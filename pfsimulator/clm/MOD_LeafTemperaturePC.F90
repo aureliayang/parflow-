@@ -636,7 +636,7 @@ CONTAINS
 !-----------------------------------------------------------------------
       DO i = ps, pe
          IF (lsai(i) > 1.e-6) THEN
-            CALL cal_z0_displa(lsai(i), htop(i), 1., z0mpc(i), displa)
+            CALL cal_z0_displa(lsai(i), htop(i), 1._r8, z0mpc(i), displa)
          ELSE
             z0mpc(i) = z0mg
          ENDIF
@@ -653,7 +653,7 @@ CONTAINS
 
       DO i = 1, nlay
          IF (fcover_lay(i)>0 .and. lsai_lay(i)>0) THEN
-            CALL cal_z0_displa(lsai_lay(i), htop_lay(i), 1., z0m_lay(i), displa_lay(i))
+            CALL cal_z0_displa(lsai_lay(i), htop_lay(i), 1._r8, z0m_lay(i), displa_lay(i))
             CALL cal_z0_displa(lsai_lay(i), htop_lay(i), fcover_lay(i), z0m_lays(i), displa_lays(i))
          ENDIF
       ENDDO
@@ -953,11 +953,11 @@ CONTAINS
                   ktop_lay(i) = ktop
                ELSE
                   ! calculate utop of this layer
-                  utop_lay(i) = uprofile(ubot_lay(upplay), fcover_lays(upplay), bee, 0., &
+                  utop_lay(i) = uprofile(ubot_lay(upplay), fcover_lays(upplay), bee, 0._r8, &
                                 z0mg, hbot_lay(upplay), htop_lay(i), htop_lay(i))
 
                   ! calculate ktop of this layer
-                  ktop_lay(i) = kprofile(kbot_lay(upplay), fcover_lays(upplay), bee, 0., &
+                  ktop_lay(i) = kprofile(kbot_lay(upplay), fcover_lays(upplay), bee, 0._r8, &
                                 displa_lays(toplay)/htop_lay(toplay), &
                                 hbot_lay(upplay), htop_lay(i), obug, ustarg, htop_lay(i))
 
@@ -965,7 +965,7 @@ CONTAINS
                   ! 03/15/2020, yuan: vertical gaps between layers, fc = fcover_lays(upplay) or just 0?
                   rd(upplay) = rd(upplay) + frd(kbot_lay(upplay), hbot_lay(upplay), htop_lay(i), &
                                hbot_lay(upplay), htop_lay(i), displa_lays(toplay)/htop_lay(toplay), &
-                               z0h_g, obug, ustarg, z0mg, 0., bee, fcover_lays(upplay))
+                               z0h_g, obug, ustarg, z0mg, 0._r8, bee, fcover_lays(upplay))
 
                ENDIF
 
@@ -977,7 +977,7 @@ CONTAINS
                              z0mg, htop_lay(i), hbot_lay(i), hbot_lay(i))
 
                IF (it == 1) THEN
-                  ueff_lay_norm(i) = ueffect(1., htop_lay(i), hbot_lay(i), &
+                  ueff_lay_norm(i) = ueffect(1._r8, htop_lay(i), hbot_lay(i), &
                                      z0mg, a_lay(i), bee, fcover_lay(i))
                ENDIF
                ueff_lay(i) = utop_lay(i)*ueff_lay_norm(i)
@@ -1016,7 +1016,7 @@ CONTAINS
 
          rd(botlay) = rd(botlay) + frd(kbot_lay(botlay), hbot_lay(botlay), z0qg, &
                       hbot_lay(botlay), z0qg, displa_lays(toplay)/htop_lay(toplay), &
-                      z0h_g, obug, ustarg, z0mg, 0., bee, fcover_lays(botlay))
+                      z0h_g, obug, ustarg, z0mg, 0._r8, bee, fcover_lays(botlay))
 
 ! ......................................................................
 ! Bulk boundary layer resistance of leaves

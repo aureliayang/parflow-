@@ -927,8 +927,10 @@ CONTAINS
 
             FP=p0/(10.*ppc+ppl)
 
-            int_rain=min(fvegc*FP*(prc_rain+prl_rain+qflx_irrig_sprinkler),(satcap_rain-ldew_rain)/deltim*(1.0-exp(-(prc_rain+prl_rain+qflx_irrig_sprinkler)*deltim/satcap_rain)))
-            int_snow=min(fvegc*FP*(prc_snow + prl_snow),(satcap_snow-ldew_snow)/deltim*(1.0-exp(-(prc_snow+prl_snow)*deltim/satcap_snow)))
+            int_rain=min(fvegc*FP*(prc_rain+prl_rain+qflx_irrig_sprinkler),(satcap_rain-ldew_rain)/deltim* &
+            (1.0-exp(-(prc_rain+prl_rain+qflx_irrig_sprinkler)*deltim/satcap_rain)))
+            int_snow=min(fvegc*FP*(prc_snow + prl_snow),(satcap_snow-ldew_snow)/deltim* &
+            (1.0-exp(-(prc_snow+prl_snow)*deltim/satcap_snow)))
             int_rain=max(0.,int_rain)*deltim
             int_snow=max(0.,int_snow)*deltim
 
@@ -1127,12 +1129,14 @@ CONTAINS
             tti_rain_s  = (prl_rain+qflx_irrig_sprinkler + prc_rain/Ac) * (1.d0-fpi_rain) * deltim
             tti_snow_s  = (prl_snow + prc_snow/Ac) * (1.d0-fpi_snow) * deltim
 
-            tex_rain_s  = max(ldew_rain_s - satcap_rain, 0.d0) + (1.14d-11)*1000.*deltim*exp(min(ldew_rain_s,satcap_rain)/1000.* 3.7d3 ) !cwb_adrp1 = 1.14d-11   ! dripping coefficient, [m/sec] rutter et.al.(1975)
+            tex_rain_s  = max(ldew_rain_s - satcap_rain, 0.d0) + (1.14d-11)*1000.*deltim* &
+            exp(min(ldew_rain_s,satcap_rain)/1000.* 3.7d3 ) !cwb_adrp1 = 1.14d-11   ! dripping coefficient, [m/sec] rutter et.al.(1975)
             tex_rain_s  = min(tex_rain_s, ldew_rain_s)
             ldew_rain_s = ldew_rain_s - tex_rain_s
 
             !
-            tex_snow_s  = max(ldew_snow_s - satcap_snow, 0.d0) + (1.14d-11)*1000.*deltim*exp(min(ldew_snow_s,satcap_snow)/1000.0* 3.7d3 ) !cwb_adrp2 = 3.7d3      ! dripping coefficient, [/m] rutter et.al.(1975)
+            tex_snow_s  = max(ldew_snow_s - satcap_snow, 0.d0) + (1.14d-11)*1000.*deltim* &
+            exp(min(ldew_snow_s,satcap_snow)/1000.0* 3.7d3 ) !cwb_adrp2 = 3.7d3      ! dripping coefficient, [/m] rutter et.al.(1975)
             tex_snow_s  = min(tex_snow_s, ldew_snow_s)
             ldew_snow_s = ldew_snow_s - tex_snow_s
 
@@ -1147,12 +1151,14 @@ CONTAINS
             tti_snow_n  = (prl_snow) * (1.d0-fpi_snow) * deltim
 
 
-            tex_rain_n  = max(ldew_rain_n  - satcap_rain, 0.d0) + (1.14d-11)*1000.*deltim*exp(min(ldew_rain_n,satcap_rain)/1000.* 3.7d3)
+            tex_rain_n  = max(ldew_rain_n  - satcap_rain, 0.d0) + (1.14d-11)*1000.*deltim* &
+            exp(min(ldew_rain_n,satcap_rain)/1000.* 3.7d3)
             tex_rain_n  = min(tex_rain_n, ldew_rain_n)
             ldew_rain_n = ldew_rain_n - tex_rain_n
 
             !
-            tex_snow_n  =  max(ldew_snow_n - satcap_snow, 0.d0) + (1.14d-11)*1000.*deltim*exp(min(ldew_snow_n,satcap_snow)/1000.* 3.7d3 )
+            tex_snow_n  =  max(ldew_snow_n - satcap_snow, 0.d0) + (1.14d-11)*1000.*deltim* &
+            exp(min(ldew_snow_n,satcap_snow)/1000.* 3.7d3 )
             tex_snow_n  =  min(tex_snow_n, ldew_snow_n)
             ldew_snow_n =  ldew_snow_n - tex_snow_n
             !-------------------------------------------------------------------------
@@ -1605,8 +1611,10 @@ CONTAINS
 
             tti_rain = (prc_rain+prl_rain+qflx_irrig_sprinkler)*deltim * ( 1.-fvegc )
             tti_snow = (prc_snow+prl_snow)*deltim * ( 1.-fvegc )
-            int_rain = min(fvegc*(prc_rain+prl_rain+qflx_irrig_sprinkler),snowinterceptfact*(satcap_rain-ldew_rain)/deltim*(1.0-exp(-(prc_rain+prl_rain+qflx_irrig_sprinkler)*deltim/satcap_rain)))
-            int_snow = min(fvegc*(prc_snow + prl_snow),snowinterceptfact*(satcap_snow-ldew_snow)/deltim*(1.0-exp(-(prc_snow+prl_snow)*deltim/satcap_snow)))
+            int_rain = min(fvegc*(prc_rain+prl_rain+qflx_irrig_sprinkler),snowinterceptfact*(satcap_rain-ldew_rain)/deltim* &
+            (1.0-exp(-(prc_rain+prl_rain+qflx_irrig_sprinkler)*deltim/satcap_rain)))
+            int_snow = min(fvegc*(prc_snow + prl_snow),snowinterceptfact*(satcap_snow-ldew_snow)/deltim* &
+            (1.0-exp(-(prc_snow+prl_snow)*deltim/satcap_snow)))
             int_rain = max(0.,int_rain)*deltim
             int_snow = max(0.,int_snow)*deltim
 

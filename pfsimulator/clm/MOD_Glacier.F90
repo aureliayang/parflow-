@@ -449,7 +449,7 @@ CONTAINS
 
 !----------------------- Dummy argument --------------------------------
 ! initial roughness length
-      IF(fsno > 0.)THEN
+      IF(fsno > 0._r8)THEN
        ! z0mg = zsno
          z0mg = 0.002 ! Table 1 of Brock et al., (2006)
          z0hg = z0mg
@@ -822,9 +822,6 @@ CONTAINS
          wice_icesno_bef(lb:0) = wice_icesno(lb:0)
 
          CALL meltf_snicar (patchtype,lb,nl_ice,deltim, &
-                   !NOTE: compatibility settings for spliting soil&snow temproal input,
-                   ! cause glacier patch doesn't support split soil&snow
-                   ! hs_soil=hs, hs_snow=hs, fsno=1. not go into effect.
                    fact(lb:),brr(lb:),hs,hs,hs,1.,sabg_snow_lyr(lb:),dhsdT, &
                    t_icesno_bef(lb:),t_icesno(lb:),wliq_icesno(lb:),wice_icesno(lb:),imelt(lb:), &
                    scv,snowdp,sm,xmf,porsl,psi0,&
@@ -846,9 +843,6 @@ CONTAINS
 
       ELSE
          CALL meltf (patchtype,lb,nl_ice,deltim, &
-                   !NOTE: compatibility settings for spliting soil&snow temproal input,
-                   ! cause glacier patch doesn't support split soil&snow
-                   ! hs_soil=hs, hs_snow=hs, fsno=1. not go into effect.
                    fact(lb:),brr(lb:),hs,hs,hs,1.,dhsdT, &
                    t_icesno_bef(lb:),t_icesno(lb:),wliq_icesno(lb:),wice_icesno(lb:),imelt(lb:), &
                    scv,snowdp,sm,xmf,porsl,psi0,&

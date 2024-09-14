@@ -86,7 +86,7 @@ CONTAINS
       klin = ktop*z/htop
 
       fac  = 1. / (1.+exp(-(displah-com1)/com2))
-      kcob = 1. / (fac/klin + (1.-fac)/kmoninobuk(0.,obu,ustar,z))
+      kcob = 1. / (fac/klin + (1.-fac)/kmoninobuk(0._r8,obu,ustar,z))
 
       kexp     = ktop*exp(-alpha*(htop-z)/(htop-hbot))
       kprofile = 1./( bee*fc/min(kexp,kcob) + (1-bee*fc)/kcob )
@@ -545,7 +545,7 @@ CONTAINS
       ! klin = ktop*z/htop
       ! kcob = 1./(fac/klin + (1.-fac)/kmoninobuk(0.,obu,ustar,z))
       fkcobint = fac*htop/ktop*(log(ztop)-log(zbot)) +&
-         (1.-fac)*kintmoninobuk(0.,z0h,obu,ustar,ztop,zbot)
+         (1.-fac)*kintmoninobuk(0._r8,z0h,obu,ustar,ztop,zbot)
 
       IF (kdiff((ztop+zbot)/2.,ktop,htop,hbot,obu,ustar,fac,alpha) <= 0) THEN
          ! kexp is smaller
@@ -653,7 +653,7 @@ CONTAINS
       kexp = ktop*exp(-alpha*(htop-z)/(htop-hbot))
 
       klin = ktop*z/htop
-      kcob = 1./(fac/klin + (1.-fac)/kmoninobuk(0.,obu,ustar,z))
+      kcob = 1./(fac/klin + (1.-fac)/kmoninobuk(0._r8,obu,ustar,z))
 
       kdiff = kexp - kcob
 

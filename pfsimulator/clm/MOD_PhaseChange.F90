@@ -135,7 +135,7 @@ CONTAINS
 #ifdef Campbell_SOIL_MODEL
                   supercool(j) = porsl(j)*(smp/psi0(j))**(-1.0/bsw(j))
 #else
-                  supercool(j) = soil_vliq_from_psi(smp, porsl(j), theta_r(j), -10.0, 5, &
+                  supercool(j) = soil_vliq_from_psi(smp, porsl(j), theta_r(j), -10._r8, 5, &
                      (/alpha_vgm(j), n_vgm(j), L_vgm(j), sc_vgm(j), fc_vgm(j)/))
 #endif
                ELSE
@@ -435,7 +435,7 @@ CONTAINS
 #ifdef Campbell_SOIL_MODEL
                   supercool(j) = porsl(j)*(smp/psi0(j))**(-1.0/bsw(j))
 #else
-                  supercool(j) = soil_vliq_from_psi(smp, porsl(j), theta_r(j), -10.0, 5, &
+                  supercool(j) = soil_vliq_from_psi(smp, porsl(j), theta_r(j), -10._r8, 5, &
                      (/alpha_vgm(j), n_vgm(j), L_vgm(j), sc_vgm(j), fc_vgm(j)/))
 #endif
                ELSE

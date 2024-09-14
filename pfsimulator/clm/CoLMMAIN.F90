@@ -155,7 +155,7 @@ SUBROUTINE CoLMMAIN ( &
    USE MOD_SoilSnowHydrology
    USE MOD_SnowFraction
    USE MOD_SnowLayersCombineDivide
-   USE MOD_Glacier
+   !USE MOD_Glacier
    USE MOD_Lake
    USE MOD_SimpleOcean
    USE MOD_Albedo
@@ -960,47 +960,47 @@ SUBROUTINE CoLMMAIN ( &
          lb  = snl + 1            !lower bound of array
          lbsn = min(lb,0)
    
-         CALL GLACIER_TEMP (patchtype,   lb    ,nl_soil    ,deltim      ,&
-                      zlnd        ,zsno        ,capr       ,cnfac       ,&
-                      forc_hgt_u  ,forc_hgt_t  ,forc_hgt_q ,forc_us     ,&
-                      forc_vs     ,forc_t      ,forc_q     ,forc_hpbl   ,&
-                      forc_rhoair ,forc_psrf   ,coszen     ,sabg        ,&
-                      forc_frl    ,fsno        ,dz_soisno(lb:)          ,&
-                      z_soisno(lb:),zi_soisno(lb-1:)       ,&
-                      t_soisno(lb:),wice_soisno(lb:),wliq_soisno(lb:)   ,&
-                      scv         ,snowdp      ,imelt(lb:) ,taux        ,&
-                      tauy        ,fsena       ,fevpa      ,lfevpa      ,&
-                      fseng       ,fevpg       ,olrg       ,fgrnd       ,&
-                      qseva       ,qsdew       ,qsubl      ,qfros       ,&
-                      sm          ,tref        ,qref       ,trad        ,&
-                      errore      ,emis        ,z0m        ,zol         ,&
-                      rib         ,ustar       ,qstar      ,tstar       ,&
-                      fm          ,fh          ,fq         ,pg_rain     ,&
-                      pg_snow     ,t_precip    ,&
-                      snofrz(lbsn:0), sabg_snow_lyr(lb:1)                )
-   
-   
-         IF (DEF_USE_SNICAR) THEN
-            CALL GLACIER_WATER_snicar (nl_soil ,maxsnl     ,deltim      ,&
-                      z_soisno    ,dz_soisno   ,zi_soisno  ,t_soisno    ,&
-                      wliq_soisno ,wice_soisno ,pg_rain    ,pg_snow     ,&
-                      sm          ,scv         ,snowdp     ,imelt       ,&
-                      fiold       ,snl         ,qseva      ,qsdew       ,&
-                      qsubl       ,qfros       ,gwat       ,&
-                      ssi         ,wimp        ,forc_us    ,forc_vs     ,&
-                      ! SNICAR
-                      forc_aer    ,&
-                      mss_bcpho   ,mss_bcphi   ,mss_ocpho  ,mss_ocphi   ,&
-                      mss_dst1    ,mss_dst2    ,mss_dst3   ,mss_dst4     )
-         ELSE
-            CALL GLACIER_WATER (   nl_soil     ,maxsnl     ,deltim      ,&
-                      z_soisno    ,dz_soisno   ,zi_soisno  ,t_soisno    ,&
-                      wliq_soisno ,wice_soisno ,pg_rain    ,pg_snow     ,&
-                      sm          ,scv         ,snowdp     ,imelt       ,&
-                      fiold       ,snl         ,qseva      ,qsdew       ,&
-                      qsubl       ,qfros       ,gwat       ,&
-                      ssi         ,wimp        ,forc_us    ,forc_vs     )
-         ENDIF
+         !CALL GLACIER_TEMP (patchtype,   lb    ,nl_soil    ,deltim      ,&
+         !             zlnd        ,zsno        ,capr       ,cnfac       ,&
+         !             forc_hgt_u  ,forc_hgt_t  ,forc_hgt_q ,forc_us     ,&
+         !             forc_vs     ,forc_t      ,forc_q     ,forc_hpbl   ,&
+         !             forc_rhoair ,forc_psrf   ,coszen     ,sabg        ,&
+         !             forc_frl    ,fsno        ,dz_soisno(lb:)          ,&
+         !             z_soisno(lb:),zi_soisno(lb-1:)       ,&
+         !             t_soisno(lb:),wice_soisno(lb:),wliq_soisno(lb:)   ,&
+         !             scv         ,snowdp      ,imelt(lb:) ,taux        ,&
+         !             tauy        ,fsena       ,fevpa      ,lfevpa      ,&
+         !             fseng       ,fevpg       ,olrg       ,fgrnd       ,&
+         !             qseva       ,qsdew       ,qsubl      ,qfros       ,&
+         !             sm          ,tref        ,qref       ,trad        ,&
+         !             errore      ,emis        ,z0m        ,zol         ,&
+         !             rib         ,ustar       ,qstar      ,tstar       ,&
+         !             fm          ,fh          ,fq         ,pg_rain     ,&
+         !             pg_snow     ,t_precip    ,&
+         !             snofrz(lbsn:0), sabg_snow_lyr(lb:1)                )
+   !
+   !
+         !IF (DEF_USE_SNICAR) THEN
+         !   CALL GLACIER_WATER_snicar (nl_soil ,maxsnl     ,deltim      ,&
+         !             z_soisno    ,dz_soisno   ,zi_soisno  ,t_soisno    ,&
+         !             wliq_soisno ,wice_soisno ,pg_rain    ,pg_snow     ,&
+         !             sm          ,scv         ,snowdp     ,imelt       ,&
+         !             fiold       ,snl         ,qseva      ,qsdew       ,&
+         !             qsubl       ,qfros       ,gwat       ,&
+         !             ssi         ,wimp        ,forc_us    ,forc_vs     ,&
+         !             ! SNICAR
+         !             forc_aer    ,&
+         !             mss_bcpho   ,mss_bcphi   ,mss_ocpho  ,mss_ocphi   ,&
+         !             mss_dst1    ,mss_dst2    ,mss_dst3   ,mss_dst4     )
+         !ELSE
+         !   CALL GLACIER_WATER (   nl_soil     ,maxsnl     ,deltim      ,&
+         !             z_soisno    ,dz_soisno   ,zi_soisno  ,t_soisno    ,&
+         !             wliq_soisno ,wice_soisno ,pg_rain    ,pg_snow     ,&
+         !             sm          ,scv         ,snowdp     ,imelt       ,&
+         !             fiold       ,snl         ,qseva      ,qsdew       ,&
+         !             qsubl       ,qfros       ,gwat       ,&
+         !             ssi         ,wimp        ,forc_us    ,forc_vs     )
+         !ENDIF
    
          IF (.not. DEF_USE_VariablySaturatedFlow) THEN
             rsur = max(0.0,gwat)

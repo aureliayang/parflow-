@@ -161,6 +161,7 @@ CONTAINS
    real(r8),dimension(nvegwcs) :: x      ! vegetation water potential
 
    integer j
+   real(r8) temp
 
 !----------------calculate root-soil interface conductance-----------------
       DO j = 1,nl_soil
@@ -187,7 +188,8 @@ CONTAINS
          soil_conductance = min(hksati(j),hk(j))/(1.e3*r_soil)
 
          ! USE vegetation plc function to adjust root conductance
-         fs(j)=  plc(amax1(smp(j),-1._r8),psi50_root,ck)
+         temp = amax1(smp(j),-1._r8)
+         fs(j)=  plc(temp,psi50_root,ck)
 
          ! krmax is root conductance per area per length
          root_conductance = (fs(j)*rai(j)*krmax)/(croot_average_length + z_soi(j))

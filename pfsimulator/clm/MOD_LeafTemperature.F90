@@ -469,7 +469,7 @@ CONTAINS
 ! 10/17/2017, yuan: z0m and displa with vertical profile solution
       IF (zd_opt == 3) THEN
 
-         CALL cal_z0_displa(lai+sai, htop, 1., z0mv, displa)
+         CALL cal_z0_displa(lai+sai, htop, 1._r8, z0mv, displa)
 
          ! NOTE: adjusted for samll displa
          displasink = max(htop/2., displa)

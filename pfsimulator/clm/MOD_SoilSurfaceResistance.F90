@@ -197,7 +197,7 @@ CONTAINS
 #endif
 
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
-         eps100 = porsl(1) - soil_vliq_from_psi (-1000., porsl(1), theta_r(1), psi0(1), &
+         eps100 = porsl(1) - soil_vliq_from_psi (-1000._r8, porsl(1), theta_r(1), psi0(1), &
                     5, (/alpha_vgm(1), n_vgm(1), L_vgm(1), sc_vgm(1), fc_vgm(1)/))
 #endif
          tao    = porsl(1)*porsl(1)*(eps/porsl(1))**(2.+log(eps100**0.25_r8)/log(eps100/porsl(1)))
