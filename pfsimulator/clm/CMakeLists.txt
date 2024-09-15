@@ -45,7 +45,8 @@ set (SRC_FILES
   MOD_SoilThermalParameters.F90               
   MOD_SoilSnowHydrology.F90                   
   MOD_SnowLayersCombineDivide.F90             
-  MOD_PhaseChange.F90                                                     
+  MOD_PhaseChange.F90
+  MOD_Glacier.F90                                                     
   MOD_Lake.F90                                
   MOD_SimpleOcean.F90                         
   MOD_GroundFluxes.F90                        
