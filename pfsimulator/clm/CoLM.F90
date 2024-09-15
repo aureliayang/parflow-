@@ -326,7 +326,7 @@ if (time == start_time_pf) then !initialization
 
       CALL Init_GlobalVars
       !@CY: mapping layers
-      
+
       CAll Init_LC_Const
       CAll Init_PFT_Const
 
@@ -620,8 +620,8 @@ endif
             Julian_8day = int(calendarday(jdate)-1)/8*8 + 1
             IF ((itstamp < etstamp) .and. (Julian_8day /= Julian_8day_p)) THEN
                !CALL LAI_readin (jdate(1), Julian_8day, dir_landdata)
-               ! 06/2023, yuan: or depend on DEF_LAI_CHANGE_YEARLY nanemlist
-               !CALL LAI_readin (lai_year, Julian_8day, dir_landdata)
+               !! 06/2023, yuan: or depend on DEF_LAI_CHANGE_YEARLY nanemlist
+               !!CALL LAI_readin (lai_year, Julian_8day, dir_landdata)
             ENDIF
          ENDIF
 #endif
