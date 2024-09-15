@@ -141,9 +141,9 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
 
    integer*8 :: start_time, end_time, c_per_sec, time_used
 
+   !@CY: below from parflow=================================
    integer  :: numpatch
 
-   !@CY: below from parflow=================================
    integer  :: pf_nlevsoi                         ! number of soil levels, passed from PF
    integer  :: pf_nlevlak                         ! number of lake levels, passed from PF
   
@@ -216,7 +216,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    real(r8) :: slope_y_pf((nx+2)*(ny+2)*3)        ! Slope in y-direction from PF
  
    ! output keys
-   integer :: clm_dump_interval                  ! dump inteval for CLM output, passed from PF, always in interval of CLM timestep, not time
+   integer  :: clm_dump_interval                  ! dump inteval for CLM output, passed from PF, always in interval of CLM timestep, not time
    integer  :: clm_1d_out                         ! whether to dump 1d output 0=no, 1=yes
    integer  :: clm_forc_veg                       ! BH: whether vegetation (LAI, SAI, z0m, displa) is being forced 0=no, 1=yes
    integer  :: clm_output_dir_length              ! for output directory
@@ -256,6 +256,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
 
       !@CY:
       numpatch = nx*ny
+      nl_soil  = pf_nlevsoi
 
 if (time == start_time_pf) then !initialization
 #ifdef USEMPI
@@ -321,7 +322,11 @@ if (time == start_time_pf) then !initialization
       edate(1) = e_year; edate(2) = e_julian; edate(3) = e_seconds
       pdate(1) = p_year; pdate(2) = p_julian; pdate(3) = p_seconds
 
+      !@CY: mapping mask
+
       CALL Init_GlobalVars
+      !@CY: mapping layers
+      
       CAll Init_LC_Const
       CAll Init_PFT_Const
 
@@ -663,7 +668,7 @@ endif
          !   jdate   = sdate
          !   itstamp = ststamp
          !   CALL adj2begin(jdate)
-         !   !CALL forcing_reset ()
+         !   CALL forcing_reset ()
          !ENDIF
 
          !istep = istep + 1
