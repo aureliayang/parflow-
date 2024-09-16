@@ -322,11 +322,7 @@ if (time == start_time_pf) then !initialization
       edate(1) = e_year; edate(2) = e_julian; edate(3) = e_seconds
       pdate(1) = p_year; pdate(2) = p_julian; pdate(3) = p_seconds
 
-      !@CY: mapping mask
-
       CALL Init_GlobalVars
-      !@CY: mapping layers
-
       CAll Init_LC_Const
       CAll Init_PFT_Const
 
@@ -396,6 +392,9 @@ if (time == start_time_pf) then !initialization
       ! Read in SNICAR optical and aging parameters
       !CALL SnowOptics_init( DEF_file_snowoptics ) ! SNICAR optical parameters
       !CALL SnowAge_init( DEF_file_snowaging )     ! SNICAR aging   parameters
+
+      !@CY: mapping mask
+      !@CY: mapping layers
 
       ! ----------------------------------------------------------------------
       doalb = .true.
