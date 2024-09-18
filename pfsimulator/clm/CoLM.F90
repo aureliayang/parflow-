@@ -256,7 +256,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
 
       !@CY:
       numpatch = nx*ny
-      nl_soil  = pf_nlevsoi
+      !nl_soil  = pf_nlevsoi
 
 if (time == start_time_pf) then !initialization
 #ifdef USEMPI

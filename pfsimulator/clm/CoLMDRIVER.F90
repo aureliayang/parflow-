@@ -14,7 +14,7 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
 !=======================================================================
 
    USE MOD_Precision
-   USE MOD_Const_Physical, only: tfrz, rgas, vonkar
+   !USE MOD_Const_Physical, only: tfrz, rgas, vonkar
    USE MOD_Const_LC
    USE MOD_Vars_Global
    USE MOD_Vars_TimeInvariants

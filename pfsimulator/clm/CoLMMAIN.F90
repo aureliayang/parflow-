@@ -140,7 +140,8 @@ SUBROUTINE CoLMMAIN ( &
 
    USE MOD_Precision
    USE MOD_Vars_Global
-   USE MOD_Const_Physical, only: tfrz, denh2o, denice, cpliq, cpice
+   USE MOD_Const_Physical, only: denh2o, denice, cpliq, cpice
+   !USE MOD_Const_Physical, only: tfrz, denh2o, denice, cpliq, cpice
    USE MOD_Vars_TimeVariables, only: tlai, tsai, irrig_rate
 #if (defined LULC_IGBP_PFT || defined LULC_IGBP_PC)
    USE MOD_LandPFT, only : patch_pft_s, patch_pft_e

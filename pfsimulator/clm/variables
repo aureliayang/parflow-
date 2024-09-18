@@ -1,17 +1,17 @@
 #invariants
 patchclass(i),   
-patchtype(i),    & 
+patchtype(i),     
 patchlonr(i),    
 patchlatr(i),    
-lakedepth(i),    
-dz_lake(1:,i),   
-soil_s_v_alb(i), 
+lakedepth(i),    ##
+dz_lake(1:,i),   ##
+soil_s_v_alb(i), ##soil_color_refl
 soil_d_v_alb(i), 
 soil_s_n_alb(i), 
-soil_d_n_alb(i), &   
-vf_quartz(1:,i), 
-vf_gravels(1:,i),
-vf_om(1:,i),     
+soil_d_n_alb(i),   
+vf_quartz(1:,i), ##not used at all
+vf_gravels(1:,i), ##used in soil_hcap_cond, maybe setup in 2nd file
+vf_om(1:,i),    ##used in soil_hcap_cond, maybe setup in 2nd file 
 vf_sand(1:,i),   &             
 wf_gravels(1:,i),
 wf_sand(1:,i),   
@@ -234,10 +234,11 @@ g0(m),
 gradm(m),  
 binter(m),       &          
 extkn(m),        
-chil(m),         
+chil(m),   
+lambda(m),      
 rho(1:,1:,m),    
 tau(1:,1:,m),    &
-lambda(m),    
+    
 
 
 237 variables, 6 excluded

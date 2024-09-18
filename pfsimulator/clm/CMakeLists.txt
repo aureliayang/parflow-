@@ -31,8 +31,7 @@ set (SRC_FILES
   MOD_Albedo.F90                              
   MOD_SnowFraction.F90                        
   MOD_MonthlyinSituCO2MaunaLoa.F90            
-  MOD_SoilColorRefl.F90                       
-  MOD_IniTimeVariable.F90                     
+  MOD_SoilColorRefl.F90                                           
   MOD_Irrigation.F90                          
   MOD_AssimStomataConductance.F90             
   MOD_PlantHydraulic.F90                      
