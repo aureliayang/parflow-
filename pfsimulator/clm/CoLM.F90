@@ -1,16 +1,23 @@
 #include <define.h>
 
 SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep_pf,dt,time,           &
-   start_time_pf,pdx,pdy,pdz,ix,iy,nx,ny,nz,nx_f,ny_f,nz_f,nz_rz,ip,npp,npq,npr,gnx,gny,rank,sw_pf,lw_pf,    &
-   prcp_pf,tas_pf,u_pf,v_pf,patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,                               &
-   slope_x_pf,slope_y_pf,                                                                                 &
-   eflx_lh_pf,eflx_lwrad_pf,eflx_sh_pf,eflx_grnd_pf,                                                     &
-   qflx_tot_pf,qflx_grnd_pf,qflx_soi_pf,qflx_eveg_pf,qflx_tveg_pf,qflx_in_pf,swe_pf,t_g_pf,               &
-   t_soi_pf,clm_dump_interval,clm_1d_out,clm_forc_veg,clm_output_dir,clm_output_dir_length,clm_bin_output_dir,         &
-   write_CLM_binary,slope_accounting_CLM,beta_typepf,veg_water_stress_typepf,wilting_pointpf,field_capacitypf,                 &
-   res_satpf,irr_typepf, irr_cyclepf, irr_ratepf, irr_startpf, irr_stoppf, irr_thresholdpf,               &
-   qirr_pf,qirr_inst_pf,irr_flag_pf,irr_thresholdtypepf,soi_z,clm_next,clm_write_logs,                    &
-   clm_last_rst,clm_daily_rst, pf_nlevsoi, pf_nlevlak)
+   start_time_pf,pdx,pdy,pdz,ix,iy,nx,ny,nz,nx_f,ny_f,nz_f,nz_rz,ip,npp,npq,npr,gnx,gny,rank,          &
+   sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf,patm_pf,qatm_pf,                                               &
+   lai_pf,sai_pf,z0m_pf,displa_pf,slope_x_pf,slope_y_pf,                                               &
+   eflx_lh_pf,eflx_lwrad_pf,eflx_sh_pf,eflx_grnd_pf,qflx_tot_pf,                                       &
+   qflx_grnd_pf,qflx_soi_pf,qflx_eveg_pf,qflx_tveg_pf,qflx_in_pf,swe_pf,t_g_pf,t_soi_pf,               &
+   clm_dump_interval,clm_1d_out,clm_forc_veg,clm_output_dir,clm_output_dir_length,clm_bin_output_dir,  &
+   write_CLM_binary,slope_accounting_CLM,beta_typepf,                                                  &
+   veg_water_stress_typepf,wilting_pointpf,field_capacitypf,res_satpf,                                 &
+   irr_typepf, irr_cyclepf, irr_ratepf, irr_startpf, irr_stoppf, irr_thresholdpf,                      &
+   qirr_pf,qirr_inst_pf,irr_flag_pf,irr_thresholdtypepf,                                               &
+   soi_z,clm_next,clm_write_logs,clm_last_rst,clm_daily_rst,pf_nlevsoi,pf_nlevlak                      )
+
+   !!not used=======================================
+   !nz_rz,ip
+   !!would be used later============================
+   !npp,npq,npr,gnx,gny,rank,ix,iy
+   !lai_pf,sai_pf,z0m_pf,displa_pf,slope_x_pf,slope_y_pf
 !-----------------------------------------------------------------------------
 ! Description:
 !   This is the main program for the Common Land Model (CoLM)
@@ -151,9 +158,9 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
  
    ! basic indices, counters
    integer  :: t                                   ! tile space counter
-   integer  :: l,ll                                   ! layer counter 
-   integer  :: r,c                                 ! row,column indices
-   !integer  :: ierr                                ! error output 
+   integer  :: l,ll                                ! layer counter 
+   !integer  :: r,c                                ! row,column indices
+   !integer  :: ierr                               ! error output 
  
    ! values passed from parflow
    integer  :: nx,ny,nz,nx_f,ny_f,nz_f,nz_rz
@@ -177,7 +184,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    integer  :: rank                               ! processor rank, from ParFlow
  
    integer :: clm_next                           ! NBE: Passing flag to sync outputs
-   integer :: d_stp                              ! NBE: Dummy for CLM restart
+   !integer :: d_stp                              ! NBE: Dummy for CLM restart
    integer :: clm_write_logs                     ! NBE: Enable/disable writing of the log files
    integer :: clm_last_rst                       ! NBE: Write all the CLM restart files or just the last one
    integer :: clm_daily_rst                      ! NBE: Write daily restart files or hourly
@@ -251,8 +258,8 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    integer  :: j_incr,k_incr                      ! increment for j and k to convert 1D vector to 3D i,j,k array
    integer, allocatable :: counter(:,:) 
    real(r8) :: total
-   character*100 :: RI
-   real(r8) :: u         ! Tempoary UNDEF Variable  
+   !character*100 :: RI
+   !real(r8) :: u         ! Tempoary UNDEF Variable  
 
    save
    !@CY: we don't want to initialize everything every timestep
