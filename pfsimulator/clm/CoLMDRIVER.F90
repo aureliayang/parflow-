@@ -183,7 +183,7 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
                emis(i),         z0m(i),          zol(i),          rib(i),          &
                ustar(i),        qstar(i),        tstar(i),                         &
                fm(i),           fh(i),           fq(i),           pf_press(1:,i),  &
-               pf_vol_liq(1:,i),veg_water_stress_typepf,          wilting_pointpf, & 
+               pf_vol_liq(1:,i),veg_water_stress_typepf,          wilting_pointpf, &
                field_capacitypf                                                    )
 
             ENDDO

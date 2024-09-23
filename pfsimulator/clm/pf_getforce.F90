@@ -98,7 +98,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         !clm(t)%slope_x         = slope_x_pf(l)
         !clm(t)%slope_y         = slope_y_pf(l)
         ! BH: added the option for forcing or not the vegetation
-        if  (clm_forc_veg== 1) then 
+        if  (clm_forc_veg == 1) then 
           !clm(t)%elai	        = lai_pf(l)
           !clm(t)%esai	        = sai_pf(l)	
           !clm(t)%z0m	        = z0m_pf(l) 
