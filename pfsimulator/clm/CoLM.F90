@@ -600,8 +600,9 @@ endif
          ! Read in the meteorological forcing
          ! ----------------------------------------------------------------------
          ! CALL read_forcing (jdate, dir_forcing)
-         !call drv_getforce (drv,tile,clm,nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
-         !patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,istep_pf,clm_forc_veg)
+         call pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
+         patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,clm_forc_veg, &
+         numpatch,planar_mask)
 
          IF(DEF_USE_OZONEDATA)THEN
             !CALL update_Ozone_data(itstamp, deltim)

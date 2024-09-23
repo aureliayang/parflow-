@@ -63,6 +63,7 @@ set (SRC_FILES
   CoLM.F90
   pf_readout.F90
   pf_couple.F90
+  pf_getforce.F90
   )
 
 include_directories(.)
