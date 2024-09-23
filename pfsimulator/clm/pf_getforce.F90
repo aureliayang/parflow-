@@ -65,7 +65,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
 !=== Local Variables =====================================================
 
   !real(r8) solar     ! incident solar radiation [w/m2]
-  !real(r8) prcp      ! precipitation [mm/s]
+  real(r8) prcp      ! precipitation [mm/s]
   integer t,i,j,k,l  ! Looping indices
 ! integer nx,ny      ! Array sizes
   
@@ -89,11 +89,11 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         l = (1+i) + (nx+2)*(j) + (nx+2)*(ny+2)
         forc_swrad(t)          = sw_pf(l)
         forc_frl(t)            = lw_pf(l)
-        forc_prc(t)            = prcp_pf(l)
+        prcp                   = prcp_pf(l)
         forc_t(t)              = tas_pf(l)
         forc_us(t)             = u_pf(l)
         forc_vs(t)             = v_pf(l)
-        forc_pbot(t)           = patm_pf(l)
+        forc_psrf(t)           = patm_pf(l)
         forc_q(t)              = qatm_pf(l)
         !clm(t)%slope_x         = slope_x_pf(l)
         !clm(t)%slope_y         = slope_y_pf(l)
@@ -106,7 +106,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         endif
       
         !Treat air density
-        forc_rhoair(t)  = forc_pbot(t)/(forc_t(t)*2.8704e2)
+        forc_rhoair(t)  = forc_psrf(t)/(forc_t(t)*2.8704e2)
 
         !Treat solar (SW)
         forc_sols(t)    = forc_swrad(t)*35./100.   !forc_sols
@@ -114,8 +114,13 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         forc_solsd(t)   = forc_swrad(t)*15./100.   !forc_solsd
         forc_solld(t)   = forc_swrad(t)*15./100.   !forc_solad
 
-        forc_pco2m(t) = 355.e-06*forc_pbot(t)
-        forc_po2m(t)  = 0.209*forc_pbot(t)
+        forc_prc(t)     = prcp/3.d0
+        forc_prl(t)     = prcp*2.d0/3.d0
+
+        
+
+        forc_pco2m(t)   = 355.e-06*forc_psrf(t)
+        forc_po2m(t)    = 0.209*forc_psrf(t)
         
         !!Treat precip
         !!(Set upper limit of air temperature for snowfall at 275.65K.
