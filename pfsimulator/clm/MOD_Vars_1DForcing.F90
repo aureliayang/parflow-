@@ -61,7 +61,7 @@ CONTAINS
    !USE MOD_Mesh
    !USE MOD_LandPatch
    IMPLICIT NONE
-   integer :: numpatch
+   integer, intent(in) :: numpatch
 
       IF (p_is_worker) THEN
 
@@ -114,7 +114,7 @@ CONTAINS
    !USE MOD_Mesh
    !USE MOD_LandPatch
    IMPLICIT NONE
-   integer :: numpatch
+   integer, intent(in) :: numpatch
 
       IF (p_is_worker) THEN
 

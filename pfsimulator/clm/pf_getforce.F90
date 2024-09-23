@@ -43,7 +43,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   !type (drvdec) ,intent(inout) :: drv              
   !type (tiledec),intent(inout) :: tile(drv%nch)
   !type (clm1d)  ,intent(inout) :: clm (drv%nch)
-  integer,intent(in)  :: nx,ny,numpatch,planar_mask(:,:)
+  integer,intent(in)  :: nx,ny,numpatch,planar_mask(3,nx*ny)
   integer,intent(in)  :: clm_forc_veg                       ! BH: whether vegetation (LAI, SAI, z0m, displa) is being forced 0=no, 1=yes
   real(r8),intent(in) :: sw_pf((nx+2)*(ny+2)*3)             ! SW rad, passed from PF
   real(r8),intent(in) :: lw_pf((nx+2)*(ny+2)*3)             ! LW rad, passed from PF
@@ -53,6 +53,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   real(r8),intent(in) :: v_pf((nx+2)*(ny+2)*3)              ! v-wind, passed from PF
   real(r8),intent(in) :: patm_pf((nx+2)*(ny+2)*3)           ! air pressure, passed from PF
   real(r8),intent(in) :: qatm_pf((nx+2)*(ny+2)*3)           ! air specific humidity, passed from PF
+
   real(r8),intent(in) :: lai_pf((nx+2)*(ny+2)*3)            ! lai, passed from PF !BH
   real(r8),intent(in) :: sai_pf((nx+2)*(ny+2)*3)            ! sai, passed from PF !BH
   real(r8),intent(in) :: z0m_pf((nx+2)*(ny+2)*3)            ! z0m, passed from PF !BH
@@ -63,7 +64,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
 
 !=== Local Variables =====================================================
 
-  real(r8) solar     ! incident solar radiation [w/m2]
+  !real(r8) solar     ! incident solar radiation [w/m2]
   !real(r8) prcp      ! precipitation [mm/s]
   integer t,i,j,k,l  ! Looping indices
 ! integer nx,ny      ! Array sizes
@@ -86,7 +87,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         i = planar_mask(1,t)
         j = planar_mask(2,t)
         l = (1+i) + (nx+2)*(j) + (nx+2)*(ny+2)
-        solar                  = sw_pf(l)
+        forc_swrad(t)          = sw_pf(l)
         forc_frl(t)            = lw_pf(l)
         forc_prc(t)            = prcp_pf(l)
         forc_t(t)              = tas_pf(l)
@@ -108,13 +109,13 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         forc_rhoair(t)  = forc_pbot(t)/(forc_t(t)*2.8704e2)
 
         !Treat solar (SW)
-        forc_sols(t)    = solar*35./100.   !forc_sols
-        forc_soll(t)    = solar*35./100.   !forc_soll
-        forc_solsd(t)   = solar*15./100.   !forc_solsd
-        forc_solld(t)   = solar*15./100.   !forc_solad
+        forc_sols(t)    = forc_swrad(t)*35./100.   !forc_sols
+        forc_soll(t)    = forc_swrad(t)*35./100.   !forc_soll
+        forc_solsd(t)   = forc_swrad(t)*15./100.   !forc_solsd
+        forc_solld(t)   = forc_swrad(t)*15./100.   !forc_solad
 
-        forc_pco2m = 355.e-06*forc_pbot(t)
-        forc_po2m  = 0.209*forc_pbot(t)
+        forc_pco2m(t) = 355.e-06*forc_pbot(t)
+        forc_po2m(t)  = 0.209*forc_pbot(t)
         
         !!Treat precip
         !!(Set upper limit of air temperature for snowfall at 275.65K.
