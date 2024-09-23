@@ -73,7 +73,8 @@ CONTAINS
                        rib         ,ustar       ,qstar       ,tstar      ,&
                        fm          ,fh          ,fq          ,pg_rain    ,&
                        pg_snow     ,t_precip    ,qintr_rain  ,qintr_snow ,&
-                       snofrz      ,sabg_snow_lyr                         )
+                       snofrz      ,sabg_snow_lyr, pf_press  ,pf_vol_liq ,&
+                       veg_water_stress_typepf  ,wilting_pointpf, field_capacitypf)
 
 !=======================================================================
 ! this is the main subroutine to execute the calculation
@@ -136,8 +137,9 @@ CONTAINS
    integer, intent(in) :: &
        ipatch,       &! patch index
        lb,           &! lower bound of array
-       patchtype      ! land patch type (0=soil, 1=urban or built-up, 2=wetland,
+       patchtype,    &! land patch type (0=soil, 1=urban or built-up, 2=wetland,
                       !                  3=glacier/ice sheet, 4=land water bodies)
+       veg_water_stress_typepf
 
    real(r8), intent(inout) :: &
        sai            ! stem area index  [-]
@@ -150,6 +152,8 @@ CONTAINS
        dewmx,        &! maximum dew
        capr,         &! tuning factor to turn first layer T into surface T
        cnfac,        &! Crank Nicholson factor between 0 and 1
+       wilting_pointpf,  & 
+       field_capacitypf, &
 
        ! soil physical parameters
        vf_quartz (1:nl_soil), &! volumetric fraction of quartz within mineral soil
@@ -179,6 +183,8 @@ CONTAINS
        hksati    (1:nl_soil), &! hydraulic conductivity at saturation [mm h2o/s]
        BA_alpha  (1:nl_soil), &! alpha in Balland and Arp(2005) thermal conductivity scheme
        BA_beta   (1:nl_soil), &! beta in Balland and Arp(2005) thermal conductivity scheme
+       pf_vol_liq(1:nl_soil), &
+       pf_press  (1:nl_soil), &
 
        ! vegetation parameters
        lai,          &! adjusted leaf area index for seasonal variation [-]
@@ -537,6 +543,10 @@ ENDIF
             5, (/alpha_vgm(1), n_vgm(1), L_vgm(1), sc_vgm(1), fc_vgm(1)/))
 #endif
          psit = max( -1.e8, psit )
+
+         if (pf_press(1)>= 0.0d0)  psit = 0.0d0
+         if (pf_press(1) < 0.0d0)  psit = pf_press(1)
+
          hr   = exp(psit/roverg/t_grnd)
          qred = (1.-fsno)*hr + fsno
       ENDIF
@@ -588,7 +598,8 @@ ENDIF
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
                             theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
-                            dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss)
+                            dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss,&
+                            pf_vol_liq)
       ELSE
          rss = 0.
       ENDIF
@@ -631,7 +642,9 @@ IF ( patchtype==0.and.DEF_USE_LCT .or. patchtype>0 ) THEN
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
             theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
-            psi0,rootfr,dz_soisno,t_soisno,wliq_soisno,rootr,etrc,rstfac)
+            psi0,rootfr,dz_soisno,t_soisno,wliq_soisno,rootr, &
+            etrc,rstfac,veg_water_stress_typepf,wilting_pointpf,&
+            field_capacitypf,pf_vol_liq,pf_press)
 
          ! fraction of sunlit and shaded leaves of canopy
          fsun = ( 1. - exp(-min(extkb*lai,40.))) / max( min(extkb*lai,40.), 1.e-6 )

@@ -61,6 +61,8 @@ set (SRC_FILES
   CoLMDRIVER.F90                              
   CoLMMAIN.F90                                
   CoLM.F90
+  pf_readout.F90
+  pf_couple.F90
   )
 
 include_directories(.)

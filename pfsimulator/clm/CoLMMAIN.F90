@@ -89,7 +89,7 @@ SUBROUTINE CoLMMAIN ( &
            srvi,         srnd,         srni,         solvdln,       &
            solviln,      solndln,      solniln,      srvdln,        &
            srviln,       srndln,       srniln,       qcharge,       &
-           xerr,         zerr,         &
+           xerr,         zerr,         qseva,                       &
 
          ! TUNABLE modle constants
            zlnd,         zsno,         csoilc,       dewmx,         &
@@ -100,7 +100,8 @@ SUBROUTINE CoLMMAIN ( &
          ! additional variables required by coupling with WRF model
            emis,         z0m,          zol,          rib,           &
            ustar,        qstar,        tstar,        fm,            &
-           fh,           fq                                         )
+           fh,           fq,           pf_press,     pf_vol_liq,    &
+           veg_water_stress_typepf, wilting_pointpf, field_capacitypf   )
 
 !=======================================================================
 !
@@ -181,7 +182,8 @@ SUBROUTINE CoLMMAIN ( &
    logical, intent(in) :: dosst   !true to update sst/ice/snow before calculation
 
    integer, intent(in) :: &
-        ipatch        ! patch index
+        ipatch, &        ! patch index
+        veg_water_stress_typepf
 
    real(r8), intent(in) :: &
         patchlonr   ,&! logitude in radians
@@ -232,6 +234,10 @@ SUBROUTINE CoLMMAIN ( &
         BA_alpha(nl_soil) ,&! alpha in Balland and Arp(2005) thermal conductivity scheme
         BA_beta (nl_soil) ,&! beta in Balland and Arp(2005) thermal conductivity scheme
         rootfr(nl_soil)   ,&! fraction of roots in each soil layer
+        pf_press(nl_soil) ,&
+        pf_vol_liq(nl_soil) ,&
+        wilting_pointpf     ,&
+        field_capacitypf    ,&
 
         ! vegetation static, dynamic, derived parameters
         htop        ,&! canopy top height [m]
@@ -743,7 +749,8 @@ SUBROUTINE CoLMMAIN ( &
               rib               ,ustar             ,qstar             ,tstar             ,&
               fm                ,fh                ,fq                ,pg_rain           ,&
               pg_snow           ,t_precip          ,qintr_rain        ,qintr_snow        ,&
-              snofrz(lbsn:0)    ,sabg_snow_lyr(lb:1)                                      )
+              snofrz(lbsn:0)    ,sabg_snow_lyr(lb:1), pf_press        ,pf_vol_liq        ,&
+              veg_water_stress_typepf, wilting_pointpf, field_capacitypf                  )
 
          IF (.not. DEF_USE_VariablySaturatedFlow) THEN
 

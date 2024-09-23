@@ -1,6 +1,7 @@
 #include <define.h>
 
-SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
+SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
+  veg_water_stress_typepf, wilting_pointpf, field_capacitypf)
 
 
 !=======================================================================
@@ -36,6 +37,8 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
 
    integer,  intent(in) :: idate(3) ! model calendar for next time step (year, julian day, seconds)
    real(r8), intent(in) :: deltim   ! seconds in a time-step
+   integer,  intent(in) :: numpatch, veg_water_stress_typepf
+   real(r8), intent(in) :: wilting_pointpf, field_capacitypf
 
    logical,  intent(in) :: dolai    ! true if time for time-varying vegetation paramter
    logical,  intent(in) :: doalb    ! true if time for surface albedo calculation
@@ -46,7 +49,6 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
    real(r8) :: deltim_phy
    integer  :: steps_in_one_deltim
    integer  :: i, m, u, k
-   integer  :: numpatch
 
 ! ======================================================================
 
@@ -169,7 +171,7 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
                srvi(i),         srnd(i),         srni(i),         solvdln(i),      &
                solviln(i),      solndln(i),      solniln(i),      srvdln(i),       &
                srviln(i),       srndln(i),       srniln(i),       qcharge(i),      &
-               xerr(i),         zerr(i),                                           &
+               xerr(i),         zerr(i),         qseva(i),                         &
 
              ! TUNABLE modle constants
                zlnd,            zsno,            csoilc,          dewmx,           &
@@ -180,7 +182,9 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch)
              ! additional variables required by coupling with WRF model
                emis(i),         z0m(i),          zol(i),          rib(i),          &
                ustar(i),        qstar(i),        tstar(i),                         &
-               fm(i),           fh(i),           fq(i)                             )
+               fm(i),           fh(i),           fq(i),           pf_press(1:,i),  &
+               pf_vol_liq(1:,i),veg_water_stress_typepf,          wilting_pointpf, & 
+               field_capacitypf                                                    )
 
             ENDDO
          ENDIF

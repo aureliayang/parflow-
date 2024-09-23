@@ -214,6 +214,9 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
  
    real(r8) :: slope_x_pf((nx+2)*(ny+2)*3)        ! Slope in x-direction from PF
    real(r8) :: slope_y_pf((nx+2)*(ny+2)*3)        ! Slope in y-direction from PF
+
+   integer :: topo_mask(3,nx*ny)                 ! nx*ny >= numpatch
+   integer :: planar_mask(3,nx*ny)               ! col num, row num, mask indicator
  
    ! output keys
    integer  :: clm_dump_interval                  ! dump inteval for CLM output, passed from PF, always in interval of CLM timestep, not time
@@ -255,8 +258,10 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    !@CY: we don't want to initialize everything every timestep
 
       !@CY:
-      numpatch = nx*ny
+      !numpatch = nx*ny
       !nl_soil  = pf_nlevsoi
+   j_incr = nx_f
+   k_incr = nx_f*ny_f
 
 if (time == start_time_pf) then !initialization
 #ifdef USEMPI
@@ -297,6 +302,7 @@ if (time == start_time_pf) then !initialization
 #endif
 
       deltim    = DEF_simulation_time%timestep
+      deltim    = dt*3600.d0
       greenwich = DEF_simulation_time%greenwich
       s_year    = DEF_simulation_time%start_year
       s_month   = DEF_simulation_time%start_month
@@ -322,9 +328,81 @@ if (time == start_time_pf) then !initialization
       edate(1) = e_year; edate(2) = e_julian; edate(3) = e_seconds
       pdate(1) = p_year; pdate(2) = p_julian; pdate(3) = p_seconds
 
+      !@CY: build numpatch and planar_mask
+      allocate( counter(nx,ny) )
+      numpatch = 0
+      topo_mask = 0
+      planar_mask = 0
+      
+      do j = 1, ny
+         do i = 1, nx
+
+            ! i=tile(t)%col
+            ! j=tile(t)%row
+            counter(i,j) = 0
+            !clm(t)%topo_mask(3) = 1
+   
+            do k = nz, 1, -1 ! PF loop over z
+               l = 1+i + (nx+2)*(j) + (nx+2)*(ny+2)*(k)
+               if (topo(l) > 0) then
+                  counter(i,j) = counter(i,j) + 1
+                  if (counter(i,j) == 1) then
+                     numpatch = numpatch + 1
+                     topo_mask(1,numpatch) = k
+                     planar_mask(1,numpatch) = i
+                     planar_mask(2,numpatch) = j
+                     planar_mask(3,numpatch) = 1
+                  end if
+               endif
+   
+               if (topo(l) == 0 .and. topo(l+k_incr) > 0) topo_mask(3,numpatch) = k + 1
+   
+            enddo ! k
+   
+            topo_mask(2,numpatch) = topo_mask(1,numpatch) - nl_soil
+
+         enddo !i
+      enddo !j
+
       CALL Init_GlobalVars
       CAll Init_LC_Const
       CAll Init_PFT_Const
+
+      do t = 1, numpatch
+
+         ! zi_soi(0) = 0.   
+         ! zi_soi: depth of interface
+         ! dz_soi depth of each layer
+         ! z_soi depth of node
+     
+         ! check if cell is active
+         if (planar_mask(3,t) == 1) then
+
+            i = planar_mask(1,t)
+            j = planar_mask(2,t)
+ 
+            ! reset node depths (clm%z) based on variable dz multiplier
+            do k = 1, nl_soil
+                  l = 1 + i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
+                  dz_soi(k) = pdz*pf_dz_mult(l) 
+
+               if (k == 1) then
+                     z_soi(k)  = 0.5 * pdz * pf_dz_mult(l)
+                     zi_soi(k) = pdz * pf_dz_mult(l) 
+               else
+                     total = 0.0
+                     do k1 = 1, k-1
+                        l1     = 1 + i + j_incr*(j) + k_incr*(topo_mask(t,1)-(k1-1))
+                        total  = total + (pdz * pf_dz_mult(l1))
+                     enddo
+                     z_soi(k)  = total + (0.5 * pdz * pf_dz_mult(l))
+                     zi_soi(k) = total + pdz * pf_dz_mult(l)
+               endif
+     
+            enddo
+
+         endif ! active/inactive
+      enddo !t 
 
       !CALL pixel%load_from_file    (dir_landdata)
       !CALL gblock%load_from_file   (dir_landdata)
@@ -393,9 +471,6 @@ if (time == start_time_pf) then !initialization
       !CALL SnowOptics_init( DEF_file_snowoptics ) ! SNICAR optical parameters
       !CALL SnowAge_init( DEF_file_snowaging )     ! SNICAR aging   parameters
 
-      !@CY: mapping mask
-      !@CY: mapping layers
-
       ! ----------------------------------------------------------------------
       doalb = .true.
       dolai = .true.
@@ -456,6 +531,43 @@ if (time == start_time_pf) then !initialization
       idate   = sdate
       itstamp = ststamp
 
+      do t = 1, numpatch  
+
+         ! check if cell is active
+         if (planar_mask(3,t) == 1) then
+ 
+            !! for beta and veg stress formulations
+            !clm(t)%beta_type          = beta_typepf
+            !clm(t)%vegwaterstresstype = veg_water_stress_typepf
+            !clm(t)%wilting_point      = wilting_pointpf
+            !clm(t)%field_capacity     = field_capacitypf
+            !clm(t)%res_sat            = res_satpf
+ 
+            !! for irrigation
+            !clm(t)%irr_type           = irr_typepf
+            !clm(t)%irr_cycle          = irr_cyclepf
+            !clm(t)%irr_rate           = irr_ratepf
+            !clm(t)%irr_start          = irr_startpf
+            !clm(t)%irr_stop           = irr_stoppf
+            !clm(t)%irr_threshold      = irr_thresholdpf     
+            !clm(t)%threshold_type     = irr_thresholdtypepf
+  
+            ! set clm watsat, tksatu from PF porosity
+            ! convert t to i,j index
+            i = planar_mask(1,t)        
+            j = planar_mask(2,t)
+            do k = 1, nl_soil ! loop over clm soil layers (1->nlevsoi)
+               ! convert clm space to parflow space, note that PF space has ghost nodes
+               l = 1 + i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
+               porsl(k,t)   = porosity(l)
+               dksatu(k,t)  = k_solids(k,t)*0.57**porsl(k,t)
+               theta_r(k,t) = porsl(k,t)*res_satpf
+            end do !k
+ 
+         endif ! active/inactive
+ 
+      end do !t
+
 endif
 
       ! ======================================================================
@@ -466,6 +578,8 @@ endif
 
 
       !TIMELOOP : DO WHILE (itstamp < etstamp)
+
+         call pfreadout(saturation,pressure,nx,ny,nz,j_incr,k_incr,numpatch,topo_mask,planar_mask)
 
          CALL julian2monthday (jdate(1), jdate(2), month_p, mday_p)
 
@@ -486,6 +600,8 @@ endif
          ! Read in the meteorological forcing
          ! ----------------------------------------------------------------------
          ! CALL read_forcing (jdate, dir_forcing)
+         !call drv_getforce (drv,tile,clm,nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
+         !patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,istep_pf,clm_forc_veg)
 
          IF(DEF_USE_OZONEDATA)THEN
             !CALL update_Ozone_data(itstamp, deltim)
@@ -542,7 +658,8 @@ endif
          ! Call colm driver
          ! ----------------------------------------------------------------------
          IF (p_is_worker) THEN
-            CALL CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oroflag,numpatch)
+            CALL CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oroflag,numpatch, &
+            veg_water_stress_typepf,wilting_pointpf,field_capacitypf)
          ENDIF
 
 
@@ -671,6 +788,65 @@ endif
          !ENDIF
 
          !istep = istep + 1
+
+         do t=1,numpatch
+            i=planar_mask(1,t)
+            j=planar_mask(2,t)
+            l = 1+i + (nx+2)*(j) + (nx+2)*(ny+2) 
+            if (planar_mask(3,t)==1) then
+               eflx_lh_pf(l)      = lfevpa(t)
+               eflx_lwrad_pf(l)   = olrg(t)
+               eflx_sh_pf(l)      = fsena(t)
+               eflx_grnd_pf(l)    = fgrnd(t)
+               qflx_tot_pf(l)     = fevpl(t) - etr(t) + fevpg(t)
+               qflx_grnd_pf(l)    = qseva(t)
+               qflx_soi_pf(l)     = fevpg(t)
+               qflx_eveg_pf(l)    = fevpl(t) 
+               qflx_tveg_pf(l)    = etr(t)
+               qflx_in_pf(l)      = qinfl(t) 
+               swe_pf(l)          = scv(t) 
+               t_g_pf(l)          = t_grnd(t)
+               !qirr_pf(l)         = clm(t)%qflx_qirr
+               !irr_flag_pf(l)     = clm(t)%irr_flag
+            else
+               eflx_lh_pf(l)      = -9999.0
+               eflx_lwrad_pf(l)   = -9999.0
+               eflx_sh_pf(l)      = -9999.0
+               eflx_grnd_pf(l)    = -9999.0
+               qflx_tot_pf(l)     = -9999.0
+               qflx_grnd_pf(l)    = -9999.0
+               qflx_soi_pf(l)     = -9999.0
+               qflx_eveg_pf(l)    = -9999.0
+               qflx_tveg_pf(l)    = -9999.0
+               qflx_in_pf(l)      = -9999.0
+               swe_pf(l)          = -9999.0
+               t_g_pf(l)          = -9999.0
+               !qirr_pf(l)         = -9999.0
+               !irr_flag_pf(l)     = -9999.0
+            endif
+         enddo
+
+         !=== Repeat for values from 3D CLM arrays
+         do t = 1, numpatch            ! Loop over CLM tile space
+            i = planar_mask(1,t)
+            j = planar_mask(2,t)
+            if (planar_mask(3,t) == 1) then
+               do k = 1, nl_soil       ! Loop from 1 -> number of soil layers (in CLM)
+                  l = 1+i + j_incr*(j) + k_incr*(nl_soil-(k-1))
+                  t_soi_pf(l)     = t_soisno(k,t)
+                  !qirr_inst_pf(l) = clm(t)%qflx_qirr_inst(k)
+               enddo
+            else
+               do k = 1, nl_soil
+                  l = 1+i + j_incr*(j) + k_incr*(nl_soil-(k-1))
+                  t_soi_pf(l)     = -9999.0
+                  !qirr_inst_pf(l) = -9999.0
+               enddo
+            endif
+         enddo
+
+         call pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_incr, &
+            numpatch,topo_mask,planar_mask)
 
       !ENDDO TIMELOOP
 

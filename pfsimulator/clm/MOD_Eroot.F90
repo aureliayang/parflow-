@@ -25,7 +25,9 @@ CONTAINS
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
          theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
-         psi0,rootfr, dz_soisno,t_soisno,wliq_soisno,rootr,etrc,rstfac)
+         psi0,rootfr, dz_soisno,t_soisno,wliq_soisno,rootr, &
+         etrc,rstfac,veg_water_stress_typepf,wilting_pointpf,field_capacitypf, &
+         pf_vol_liq,pf_press)
 
   !=======================================================================
   ! !DESCRIPTION:
@@ -44,7 +46,10 @@ CONTAINS
   !-----------------------Argument-----------------------------------------
 
    integer, intent(in) :: nl_soil            ! upper bound of array
-
+   integer, intent(in) :: veg_water_stress_typepf
+   
+   real(r8), intent(in) :: wilting_pointpf, field_capacitypf
+   real(r8), intent(in) :: pf_vol_liq(1:nl_soil), pf_press(1:nl_soil)
    real(r8), intent(in) :: trsmx0            ! max transpiration for moist soil+100% veg.[mm/s]
    real(r8), intent(in) :: porsl(1:nl_soil)  ! soil porosity [-]
 #ifdef Campbell_SOIL_MODEL
@@ -99,6 +104,21 @@ CONTAINS
             smp_node = max(smpmax, smp_node)
 #endif
             rresis(i) =(1.-smp_node/smpmax)/(1.-psi0(i)/smpmax)
+
+            !@CY:
+            select case (veg_water_stress_typepf)
+            case (0)     ! none
+            rresis(i) = 1.0d0
+            case (1)     ! pressure type
+            rresis(i) = ((wilting_pointpf*1000.d0 - pf_press(i))/(wilting_pointpf*1000.d0 - field_capacitypf*1000.d0) )
+            case (2)     ! SM type
+            rresis(i) = (pf_vol_liq(i) - wilting_pointpf*porsl(i)) / &
+                (field_capacitypf*porsl(i) - wilting_pointpf*porsl(i))
+            end select
+
+            if (rresis(i) < 0.) rresis(i) = 0.
+            if (rresis(i) > 1.) rresis(i) = 1.
+
             rootr(i) = rootfr(i)*rresis(i)
             roota = roota + rootr(i)
         ELSE

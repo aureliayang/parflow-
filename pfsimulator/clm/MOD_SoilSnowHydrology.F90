@@ -372,35 +372,35 @@ IF(patchtype<=1)THEN   ! soil ground only
 ! [3] determine the change of soil water
 !=======================================================================
 
-      ! convert length units from m to mm
-      zmm(1:) = z_soisno(1:)*1000.
-      dzmm(1:) = dz_soisno(1:)*1000.
-      zimm(0:) = zi_soisno(0:)*1000.
+      !! convert length units from m to mm
+      !zmm(1:) = z_soisno(1:)*1000.
+      !dzmm(1:) = dz_soisno(1:)*1000.
+      !zimm(0:) = zi_soisno(0:)*1000.
 
-      CALL soilwater(patchtype,nl_soil,deltim,wimp,smpmin,&
-                     qinfl,etr,z_soisno(1:),dz_soisno(1:),zi_soisno(0:),&
-                     t_soisno(1:),vol_liq,vol_ice,smp,hk,icefrac,eff_porosity,&
-                     porsl,hksati,bsw,psi0,rootr,rootflux,&
-                     zwt,dwat,qcharge)
+      !CALL soilwater(patchtype,nl_soil,deltim,wimp,smpmin,&
+      !               qinfl,etr,z_soisno(1:),dz_soisno(1:),zi_soisno(0:),&
+      !               t_soisno(1:),vol_liq,vol_ice,smp,hk,icefrac,eff_porosity,&
+      !               porsl,hksati,bsw,psi0,rootr,rootflux,&
+      !               zwt,dwat,qcharge)
 
-      ! update the mass of liquid water
-      DO j= 1, nl_soil
-         wliq_soisno(j) = wliq_soisno(j)+dwat(j)*dzmm(j)
-      ENDDO
+      !! update the mass of liquid water
+      !DO j= 1, nl_soil
+      !   wliq_soisno(j) = wliq_soisno(j)+dwat(j)*dzmm(j)
+      !ENDDO
 
 
 !=======================================================================
 ! [4] subsurface runoff and the corrections
 !=======================================================================
 
-      CALL groundwater (nl_soil,deltim,pondmx,&
-                        eff_porosity,icefrac,dz_soisno(1:),zi_soisno(0:),&
-                        wice_soisno(1:),wliq_soisno(1:),&
-                        porsl,psi0,bsw,zwt,wa,&
-                        qcharge,rsubst,errw_rsub)
+      !CALL groundwater (nl_soil,deltim,pondmx,&
+      !                  eff_porosity,icefrac,dz_soisno(1:),zi_soisno(0:),&
+      !                  wice_soisno(1:),wliq_soisno(1:),&
+      !                  porsl,psi0,bsw,zwt,wa,&
+      !                  qcharge,rsubst,errw_rsub)
 
-      ! total runoff (mm/s)
-      rnof = rsubst + rsur
+      !! total runoff (mm/s)
+      !rnof = rsubst + rsur
 
       ! Renew the ice and liquid mass due to condensation
 IF ((.not.DEF_SPLIT_SOILSNOW) .or. (patchtype==1 .and. DEF_URBAN_RUN)) THEN

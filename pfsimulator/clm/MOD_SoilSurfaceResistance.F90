@@ -43,7 +43,8 @@ CONTAINS
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
                               theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
-                              dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss)
+                              dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss,&
+                              pf_vol_liq)
 
 !=======================================================================
 ! !DESCRIPTION:
@@ -74,6 +75,7 @@ CONTAINS
         forc_rhoair,                 &! density air [kg/m**3]
         hksati      (1:nl_soil),     &! hydraulic conductivity at saturation [mm h2o/s]
         porsl       (1:nl_soil),     &! soil porosity [-]
+        pf_vol_liq  (1:nl_soil),     &
         psi0        (1:nl_soil),     &! saturated soil suction [mm] (NEGATIVE)
 #ifdef Campbell_SOIL_MODEL
         bsw         (1:nl_soil),     &! clapp and hornbereger "b" parameter [-]
@@ -278,6 +280,10 @@ CONTAINS
          ELSE                 !when water content of ths top layer is more than that at F.C.
             rss  = 1._r8
          ENDIF
+
+         rss = 0.5d0*(1.0d0 - cos(((pf_vol_liq(1) - theta_r(1)) / (porsl(1) - theta_r(1)))*3.141d0)) 
+         if (rss < 0.0) rss = 0.00d0
+         if (rss > 1.)  rss = 1.d0
 
       ! Sellers, 1992
       CASE (5)
