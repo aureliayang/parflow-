@@ -390,20 +390,20 @@ if (time == start_time_pf) then !initialization
  
             ! reset node depths (clm%z) based on variable dz multiplier
             do k = 1, nl_soil
-                  l = 1 + i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
+                  l = 1+i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
                   dz_soi(k) = pdz*pf_dz_mult(l) 
 
                if (k == 1) then
-                     z_soi(k)  = 0.5 * pdz * pf_dz_mult(l)
-                     zi_soi(k) = pdz * pf_dz_mult(l) 
+                  z_soi(k)  = 0.5 * pdz * pf_dz_mult(l)
+                  zi_soi(k) = pdz * pf_dz_mult(l) 
                else
-                     total = 0.0
-                     do k1 = 1, k-1
-                        l1     = 1 + i + j_incr*(j) + k_incr*(topo_mask(t,1)-(k1-1))
-                        total  = total + (pdz * pf_dz_mult(l1))
-                     enddo
-                     z_soi(k)  = total + (0.5 * pdz * pf_dz_mult(l))
-                     zi_soi(k) = total + pdz * pf_dz_mult(l)
+                  total = 0.0
+                  do k1 = 1, k-1
+                     l1     = 1+i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k1-1))
+                     total  = total + (pdz * pf_dz_mult(l1))
+                  enddo
+                  z_soi(k)  = total + (0.5 * pdz * pf_dz_mult(l))
+                  zi_soi(k) = total + pdz * pf_dz_mult(l)
                endif
      
             enddo
@@ -565,7 +565,7 @@ if (time == start_time_pf) then !initialization
             j = planar_mask(2,t)
             do k = 1, nl_soil ! loop over clm soil layers (1->nlevsoi)
                ! convert clm space to parflow space, note that PF space has ghost nodes
-               l = 1 + i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
+               l = 1+i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
                porsl(k,t)   = porosity(l)
                dksatu(k,t)  = k_solids(k,t)*0.57**porsl(k,t)
                theta_r(k,t) = porsl(k,t)*res_satpf
