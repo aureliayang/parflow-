@@ -120,9 +120,9 @@ mss_dst1(:,i)   !albland
 mss_dst2(:,i)   !albland
 mss_dst3(:,i)   !albland
 mss_dst4(:,i)   !albland
-trad(i)         !t_grnd
-tref(i)         !t_grnd
-qref(i)         !t_grnd                    
+trad(i)         !t_grnd, out
+tref(i)         !t_grnd, out
+qref(i)         !t_grnd, out                   
 rst(i)     !out, canopy stomatal resistance   
 emis(i)    !emis  = 1.0 
 z0m(i)     !z0m    = htop * z0mr(patchclass(ipatch))
@@ -195,8 +195,8 @@ forc_t(i)       !temperature
 forc_q(i)       !pfb readin
 forc_prc(i)     !prcp/3
 forc_prl(i)     !prcp*2/3            
-forc_rain(i),    
-forc_snow(i),    
+forc_rain(i),   !out
+forc_snow(i),   !out
 forc_psrf(i)    !pfb readin    
 forc_pbot(i),    &         
 forc_sols(i),    
@@ -263,8 +263,8 @@ vic_Dsmax    (:)
 vic_Ds       (:)
 vic_Ws       (:)
 vic_c        (:)
-dbedrock       (:)  !depth to bedrock
-ibedrock       (:)  !bedrock level
+dbedrock       (:)  !depth to bedrock, no use
+ibedrock       (:)  !bedrock level, no use
 topoelv (:)  !elevation above sea level [m]
 wetwatmax    !./mkinidata/MOD_Initialize.F90:429:      wetwatmax = 200.0 !maximum wetland water (mm)
 svf_patches (:)                                           ! sky view factor
