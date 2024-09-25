@@ -1,10 +1,10 @@
 ###========================invariants===============================
-patchclass(i),   
-patchtype(i),     
-patchlonr(i),    
-patchlatr(i),    
-lakedepth(i),    ##
-dz_lake(1:,i),   ##
+patchclass(i)   
+patchtype(i)     
+patchlonr(i)    
+patchlatr(i)    
+lakedepth(i)     ##
+dz_lake(1:,i)    ##
 soil_s_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl ##soil_color_refl
 soil_d_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_s_n_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
@@ -57,130 +57,134 @@ dz_sno(maxsnl+1:,i)
 t_soisno(maxsnl+1:,i)            
 wliq_soisno(maxsnl+1:,i)               
 wice_soisno(maxsnl+1:,i)  
-h2osoi(1:,i) 
-smp(1:,i)          
-hk(1:,i)       
-rootr(1:,i)
-rootflux(1:,i)
-vegwp(1:,i)     
-gs0sun(i)       
-gs0sha(i)         
+h2osoi(1:,i) !out
+smp(1:,i)    !soil matrix potential, not used      
+hk(1:,i)     !soil hydraulic conductance, not used
+rootr(1:,i)     !out
+rootflux(1:,i)  !out
+vegwp(1:,i)   !if use plant hydraulic, simple value  
+gs0sun(i)     !if use plant hydraulic, simple value  
+gs0sha(i)     !if use plant hydraulic, simple value     
 lai_old(i)      
 o3uptakesun(i)  
 o3uptakesha(i)   
-rstfacsun_out(i)
-rstfacsha_out(i)
-gssun_out(i)    
-gssha_out(i)     
+rstfacsun_out(i)  !out
+rstfacsha_out(i)  !out
+gssun_out(i)      !out 
+gssha_out(i)      !out
 t_grnd(i)   
-assimsun_out(i) 
-etrsun_out(i)   
-assimsha_out(i) 
-etrsha_out(i)     
-tleaf(i)        
-ldew(i)
-ldew_rain(i)
-ldew_snow(i)           
-sag(i)          
-scv(i)          
-snowdp(i)       
-fveg(i)                    
-fsno(i)         
+assimsun_out(i)   !out
+etrsun_out(i)     !out
+assimsha_out(i)   !out
+etrsha_out(i)     !out
+tleaf(i)          !same as t_grnd   
+ldew(i)           !zero
+ldew_rain(i)      !zero
+ldew_snow(i)      !zero        
+sag(i)            !zero     
+scv(i)            !readin or zero
+snowdp(i)         !readin or zero
+fveg(i)           !empirical        
+fsno(i)           !snowfraction
 sigf(i)         
-green(i)    
-lai(i)           
-laisun(i)       
-laisha(i)           
+green(i)          !empirical
+lai(i)            
+laisun(i)         !out
+laisha(i)         !out 
 sai(i)  
-coszen(i)
-alb(1:,1:,i)    
-ssun(1:,1:,i)   
-ssha(1:,1:,i)               
-ssoi(:,:,i)     
-ssno(:,:,i)     
-thermk(i)       
-extkb(i)                  
-extkd(i)  
-zwt(i)    
-wa(i)     
-wetwat(i)           
-wat(i)                 
-wdsrf(i)    
-rss(i)            
+coszen(i)         !orb_coszen
+alb(1:,1:,i)      !albland
+ssun(1:,1:,i)     !albland
+ssha(1:,1:,i)     !albland        
+ssoi(:,:,i)       !albland
+ssno(:,:,i)       !albland
+thermk(i)         !albland 
+extkb(i)          !albland          
+extkd(i)          !albland 
+zwt(i)            !no use
+wa(i)             !no use
+wetwat(i)         !no use  
+wat(i)            !no use    
+wdsrf(i)          !no use
+rss(i)            !out      
 t_lake(1:,i)    
 lake_icefrac(1:,i)               
-savedtke1(i)            
-snw_rds(:,i)    
-ssno_lyr(:,:,:,i)                                             
-mss_bcpho(:,i)  
-mss_bcphi(:,i)  
-mss_ocpho(:,i)  
-mss_ocphi(:,i)              
-mss_dst1(:,i)   
-mss_dst2(:,i)   
-mss_dst3(:,i)   
-mss_dst4(:,i)   
-trad(i)         
-tref(i)         
-qref(i)                              
+savedtke1(i)      !tkwat  = 0.6     
+snw_rds(:,i)      !simple value 
+ssno_lyr(:,:,:,i)    !albland                                         
+mss_bcpho(:,i)    !albland
+mss_bcphi(:,i)   !albland
+mss_ocpho(:,i)   !albland
+mss_ocphi(:,i)  !albland         
+mss_dst1(:,i)   !albland
+mss_dst2(:,i)   !albland
+mss_dst3(:,i)   !albland
+mss_dst4(:,i)   !albland
+trad(i)         !t_grnd
+tref(i)         !t_grnd
+qref(i)         !t_grnd                    
 rst(i)     !out, canopy stomatal resistance   
-emis(i)    ! emis  = 1.0 
-z0m(i)  
-zol(i)          
-rib(i)           
-ustar(i)        
-qstar(i)        
-tstar(i)                                     
-fm(i)           
-fh(i)           
-fq(i)   
+emis(i)    !emis  = 1.0 
+z0m(i)     !z0m    = htop * z0mr(patchclass(ipatch))
+zol(i)     !zol   = -1.0 
+rib(i)     !rib   = -0.1     
+ustar(i)   !ustar = 0.25   
+qstar(i)   !qstar = 0.001    
+tstar(i)   !tstar = -1.5                                  
+fm(i)      !fm    = alog(30.)     
+fh(i)      !fh    = alog(30.)    
+fq(i)      !fq    = alog(30.)
 
 ###========================1D_Flux=======================================
-taux(i),         
-tauy(i),         
-fsena(i),      
-lfevpa(i),     
-fevpa(i),        &                 
-fsenl(i),        
-fevpl(i),        
-etr(i),          &            
-fseng(i),        
-fevpg(i),    
-fgrnd(i),        &  
-sabvsun(i),      &            
-sabvsha(i),      
-sabg(i),         
-sr(i),           
-solvd(i),        &           
-solvi(i),        
-solnd(i),        
-solni(i),        
-srvd(i),         &            
-srvi(i),         
-srnd(i),         
-srni(i),         
-solvdln(i),      &             
-solviln(i),      
-solndln(i),      
-solniln(i),      
-srvdln(i),       &            
-srviln(i),       
-srndln(i),       
-srniln(i), 
-olrg(i),     
-xerr(i),         
-zerr(i),                                           &      
-rsur(i),         
-rsur_se(i),      
-rsur_ie(i),       
-rnof(i),         &           
-qintr(i),        
-qinfl(i),        
-qdrip(i),                         &            
-assim(i),        
-respc(i),      
-qcharge(i),      &  
-oro(i),       //redeclared in driver, not the same as that (oroflag) in flux
+taux(i)         
+tauy(i)         
+fsena(i)     
+lfevpa(i)    
+fevpa(i)                        
+fsenl(i)       
+fevpl(i)       
+etr(i)                     
+fseng(i)        
+fevpg(i)   
+fgrnd(i)  
+olrg(i)     
+xerr(i)        
+zerr(i) 
+
+sabvsun(i)                  
+sabvsha(i)      
+sabg(i)         
+sr(i)           
+solvd(i)                   
+solvi(i)        
+solnd(i)       
+solni(i)        
+srvd(i)                     
+srvi(i)         
+srnd(i)         
+srni(i)        
+solvdln(i)                   
+solviln(i)     
+solndln(i)     
+solniln(i)      
+srvdln(i)                   
+srviln(i)       
+srndln(i)      
+srniln(i)
+                                              
+rsur(i)        
+rsur_se(i)      
+rsur_ie(i)       
+rnof(i)                    
+qintr(i)        
+qinfl(i)        
+qdrip(i)   
+qcharge(i) 
+
+assim(i)        
+respc(i)      
+       
+oro(i)       //redeclared in driver, not the same as that (oroflag) in flux
 
 ###========================1D_Forcing=============================
 forc_pco2m(i)   !constant in old clm, currently, set as constant temporarily 
@@ -188,12 +192,12 @@ forc_po2m(i)    !constant in old clm, currently, set as constant temporarily
 forc_us(i)      !wind, pfb readin     
 forc_vs(i)      !wind
 forc_t(i)       !temperature   
-forc_q(i),      !pfb readin
-forc_prc(i),    !prcp/3
-forc_prl(i),    !prcp*2/3            
+forc_q(i)       !pfb readin
+forc_prc(i)     !prcp/3
+forc_prl(i)     !prcp*2/3            
 forc_rain(i),    
 forc_snow(i),    
-forc_psrf(i),    
+forc_psrf(i)    !pfb readin    
 forc_pbot(i),    &         
 forc_sols(i),    
 forc_soll(i),    
@@ -277,7 +281,7 @@ o3coefg_sun   (:) ! Ozone stress factor for stomata on sunlit leaf
 o3coefg_sha   (:) ! Ozone stress factor for stomata on shaded leaf
 tlai          (:)
 tsai          (:)
-displa        (:)
+displa        (:)  !I guess no use
 
 #allocate_1D_Fluxes
 rnet   (:)
