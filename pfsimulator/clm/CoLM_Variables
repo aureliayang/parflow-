@@ -292,3 +292,50 @@ rsub   (:)
 ! flood variables [mm, m2/m2, mm/s, mm/s]
 flddepth_cama(i),fldfrc_cama(i),fevpg_fld(i),  finfg_fld(i),        &
 #endif
+
+#MOD_Aerosol.F90
+remove two subroutines: AerosolDepInit, AerosolDepReadin
+#MOD_CanopyLayerProfile.F90
+r8 precision
+#MOD_Glacier.F90
+r8 precision
+#MOD_Hydro_SoilWater.F90
+r8 precision
+#MOD_LeafInterception.F90
+line length
+#MOD_LeafTemperature.F90
+r8 precision
+#MOD_LeafTemperaturePC.F90
+r8 precision
+#MOD_MonthlyinSituCO2MaunaLoa.F90
+line length
+#MOD_Ozone.F90
+remove two subroutines
+#MOD_PhaseChange.F90
+r8
+#MOD_PlantHydraulic.F90
+precision issue
+#MOD_SnowSnicar.F90
+remove two subroutines
+
+#MOD_SoilSnowHydrology.F90
+a lot
+#MOD_SoilSurfaceResistance.F90
+beta soil
+#MOD_Thermal.F90
+a lot
+#MOD_Eroot.F90
+water stress
+
+I think wfc is only used in beta soil as local which is recaculated in the subroutine. 
+Though it was readin through TimeInvariants, maybe used in BGC.
+you should check the upstream and downstream of rss and rootr
+
+#MOD_Vars_Global.F90
+nl_soil
+#MOD_TimeManager.F90
+some
+#MOD_Vars_1DFluxes.F90
+add qseva
+#MOD_Vars_1DForcing.F90
+numpatch

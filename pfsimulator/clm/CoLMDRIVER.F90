@@ -61,12 +61,12 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
       DO i = 1, numpatch
 
          ! Apply forcing mask
-         IF (DEF_forcing%has_missing_value) THEN
-            !IF (.not. forcmask_pch(i)) CYCLE
-         ENDIF
+         !IF (DEF_forcing%has_missing_value) THEN
+         !   IF (.not. forcmask_pch(i)) CYCLE
+         !ENDIF
 
          ! Apply patch mask
-         IF (.not. patchmask(i)) CYCLE
+         !IF (.not. patchmask(i)) CYCLE
 
          m = patchclass(i)
 
@@ -74,6 +74,7 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
          ! deltim need to be within 1800s for waterbody with snow in order to avoid large
          ! temperature fluctuations due to rapid snow heat conductance
          IF(m == WATERBODY .and. snowdp(i) > 0.0) steps_in_one_deltim = ceiling(deltim/1800.)
+         !I don't think this could happen in pf
          deltim_phy = deltim/steps_in_one_deltim
 
          ! For non urban patch or slab urban

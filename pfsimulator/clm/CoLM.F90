@@ -451,7 +451,7 @@ if (time == start_time_pf) then !initialization
       !CALL adj2end(edate)
       !CALL adj2end(pdate)
 
-      ststamp = sdate
+      !ststamp = sdate
       !etstamp = edate
       !ptstamp = pdate  !e and p are not used anymore
 
