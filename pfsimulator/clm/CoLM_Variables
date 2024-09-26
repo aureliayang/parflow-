@@ -1,10 +1,10 @@
-###========================invariants===============================
+###========================Invariants===============================
 patchclass(i)   
 patchtype(i)     
 patchlonr(i)    
 patchlatr(i)    
-lakedepth(i)     ##
-dz_lake(1:,i)    ##
+lakedepth(i)     ##not used in pf
+dz_lake(1:,i)    ##not used in pf
 soil_s_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl ##soil_color_refl
 soil_d_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_s_n_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
@@ -18,8 +18,8 @@ wf_sand(1:,i)    !soil, nc readin
 porsl(1:,i)      !soil, nc readin 
 psi0(1:,i)       !soil, nc readin              
 bsw(1:,i)        !soil, nc readin 
-theta_r(1:,i)    !soil, nc readin                                    &   
-BVIC(1,i)        ##                                                 &
+theta_r(1:,i)    !soil, nc readin                                       
+BVIC(1,i)        ##                                                 
 alpha_vgm(1:,i)  !soil, nc readin 
 n_vgm(1:,i)      !soil, nc readin 
 L_vgm(1:,i)      !soil, nc readin                      
@@ -65,9 +65,9 @@ rootflux(1:,i)  !out
 vegwp(1:,i)   !if use plant hydraulic, simple value  
 gs0sun(i)     !if use plant hydraulic, simple value  
 gs0sha(i)     !if use plant hydraulic, simple value     
-lai_old(i)      
-o3uptakesun(i)  
-o3uptakesha(i)   
+lai_old(i)    !no use, if no ozone
+o3uptakesun(i)  !no use, if no ozone
+o3uptakesha(i)   !no use, if no ozone
 rstfacsun_out(i)  !out
 rstfacsha_out(i)  !out
 gssun_out(i)      !out 
@@ -84,14 +84,14 @@ ldew_snow(i)      !zero
 sag(i)            !zero     
 scv(i)            !readin or zero
 snowdp(i)         !readin or zero
-fveg(i)           !empirical        
+fveg(i)           !empirical or readin       
 fsno(i)           !snowfraction
-sigf(i)         
+sigf(i)           !snowfraction
 green(i)          !empirical
-lai(i)            
+lai(i)            !lai = tlai(ipatch)    tsai readin
 laisun(i)         !out
 laisha(i)         !out 
-sai(i)  
+sai(i)            !sai = tsai(ipatch) * sigf  tsai readin
 coszen(i)         !orb_coszen
 alb(1:,1:,i)      !albland
 ssun(1:,1:,i)     !albland
@@ -107,22 +107,22 @@ wetwat(i)         !no use
 wat(i)            !no use    
 wdsrf(i)          !no use
 rss(i)            !out      
-t_lake(1:,i)    
-lake_icefrac(1:,i)               
+t_lake(1:,i)      !no use in pf
+lake_icefrac(1:,i)  !no use in pf             
 savedtke1(i)      !tkwat  = 0.6     
 snw_rds(:,i)      !simple value 
-ssno_lyr(:,:,:,i)    !albland                                         
+ssno_lyr(:,:,:,i) !albland                                         
 mss_bcpho(:,i)    !albland
-mss_bcphi(:,i)   !albland
-mss_ocpho(:,i)   !albland
-mss_ocphi(:,i)  !albland         
-mss_dst1(:,i)   !albland
-mss_dst2(:,i)   !albland
-mss_dst3(:,i)   !albland
-mss_dst4(:,i)   !albland
-trad(i)         !t_grnd, out
-tref(i)         !t_grnd, out
-qref(i)         !t_grnd, out                   
+mss_bcphi(:,i)    !albland
+mss_ocpho(:,i)    !albland
+mss_ocphi(:,i)    !albland         
+mss_dst1(:,i)     !albland
+mss_dst2(:,i)     !albland
+mss_dst3(:,i)     !albland
+mss_dst4(:,i)     !albland
+trad(i)           !t_grnd, out
+tref(i)           !t_grnd, out
+qref(i)           !t_grnd, out                   
 rst(i)     !out, canopy stomatal resistance   
 emis(i)    !emis  = 1.0 
 z0m(i)     !z0m    = htop * z0mr(patchclass(ipatch))
@@ -195,53 +195,53 @@ forc_t(i)       !temperature
 forc_q(i)       !pfb readin
 forc_prc(i)     !prcp/3
 forc_prl(i)     !prcp*2/3            
-forc_rain(i),   !out
-forc_snow(i),   !out
+forc_rain(i)    !out
+forc_snow(i)    !out
 forc_psrf(i)    !pfb readin    
-forc_pbot(i),    &         
-forc_sols(i),    
-forc_soll(i),    
-forc_solsd(i),   
-forc_solld(i),   &          
-forc_frl(i),     
-forc_hgt_u(i),   
-forc_hgt_t(i),   
-forc_hgt_q(i),   &              
-forc_rhoair(i),                                                     &             
-forc_hpbl(i),                                                       &           
-forc_aerdep(:,i),                                                   &
-forc_ozone(i),   &
+forc_pbot(i)    !no use I guess        
+forc_sols(i)    
+forc_soll(i)    
+forc_solsd(i)   
+forc_solld(i)         
+forc_frl(i)     !pfb readin
+forc_hgt_u(i)   !constant
+forc_hgt_t(i)   !constant
+forc_hgt_q(i)   !constant              
+forc_rhoair(i)  !calculated                                                                
+forc_hpbl(i)    !eddy                                                             
+forc_aerdep(:,i) !aerosol
+forc_ozone(i)    !ozone
 
 ###========================Const_LC=====================================
-rootfr(1:,m),    
-sqrtdi(m),                        &             
-effcon(m),       
-vmax25(m),                                         &             
-kmax_sun(m),     
-kmax_sha(m),     
-kmax_xyl(m),     
-kmax_root(m),    &            
-psi50_sun(m),    
-psi50_sha(m),    
-psi50_xyl(m),    
-psi50_root(m),   &             
-ck(m),                                                              &            
-slti(m),         
-hlti(m),                                           &             
-shti(m),         
-hhti(m),    
-trda(m),         
-trdm(m),         &             
-trop(m),         
-g1(m),           
-g0(m),
-gradm(m),  
-binter(m),       &          
-extkn(m),        
-chil(m),   
-lambda(m),      
-rho(1:,1:,m),    
-tau(1:,1:,m),    &
+rootfr(1:,m)    
+sqrtdi(m)                                     
+effcon(m)       
+vmax25(m)                                                      
+kmax_sun(m)     
+kmax_sha(m)     
+kmax_xyl(m)     
+kmax_root(m)                
+psi50_sun(m)    
+psi50_sha(m)    
+psi50_xyl(m)    
+psi50_root(m)                
+ck(m)                                                                          
+slti(m)         
+hlti(m)                                                        
+shti(m)         
+hhti(m)    
+trda(m)         
+trdm(m)                      
+trop(m)         
+g1(m)           
+g0(m)
+gradm(m)  
+binter(m)                
+extkn(m)        
+chil(m)   
+lambda(m)      
+rho(1:,1:,m)    
+tau(1:,1:,m)    
     
 
 237 variables, 6 excluded
@@ -251,7 +251,7 @@ idate,
 doalb,           
 dolai,           
 dosst,  
-deltim_phy,      &   
+deltim_phy,         
 
 #TimeInvariants
 patchmask      (:)

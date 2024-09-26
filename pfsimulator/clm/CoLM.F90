@@ -116,10 +116,10 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    IMPLICIT NONE
 
    character(len=256) :: nlfile
-   character(len=256) :: casename
+   !character(len=256) :: casename
    character(len=256) :: dir_landdata
-   character(len=256) :: dir_forcing
-   character(len=256) :: dir_hist
+   !character(len=256) :: dir_forcing
+   !character(len=256) :: dir_hist
    character(len=256) :: dir_restart
    character(len=256) :: fsrfdata
 
@@ -293,11 +293,11 @@ if (time == start_time_pf) then !initialization
       !   CALL system_clock (start_time)
       !ENDIF
 
-      casename     = DEF_CASE_NAME
-      dir_landdata = DEF_dir_landdata
-      dir_forcing  = DEF_dir_forcing
-      dir_hist     = DEF_dir_history
-      dir_restart  = DEF_dir_restart
+      !casename     = DEF_CASE_NAME
+      !dir_landdata = DEF_dir_landdata
+      !dir_forcing  = DEF_dir_forcing
+      !dir_hist     = DEF_dir_history
+      !dir_restart  = DEF_dir_restart
 
 #ifdef SinglePoint
       fsrfdata = trim(dir_landdata) // '/srfdata.nc'
@@ -308,32 +308,32 @@ if (time == start_time_pf) then !initialization
 #endif
 #endif
 
-      deltim    = DEF_simulation_time%timestep
+      !deltim    = DEF_simulation_time%timestep
       deltim    = dt*3600.d0
       greenwich = DEF_simulation_time%greenwich
       s_year    = DEF_simulation_time%start_year
       s_month   = DEF_simulation_time%start_month
       s_day     = DEF_simulation_time%start_day
       s_seconds = DEF_simulation_time%start_sec
-      e_year    = DEF_simulation_time%end_year
-      e_month   = DEF_simulation_time%end_month
-      e_day     = DEF_simulation_time%end_day
-      e_seconds = DEF_simulation_time%end_sec
-      p_year    = DEF_simulation_time%spinup_year
-      p_month   = DEF_simulation_time%spinup_month
-      p_day     = DEF_simulation_time%spinup_day
-      p_seconds = DEF_simulation_time%spinup_sec
+      !e_year    = DEF_simulation_time%end_year
+      !e_month   = DEF_simulation_time%end_month
+      !e_day     = DEF_simulation_time%end_day
+      !e_seconds = DEF_simulation_time%end_sec
+      !p_year    = DEF_simulation_time%spinup_year
+      !p_month   = DEF_simulation_time%spinup_month
+      !p_day     = DEF_simulation_time%spinup_day
+      !p_seconds = DEF_simulation_time%spinup_sec
 
-      spinup_repeat = DEF_simulation_time%spinup_repeat
+      !spinup_repeat = DEF_simulation_time%spinup_repeat
 
       CALL initimetype(greenwich)
       CALL monthday2julian(s_year,s_month,s_day,s_julian)
-      CALL monthday2julian(e_year,e_month,e_day,e_julian)
-      CALL monthday2julian(p_year,p_month,p_day,p_julian)
+      !CALL monthday2julian(e_year,e_month,e_day,e_julian)
+      !CALL monthday2julian(p_year,p_month,p_day,p_julian)
 
       sdate(1) = s_year; sdate(2) = s_julian; sdate(3) = s_seconds
-      edate(1) = e_year; edate(2) = e_julian; edate(3) = e_seconds
-      pdate(1) = p_year; pdate(2) = p_julian; pdate(3) = p_seconds
+      !edate(1) = e_year; edate(2) = e_julian; edate(3) = e_seconds
+      !pdate(1) = p_year; pdate(2) = p_julian; pdate(3) = p_seconds
 
       !@CY: build numpatch and planar_mask
       allocate( counter(nx,ny) )
@@ -448,12 +448,12 @@ if (time == start_time_pf) then !initialization
 #endif
 
       CALL adj2end(sdate)
-      CALL adj2end(edate)
-      CALL adj2end(pdate)
+      !CALL adj2end(edate)
+      !CALL adj2end(pdate)
 
       ststamp = sdate
-      etstamp = edate
-      ptstamp = pdate
+      !etstamp = edate
+      !ptstamp = pdate  !e and p are not used anymore
 
       ! date in beginning style
       jdate = sdate
@@ -536,7 +536,7 @@ if (time == start_time_pf) then !initialization
 #endif
 
       idate   = sdate
-      itstamp = ststamp
+      !itstamp = ststamp
 
       do t = 1, numpatch  
 
@@ -581,7 +581,7 @@ endif
       ! begin time stepping loop
       ! ======================================================================
 
-      istep   = istep_pf
+      istep   = istep_pf !maybe only for output
 
 
       !TIMELOOP : DO WHILE (itstamp < etstamp)
@@ -628,7 +628,7 @@ endif
          ! Calendar for NEXT time step
          ! ----------------------------------------------------------------------
          CALL TICKTIME (deltim,idate)
-         itstamp = itstamp + int(deltim)
+         !itstamp = itstamp + int(deltim)
          jdate = idate
          CALL adj2begin(jdate)
 
@@ -698,9 +698,9 @@ endif
                               idate,greenwich)
 
             CALL allocate_1D_Forcing (numpatch)
-            CALL forcing_init (dir_forcing, deltim, itstamp, jdate(1))
+            !CALL forcing_init (dir_forcing, deltim, itstamp, jdate(1))
             !CALL deallocate_acc_fluxes
-            CALL hist_init (dir_hist)
+            !CALL hist_init (dir_hist)
             CALL allocate_1D_Fluxes (numpatch)
          ENDIF
 #endif
@@ -733,7 +733,8 @@ endif
          ENDIF
 
          IF (DEF_LAI_MONTHLY) THEN
-            IF ((itstamp < etstamp) .and. (month /= month_p)) THEN
+            !IF ((itstamp < etstamp) .and. (month /= month_p)) THEN
+            IF (month /= month_p) THEN
                !CALL LAI_readin (lai_year, month, dir_landdata)
 #ifdef URBAN_MODEL
                CALL UrbanLAI_readin(lai_year, month, dir_landdata)
@@ -742,7 +743,8 @@ endif
          ELSE
             ! Update every 8 days (time interval of the MODIS LAI data)
             Julian_8day = int(calendarday(jdate)-1)/8*8 + 1
-            IF ((itstamp < etstamp) .and. (Julian_8day /= Julian_8day_p)) THEN
+            !IF ((itstamp < etstamp) .and. (Julian_8day /= Julian_8day_p)) THEN
+            IF (Julian_8day /= Julian_8day_p) THEN
                !CALL LAI_readin (jdate(1), Julian_8day, dir_landdata)
                !! 06/2023, yuan: or depend on DEF_LAI_CHANGE_YEARLY nanemlist
                !!CALL LAI_readin (lai_year, Julian_8day, dir_landdata)
@@ -750,18 +752,18 @@ endif
          ENDIF
 #endif
 
-         IF (save_to_restart (idate, deltim, itstamp, ptstamp)) THEN
-#ifdef LULCC
-            CALL WRITE_TimeVariables (jdate, jdate(1), casename, dir_restart)
-#else
-            !CALL WRITE_TimeVariables (jdate, lc_year,  casename, dir_restart)
-#endif
-#if(defined CaMa_Flood)
-            IF (p_is_master) THEN
-               CALL colm_cama_write_restart (jdate, lc_year,  casename, dir_restart)
-            ENDIF
-#endif
-         ENDIF
+!         IF (save_to_restart (idate, deltim, itstamp, ptstamp)) THEN
+!#ifdef LULCC
+!            CALL WRITE_TimeVariables (jdate, jdate(1), casename, dir_restart)
+!#else
+!            !CALL WRITE_TimeVariables (jdate, lc_year,  casename, dir_restart)
+!#endif
+!#if(defined CaMa_Flood)
+!            IF (p_is_master) THEN
+!               CALL colm_cama_write_restart (jdate, lc_year,  casename, dir_restart)
+!            ENDIF
+!#endif
+!         ENDIF
 #ifdef RangeCheck
          CALL check_TimeVariables ()
 #endif
@@ -886,15 +888,15 @@ endif
       CALL final_DataAssimilation ()
 #endif
 
-      IF (p_is_master) THEN
-         write(*,'(/,A25)') 'CoLM Execution Completed.'
-      ENDIF
+      !IF (p_is_master) THEN
+      !   write(*,'(/,A25)') 'CoLM Execution Completed.'
+      !ENDIF
 
-      99  format(/, 'TIMESTEP = ', I0, ' | DATE = ', I4.4, '-', I2.2, '-', I2.2, '-', I5.5, ' Spinup (', I0, ' repeat left)')
+      !99  format(/, 'TIMESTEP = ', I0, ' | DATE = ', I4.4, '-', I2.2, '-', I2.2, '-', I5.5, ' Spinup (', I0, ' repeat left)')
       100 format(/, 'TIMESTEP = ', I0, ' | DATE = ', I4.4, '-', I2.2, '-', I2.2, '-', I5.5)
-      101 format(/, 'Time elapsed : ', I4, ' hours', I3, ' minutes', I3, ' seconds.')
-      102 format(/, 'Time elapsed : ', I3, ' minutes', I3, ' seconds.')
-      103 format(/, 'Time elapsed : ', I3, ' seconds.')
+      !101 format(/, 'Time elapsed : ', I4, ' hours', I3, ' minutes', I3, ' seconds.')
+      !102 format(/, 'Time elapsed : ', I3, ' minutes', I3, ' seconds.')
+      !103 format(/, 'Time elapsed : ', I3, ' seconds.')
 
 #ifdef USEMPI
       !ENDIF
