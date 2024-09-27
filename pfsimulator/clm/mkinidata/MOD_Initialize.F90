@@ -88,9 +88,11 @@ CONTAINS
    character(len=*), intent(in) :: casename      ! case name
    character(len=*), intent(in) :: dir_landdata
    character(len=*), intent(in) :: dir_restart
-   integer, intent(inout) :: idate(3)   ! year, julian day, seconds of the starting time
+   !this three could be passed without values as we don't use them currently
+   integer, intent(in)    :: idate(3)   ! year, julian day, seconds of the starting time
    integer, intent(in)    :: lc_year    ! year, land cover year
    logical, intent(in)    :: greenwich  ! true: greenwich time, false: local time
+   !@CY: no use greenwich
    logical, optional, intent(in) :: lulcc_call   ! whether it is a lulcc CALL
 
    ! ------------------------ local variables -----------------------------
@@ -262,7 +264,7 @@ CONTAINS
          ENDDO
 
          !CALL landpatch%get_lonlat_radian (patchlonr, patchlatr)
-         !@cy: you may need to read in by your self
+         !@cy: you may need to read in by your self, lat and lon pfb readin
 
 #if (defined LULC_IGBP_PFT || defined LULC_IGBP_PC)
          IF (numpft > 0) pftclass = landpft%settyp
@@ -635,11 +637,11 @@ CONTAINS
 
       !CALL initimetype(greenwich)
 
-      IF (p_is_master) THEN
-         IF(.not. greenwich)THEN
-            write(*,*) char(27)//"[1;31m"//"Notice: greenwich false, local time is used."//char(27)//"[0m"
-         ENDIF
-      ENDIF
+      !IF (p_is_master) THEN
+      !   IF(.not. greenwich)THEN
+      !      write(*,*) char(27)//"[1;31m"//"Notice: greenwich false, local time is used."//char(27)//"[0m"
+      !   ENDIF
+      !ENDIF
 
 
 ! ................................

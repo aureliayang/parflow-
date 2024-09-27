@@ -1,6 +1,6 @@
 #include <define.h>
 
-subroutine CoLMINI(numpatch)
+subroutine CoLMINI(idate, numpatch)
 
 ! ======================================================================
 ! Initialization of Land Characteristic Parameters and Initial State Variables
@@ -63,7 +63,7 @@ subroutine CoLMINI(numpatch)
    integer  :: s_day       ! starting date for run in day
    integer  :: s_julian    ! starting date for run in julian day
    integer  :: s_seconds   ! starting time of day for run in seconds
-   integer  :: idate(3)    ! starting date
+   integer, intent(in) :: idate(3)    ! starting date
    integer  :: lc_year     ! land cover year
    logical  :: greenwich   ! true: greenwich time, false: local time
 
@@ -79,17 +79,17 @@ subroutine CoLMINI(numpatch)
       ENDIF
 
       ! ----------------------------------------------------------------------
-      CALL getarg (1, nlfile)
-      CALL read_namelist (nlfile)
+      !CALL getarg (1, nlfile)
+      !CALL read_namelist (nlfile)
 
-      casename     = DEF_CASE_NAME
-      dir_landdata = DEF_dir_landdata
-      dir_restart  = DEF_dir_restart
-      greenwich    = DEF_simulation_time%greenwich
-      s_year       = DEF_simulation_time%start_year
-      s_month      = DEF_simulation_time%start_month
-      s_day        = DEF_simulation_time%start_day
-      s_seconds    = DEF_simulation_time%start_sec
+      !casename     = DEF_CASE_NAME
+      !dir_landdata = DEF_dir_landdata
+      !dir_restart  = DEF_dir_restart
+      !greenwich    = DEF_simulation_time%greenwich
+      !s_year       = DEF_simulation_time%start_year
+      !s_month      = DEF_simulation_time%start_month
+      !s_day        = DEF_simulation_time%start_day
+      !s_seconds    = DEF_simulation_time%start_sec
 
 #ifdef SinglePoint
       fsrfdata = trim(dir_landdata) // '/srfdata.nc'
@@ -100,9 +100,9 @@ subroutine CoLMINI(numpatch)
 #endif
 #endif
 
-      CALL monthday2julian(s_year,s_month,s_day,s_julian)
-      idate(1) = s_year; idate(2) = s_julian; idate(3) = s_seconds
-      CALL adj2begin(idate)
+      !CALL monthday2julian(s_year,s_month,s_day,s_julian)
+      !idate(1) = s_year; idate(2) = s_julian; idate(3) = s_seconds
+      !CALL adj2begin(idate)
 
 #ifdef LULCC
       lc_year = idate(1)
@@ -110,9 +110,9 @@ subroutine CoLMINI(numpatch)
       lc_year = DEF_LC_YEAR
 #endif
 
-      CALL Init_GlobalVars
-      CALL Init_LC_Const
-      CALL Init_PFT_Const
+      !CALL Init_GlobalVars
+      !CALL Init_LC_Const
+      !CALL Init_PFT_Const
 
       !CALL pixel%load_from_file  (dir_landdata)
       !CALL gblock%load_from_file (dir_landdata)
@@ -156,22 +156,22 @@ subroutine CoLMINI(numpatch)
       CALL mpi_barrier (p_comm_glb, p_err)
 #endif
 
-      IF (p_is_master) THEN
-         CALL system_clock (end_time, count_rate = c_per_sec)
-         time_used = (end_time - start_time) / c_per_sec
-         IF (time_used >= 3600) THEN
-            write(*,101) time_used/3600, mod(time_used,3600)/60, mod(time_used,60)
-            101 format (/,'Overall system time used:', I4, ' hours', I3, ' minutes', I3, ' seconds.')
-         ELSEIF (time_used >= 60) THEN
-            write(*,102) time_used/60, mod(time_used,60)
-            102 format (/,'Overall system time used:', I3, ' minutes', I3, ' seconds.')
-         ELSE
-            write(*,103) time_used
-            103 format (/,'Overall system time used:', I3, ' seconds.')
-         ENDIF
+      !IF (p_is_master) THEN
+      !   CALL system_clock (end_time, count_rate = c_per_sec)
+      !   time_used = (end_time - start_time) / c_per_sec
+      !   IF (time_used >= 3600) THEN
+      !      write(*,101) time_used/3600, mod(time_used,3600)/60, mod(time_used,60)
+      !      101 format (/,'Overall system time used:', I4, ' hours', I3, ' minutes', I3, ' seconds.')
+      !   ELSEIF (time_used >= 60) THEN
+      !      write(*,102) time_used/60, mod(time_used,60)
+      !      102 format (/,'Overall system time used:', I3, ' minutes', I3, ' seconds.')
+      !   ELSE
+      !      write(*,103) time_used
+      !      103 format (/,'Overall system time used:', I3, ' seconds.')
+      !   ENDIF
 
-         write(*,*) 'CoLM Initialization Execution Completed'
-      ENDIF
+      !   write(*,*) 'CoLM Initialization Execution Completed'
+      !ENDIF
 
 #ifdef USEMPI
       CALL spmd_exit
