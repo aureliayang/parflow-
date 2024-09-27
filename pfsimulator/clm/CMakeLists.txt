@@ -67,6 +67,9 @@ set (SRC_FILES
   ./coupling/pf_readout.F90
   ./coupling/pf_couple.F90
   ./coupling/pf_getforce.F90
+  ./coupling/drv_g2clm.F90
+  ./coupling/drv_gridmodule.F90
+  ./coupling/drv_readvegtf.F90
   )
 
 include_directories(.)
