@@ -11,7 +11,7 @@ MODULE MOD_Initialize
 CONTAINS
 
    SUBROUTINE initialize (casename, dir_landdata, dir_restart, &
-         idate, lc_year, greenwich, lulcc_call)
+         idate, lc_year, greenwich, numpatch, lulcc_call)
 
 ! ======================================================================
 ! initialization routine for land surface model.
@@ -80,6 +80,7 @@ CONTAINS
    !USE MOD_LakeDepthReadin
    !USE MOD_PercentagesPFTReadin
    !USE MOD_SoilParametersReadin
+   USE MOD_SoilColorRefl
 
    IMPLICIT NONE
 
@@ -225,7 +226,7 @@ CONTAINS
    integer  :: txt_id
    real(r8) :: vic_b_infilt_, vic_Dsmax_, vic_Ds_, vic_Ws_, vic_c_
 
-   integer :: numpatch
+   integer, intent(in) :: numpatch
 
 ! --------------------------------------------------------------------
 ! Allocates memory for CoLM 1d [numpatch] variables
@@ -247,7 +248,7 @@ CONTAINS
 
          DO ipatch = 1, numpatch
 
-            m = patchclass(ipatch)
+            m = patchclass(ipatch)  !@CY: pfb readin
             patchtype(ipatch) = patchtypes(m)
 
             !     ***** patch mask setting *****
@@ -297,7 +298,19 @@ CONTAINS
 ! 1.3 Read in the soil parameters of the patches of the gridcells
 ! ...............................................................
 
-      CALL soil_parameters_readin (dir_landdata, lc_year)
+      !CALL soil_parameters_readin (dir_landdata, lc_year)
+      IF (DEF_SOIL_REFL_SCHEME .eq. 1) THEN
+         IF (p_is_worker) THEN
+            DO ipatch = 1, numpatch
+               !m = landpatch%settyp(ipatch)
+               !patchclass = landpatch%settyp
+               m = patchclass(ipatch)
+               CALL soil_color_refl(m,soil_s_v_alb(ipatch),soil_d_v_alb(ipatch),&
+                  soil_s_n_alb(ipatch),soil_d_n_alb(ipatch))
+            ENDDO
+         ENDIF
+      ENDIF
+      !@CY: albedo
       !IF (p_is_worker) THEN
       !   IF (numpatch > 0) THEN
 
@@ -1047,13 +1060,13 @@ CONTAINS
                   CALL polint(soil_z,soil_t(:,i),nl_soil_ini,z_soi(nsl),t_soisno(nsl,i))
                ENDDO
             ELSE
-               t_soisno(1:,i) = 283.
+               t_soisno(1:,i) = 283.  !@CY: we may not use soilini currently
             ENDIF
          ENDDO
 
          tlai(:)=0.0; tsai(:)=0.0; green(:)=0.0; fveg(:)=0.0
          DO i = 1, numpatch
-            ! Call Ecological Model()
+            ! Call Ecological Model()  !not commented by CY
             ltyp = patchtype(i)
             IF(ltyp > 0) THEN
                CALL lai_empirical(ltyp, nl_soil,rootfr(1:,i), t_soisno(1:,i),tlai(i),tsai(i),fveg(i),green(i))
@@ -1070,19 +1083,19 @@ CONTAINS
          CALL julian2monthday (year, jday, month, mday)
          IF (DEF_LAI_CHANGE_YEARLY) THEN
             ! 08/03/2019, yuan: read global LAI/SAI data
-            CALL LAI_readin (year, month, dir_landdata)
+            !CALL LAI_readin (year, month, dir_landdata)
 #ifdef URBAN_MODEL
             CALL UrbanLAI_readin (year, month, dir_landdata)
 #endif
          ELSE
-            CALL LAI_readin (lc_year, month, dir_landdata)
+            !CALL LAI_readin (lc_year, month, dir_landdata)
 #ifdef URBAN_MODEL
             CALL UrbanLAI_readin (lc_year, month, dir_landdata)
 #endif
          ENDIF
       ELSE
          Julian_8day = int(calendarday(idate)-1)/8*8 + 1
-         CALL LAI_readin (year, Julian_8day, dir_landdata)
+         !CALL LAI_readin (year, Julian_8day, dir_landdata)
       ENDIF
 #ifdef RangeCheck
       CALL check_vector_data ('LAI ', tlai)
@@ -1132,6 +1145,7 @@ CONTAINS
          t_lake      (:,:) = 285.
          lake_icefrac(:,:) = 0.
          savedtke1   (:)   = tkwat
+         !@CY: MOD_Const_Physical.F90:21:  real(r8), parameter :: tkwat  = 0.6
 
       ENDIF
       ! ------------------------------------------
@@ -1375,20 +1389,21 @@ CONTAINS
       CALL mpi_barrier (p_comm_glb, p_err)
 #endif
 
-      IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Vraying Variables')
+      !IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Vraying Variables')
 
 
 ! --------------------------------------------------
 ! Deallocates memory for CoLM 1d [numpatch] variables
 ! --------------------------------------------------
       IF ( .not. present(lulcc_call) ) THEN
-         ! only be called in runing MKINI, LULCC will be executed later
+         !! only be called in runing MKINI, LULCC will be executed later
          !CALL deallocate_TimeInvariants
          !CALL deallocate_TimeVariables
       ENDIF
 
       IF (allocated(z_soisno )) deallocate (z_soisno )
       IF (allocated(dz_soisno)) deallocate (dz_soisno)
+      !@CY: local in CoLMMAIN.F90
 
       IF (allocated(soil_z)) deallocate (soil_z)
       IF (allocated(snow_d)) deallocate (snow_d)

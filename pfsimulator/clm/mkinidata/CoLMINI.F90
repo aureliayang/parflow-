@@ -1,6 +1,6 @@
 #include <define.h>
 
-subroutine CoLMINI()
+subroutine CoLMINI(numpatch)
 
 ! ======================================================================
 ! Initialization of Land Characteristic Parameters and Initial State Variables
@@ -68,6 +68,7 @@ subroutine CoLMINI()
    logical  :: greenwich   ! true: greenwich time, false: local time
 
    integer*8 :: start_time, end_time, c_per_sec, time_used
+   integer, intent(in) :: numpatch
 
 #ifdef USEMPI
       CALL spmd_init ()
@@ -145,7 +146,7 @@ subroutine CoLMINI()
       !CALL SnowOptics_init( DEF_file_snowoptics ) ! SNICAR optical parameters
       !CALL SnowAge_init( DEF_file_snowaging )     ! SNICAR aging   parameters
 
-      CALL initialize (casename, dir_landdata, dir_restart, idate, lc_year, greenwich)
+      CALL initialize (casename, dir_landdata, dir_restart, idate, lc_year, greenwich, numpatch)
 
 #ifdef SinglePoint
       CALL single_srfdata_final ()

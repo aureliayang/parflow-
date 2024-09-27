@@ -575,6 +575,8 @@ if (time == start_time_pf) then !initialization
  
       end do !t
 
+      call CoLMINI(numpatch)
+
 endif
 
       ! ======================================================================

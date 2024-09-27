@@ -4,6 +4,7 @@ set (SRC_FILES
   ./mkinidata/CoLMINI.F90
   ./mkinidata/MOD_Initialize.F90
   ./mkinidata/MOD_IniTimeVariable.F90
+  ./mkinidata/MOD_SoilColorRefl.F90
   ./share/MOD_Precision.F90                           
   ./share/MOD_SPMD_Task.F90                           
   ./share/MOD_Namelist.F90
