@@ -5,7 +5,7 @@ patchlonr(i)
 patchlatr(i)    
 lakedepth(i)     ##not used in pf
 dz_lake(1:,i)    ##not used in pf
-soil_s_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl ##soil_color_refl
+soil_s_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_d_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_s_n_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_d_n_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl   
@@ -18,13 +18,17 @@ wf_sand(1:,i)    !soil, nc readin
 porsl(1:,i)      !soil, nc readin 
 psi0(1:,i)       !soil, nc readin              
 bsw(1:,i)        !soil, nc readin 
-theta_r(1:,i)    !soil, nc readin                                       
+theta_r(1:,i)    !soil, nc readin    
+
 BVIC(1,i)        ##                                                 
 alpha_vgm(1:,i)  !soil, nc readin 
 n_vgm(1:,i)      !soil, nc readin 
 L_vgm(1:,i)      !soil, nc readin                      
-sc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM
-fc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM                                      
+sc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM   
+fc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM      
+!phase change, super cool and snicar scheme
+!wilting point, field capacity, saturation capacity   
+                             
 hksati(1:,i)     !soil, nc readin 
 csol(1:,i)       !soil, nc readin     
 k_solids(1:,i)   !soil, nc readin   
