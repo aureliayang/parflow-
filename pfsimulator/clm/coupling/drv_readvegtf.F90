@@ -45,7 +45,7 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
   !integer  :: nchp          !Number of tiles use for array size
   !real(r8) :: sand          !temporary value of input sand
   !real(r8) :: clay          !temporary value of input clay
-  integer  :: ix,iy,nx,ny, gnx, gny   !global and local grid indicies from ParFlow
+  integer  :: ix, iy, nx, ny, gnx, gny   !global and local grid indicies from ParFlow
   integer  :: rank
   character*100 :: RI
 
