@@ -1,22 +1,22 @@
 
 set (SRC_FILES
   ${CMAKE_CURRENT_BINARY_DIR}/parflow_config.F90
-  MOD_Precision.F90                           
-  MOD_SPMD_Task.F90                           
-  MOD_Namelist.F90                            
+  ./share/MOD_Precision.F90                           
+  ./share/MOD_SPMD_Task.F90                           
+  ./share/MOD_Namelist.F90
+  ./share/MOD_Utils.F90                               
+  ./share/MOD_UserDefFun.F90                          
+  ./share/MOD_TimeManager.F90 
+  ./HYDRO/MOD_Hydro_SoilFunction.F90                  
+  ./HYDRO/MOD_Hydro_SoilWater.F90                            
   MOD_Vars_Global.F90                         
   MOD_Const_Physical.F90                      
-  MOD_Const_LC.F90                            
-  MOD_Utils.F90                               
-  MOD_UserDefFun.F90                          
-  MOD_TimeManager.F90                         
+  MOD_Const_LC.F90                                                    
   MOD_Const_PFT.F90                           
   MOD_Vars_TimeInvariants.F90                 
   MOD_Vars_TimeVariables.F90                  
   MOD_Vars_1DFluxes.F90                       
-  MOD_Vars_1DForcing.F90                      
-  MOD_Hydro_SoilFunction.F90                  
-  MOD_Hydro_SoilWater.F90                     
+  MOD_Vars_1DForcing.F90                                           
   MOD_Eroot.F90                               
   MOD_Qsadv.F90                               
   MOD_LAIEmpirical.F90                        
@@ -30,8 +30,7 @@ set (SRC_FILES
   MOD_SnowSnicar.F90                          
   MOD_Albedo.F90                              
   MOD_SnowFraction.F90                        
-  MOD_MonthlyinSituCO2MaunaLoa.F90            
-  MOD_SoilColorRefl.F90                                           
+  MOD_MonthlyinSituCO2MaunaLoa.F90                                                     
   MOD_Irrigation.F90                          
   MOD_AssimStomataConductance.F90             
   MOD_PlantHydraulic.F90                      
@@ -61,9 +60,9 @@ set (SRC_FILES
   CoLMDRIVER.F90                              
   CoLMMAIN.F90                                
   CoLM.F90
-  pf_readout.F90
-  pf_couple.F90
-  pf_getforce.F90
+  ./coupling/pf_readout.F90
+  ./coupling/pf_couple.F90
+  ./coupling/pf_getforce.F90
   )
 
 include_directories(.)
