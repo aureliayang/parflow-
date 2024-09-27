@@ -76,26 +76,6 @@ of the source directory to make it keep things clean.  For example,
 restarting a failed build with a separate build directory simply
 involves removing the build directory.
 
-#### Building with the ccmake GUI
-
-You can control build options for ParFlow using the ccmake GUI.
-
-```shell
-   mkdir build
-   cd build
-   ccmake ../parflow 
-```
-At a minimum, you will want to set the CMAKE_INSTALL_PREFIX value to the same thing
-as PARFLOW_DIR was set to above.  Other variables should be set as desired.
-
-After setting a variable 'c' will configure `ParFlow.  When you are
-completely done setting configuration options, use 'g' to generate the
-configuration and exit ccmake.
-
-If you are new to CMake, the creators of CMake provide some additional ccmake usage notes here:
-
-https://cmake.org/runningcmake/
-
 #### Building with the cmake command line
 
 CMake may also be configured from the command line using the cmake
