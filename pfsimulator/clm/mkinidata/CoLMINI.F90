@@ -1,6 +1,6 @@
 #include <define.h>
 
-PROGRAM CoLMINI
+subroutine CoLMINI()
 
 ! ======================================================================
 ! Initialization of Land Characteristic Parameters and Initial State Variables
@@ -19,15 +19,15 @@ PROGRAM CoLMINI
    USE MOD_Precision
    USE MOD_Namelist
    USE MOD_SPMD_Task
-   USE MOD_Block
-   USE MOD_Pixel
-   USE MOD_Mesh
-   USE MOD_LandElm
+   !USE MOD_Block
+   !USE MOD_Pixel
+   !USE MOD_Mesh
+   !USE MOD_LandElm
 #ifdef CATCHMENT
    USE MOD_LandHRU
 #endif
-   USE MOD_LandPatch
-   USE MOD_SrfdataRestart
+   !USE MOD_LandPatch
+   !USE MOD_SrfdataRestart
    USE MOD_Vars_Global
    USE MOD_Const_LC
    USE MOD_Const_PFT
@@ -49,7 +49,7 @@ PROGRAM CoLMINI
 #endif
    USE MOD_Initialize
    ! SNICAR
-   USE MOD_SnowSnicar, only: SnowAge_init, SnowOptics_init
+   !USE MOD_SnowSnicar, only: SnowAge_init, SnowOptics_init
    IMPLICIT NONE
 
    ! ----------------local variables ---------------------------------
@@ -93,9 +93,9 @@ PROGRAM CoLMINI
 #ifdef SinglePoint
       fsrfdata = trim(dir_landdata) // '/srfdata.nc'
 #ifndef URBAN_MODEL
-      CALL read_surface_data_single (fsrfdata, mksrfdata=.false.)
+      !CALL read_surface_data_single (fsrfdata, mksrfdata=.false.)
 #else
-      CALL read_urban_surface_data_single (fsrfdata, mksrfdata=.false., mkrun=.true.)
+      !CALL read_urban_surface_data_single (fsrfdata, mksrfdata=.false., mkrun=.true.)
 #endif
 #endif
 
@@ -113,17 +113,17 @@ PROGRAM CoLMINI
       CALL Init_LC_Const
       CALL Init_PFT_Const
 
-      CALL pixel%load_from_file  (dir_landdata)
-      CALL gblock%load_from_file (dir_landdata)
-      CALL mesh_load_from_file   (dir_landdata, lc_year)
+      !CALL pixel%load_from_file  (dir_landdata)
+      !CALL gblock%load_from_file (dir_landdata)
+      !CALL mesh_load_from_file   (dir_landdata, lc_year)
 
-      CALL pixelset_load_from_file (dir_landdata, 'landelm', landelm, numelm, lc_year)
+      !CALL pixelset_load_from_file (dir_landdata, 'landelm', landelm, numelm, lc_year)
 
 #ifdef CATCHMENT
       CALL pixelset_load_from_file (dir_landdata, 'landhru', landhru, numhru, lc_year)
 #endif
 
-      CALL pixelset_load_from_file (dir_landdata, 'landpatch', landpatch, numpatch, lc_year)
+      !CALL pixelset_load_from_file (dir_landdata, 'landpatch', landpatch, numpatch, lc_year)
 
 #if (defined LULC_IGBP_PFT || defined LULC_IGBP_PC)
       CALL pixelset_load_from_file (dir_landdata, 'landpft', landpft, numpft, lc_year)
@@ -141,9 +141,9 @@ PROGRAM CoLMINI
 #endif
 #endif
 
-      ! Read in SNICAR optical and aging parameters
-      CALL SnowOptics_init( DEF_file_snowoptics ) ! SNICAR optical parameters
-      CALL SnowAge_init( DEF_file_snowaging )     ! SNICAR aging   parameters
+      !! Read in SNICAR optical and aging parameters
+      !CALL SnowOptics_init( DEF_file_snowoptics ) ! SNICAR optical parameters
+      !CALL SnowAge_init( DEF_file_snowaging )     ! SNICAR aging   parameters
 
       CALL initialize (casename, dir_landdata, dir_restart, idate, lc_year, greenwich)
 
@@ -176,6 +176,6 @@ PROGRAM CoLMINI
       CALL spmd_exit
 #endif
 
-END PROGRAM CoLMINI
+END subroutine CoLMINI
 ! ----------------------------------------------------------------------
 ! EOP

@@ -25,8 +25,8 @@ CONTAINS
    USE MOD_Vars_Global
    USE MOD_Namelist
    USE MOD_SPMD_Task
-   USE MOD_Pixel
-   USE MOD_LandPatch
+   !USE MOD_Pixel
+   !USE MOD_LandPatch
 #ifdef URBAN_MODEL
    USE MOD_LandUrban
    USE MOD_UrbanIniTimeVariable
@@ -46,18 +46,18 @@ CONTAINS
    USE MOD_Const_PFT
    USE MOD_TimeManager
 
-   USE MOD_Grid
-   USE MOD_DataType
-   USE MOD_NetCDFSerial
-   USE MOD_NetCDFVector
-   USE MOD_NetCDFBlock
+   !USE MOD_Grid
+   !USE MOD_DataType
+   !USE MOD_NetCDFSerial
+   !USE MOD_NetCDFVector
+   !USE MOD_NetCDFBlock
 #ifdef RangeCheck
    USE MOD_RangeCheck
 #endif
 #ifdef vanGenuchten_Mualem_SOIL_MODEL
    USE MOD_Hydro_SoilFunction
 #endif
-   USE MOD_SpatialMapping
+   !USE MOD_SpatialMapping
 #ifdef CatchLateralFlow
    USE MOD_Mesh
    USE MOD_LandHRU
@@ -72,14 +72,14 @@ CONTAINS
    USE MOD_CropReadin
 #endif
    USE MOD_LAIEmpirical
-   USE MOD_LAIReadin
+   !USE MOD_LAIReadin
    USE MOD_OrbCoszen
-   USE MOD_DBedrockReadin
-   USE MOD_HtopReadin
+   !USE MOD_DBedrockReadin
+   !USE MOD_HtopReadin
    USE MOD_IniTimeVariable
-   USE MOD_LakeDepthReadin
-   USE MOD_PercentagesPFTReadin
-   USE MOD_SoilParametersReadin
+   !USE MOD_LakeDepthReadin
+   !USE MOD_PercentagesPFTReadin
+   !USE MOD_SoilParametersReadin
 
    IMPLICIT NONE
 
@@ -104,49 +104,49 @@ CONTAINS
    character(len=256) :: fsnowdat
    character(len=256) :: fcndat
    character(len=256) :: ftopo, lndname
-   type(grid_type) :: gsoil
-   type(grid_type) :: gsnow
-   type(grid_type) :: gcn
-   type(spatial_mapping_type) :: ms2p
-   type(spatial_mapping_type) :: mc2p
-   type(spatial_mapping_type) :: mc2f
-   type(spatial_mapping_type) :: msoil2p, msnow2p
+   !type(grid_type) :: gsoil
+   !type(grid_type) :: gsnow
+   !type(grid_type) :: gcn
+   !type(spatial_mapping_type) :: ms2p
+   !type(spatial_mapping_type) :: mc2p
+   !type(spatial_mapping_type) :: mc2f
+   !type(spatial_mapping_type) :: msoil2p, msnow2p
 
    integer  :: nl_soil_ini
    real(r8) :: missing_value
 
    real(r8), allocatable :: soil_z(:)
 
-   type(block_data_real8_2d) :: snow_d_grid
-   type(block_data_real8_3d) :: soil_t_grid
-   type(block_data_real8_3d) :: soil_w_grid
-   type(block_data_real8_2d) :: zwt_grid
+   !type(block_data_real8_2d) :: snow_d_grid
+   !type(block_data_real8_3d) :: soil_t_grid
+   !type(block_data_real8_3d) :: soil_w_grid
+   !type(block_data_real8_2d) :: zwt_grid
 
-   type(block_data_real8_3d) :: litr1c_grid
-   type(block_data_real8_3d) :: litr2c_grid
-   type(block_data_real8_3d) :: litr3c_grid
-   type(block_data_real8_3d) :: cwdc_grid
-   type(block_data_real8_3d) :: soil1c_grid
-   type(block_data_real8_3d) :: soil2c_grid
-   type(block_data_real8_3d) :: soil3c_grid
-   type(block_data_real8_3d) :: litr1n_grid
-   type(block_data_real8_3d) :: litr2n_grid
-   type(block_data_real8_3d) :: litr3n_grid
-   type(block_data_real8_3d) :: cwdn_grid
-   type(block_data_real8_3d) :: soil1n_grid
-   type(block_data_real8_3d) :: soil2n_grid
-   type(block_data_real8_3d) :: soil3n_grid
-   type(block_data_real8_3d) :: sminn_grid
-   type(block_data_real8_3d) :: smin_nh4_grid
-   type(block_data_real8_3d) :: smin_no3_grid
-   type(block_data_real8_2d) :: leafc_grid
-   type(block_data_real8_2d) :: leafc_storage_grid
-   type(block_data_real8_2d) :: frootc_grid
-   type(block_data_real8_2d) :: frootc_storage_grid
-   type(block_data_real8_2d) :: livestemc_grid
-   type(block_data_real8_2d) :: deadstemc_grid
-   type(block_data_real8_2d) :: livecrootc_grid
-   type(block_data_real8_2d) :: deadcrootc_grid
+   !type(block_data_real8_3d) :: litr1c_grid
+   !type(block_data_real8_3d) :: litr2c_grid
+   !type(block_data_real8_3d) :: litr3c_grid
+   !type(block_data_real8_3d) :: cwdc_grid
+   !type(block_data_real8_3d) :: soil1c_grid
+   !type(block_data_real8_3d) :: soil2c_grid
+   !type(block_data_real8_3d) :: soil3c_grid
+   !type(block_data_real8_3d) :: litr1n_grid
+   !type(block_data_real8_3d) :: litr2n_grid
+   !type(block_data_real8_3d) :: litr3n_grid
+   !type(block_data_real8_3d) :: cwdn_grid
+   !type(block_data_real8_3d) :: soil1n_grid
+   !type(block_data_real8_3d) :: soil2n_grid
+   !type(block_data_real8_3d) :: soil3n_grid
+   !type(block_data_real8_3d) :: sminn_grid
+   !type(block_data_real8_3d) :: smin_nh4_grid
+   !type(block_data_real8_3d) :: smin_no3_grid
+   !type(block_data_real8_2d) :: leafc_grid
+   !type(block_data_real8_2d) :: leafc_storage_grid
+   !type(block_data_real8_2d) :: frootc_grid
+   !type(block_data_real8_2d) :: frootc_storage_grid
+   !type(block_data_real8_2d) :: livestemc_grid
+   !type(block_data_real8_2d) :: deadstemc_grid
+   !type(block_data_real8_2d) :: livecrootc_grid
+   !type(block_data_real8_2d) :: deadcrootc_grid
 
    real(r8), allocatable :: snow_d(:)
    real(r8), allocatable :: soil_t(:,:)
@@ -181,9 +181,9 @@ CONTAINS
    logical  :: use_wtd
 
    character(len=256) :: fwtd
-   type(grid_type)    :: gwtd
-   type(block_data_real8_2d)  :: wtd_xy  ! [m]
-   type(spatial_mapping_type) :: m_wtd2p
+   !type(grid_type)    :: gwtd
+   !type(block_data_real8_2d)  :: wtd_xy  ! [m]
+   !type(spatial_mapping_type) :: m_wtd2p
 
    real(r8) :: zwtmm
    real(r8) :: zc_soimm(1:nl_soil)
@@ -225,12 +225,14 @@ CONTAINS
    integer  :: txt_id
    real(r8) :: vic_b_infilt_, vic_Dsmax_, vic_Ds_, vic_Ws_, vic_c_
 
+   integer :: numpatch
+
 ! --------------------------------------------------------------------
 ! Allocates memory for CoLM 1d [numpatch] variables
 ! --------------------------------------------------------------------
 
-      CALL allocate_TimeInvariants
-      CALL allocate_TimeVariables
+      !CALL allocate_TimeInvariants
+      !CALL allocate_TimeVariables
 
 ! ---------------------------------------------------------------
 ! 1. INITIALIZE TIME INVARIANT VARIABLES
@@ -238,10 +240,10 @@ CONTAINS
 
       IF (p_is_worker) THEN
 
-         IF (numpatch > 0) THEN
-            patchclass = landpatch%settyp
-            patchmask  = .true.
-         ENDIF
+         !IF (numpatch > 0) THEN
+         !   patchclass = landpatch%settyp  !@CY
+         !   patchmask  = .true.
+         !ENDIF
 
          DO ipatch = 1, numpatch
 
@@ -275,7 +277,7 @@ CONTAINS
 ! 1.1 Ponding water
 ! ------------------------------------------
       IF(DEF_USE_BEDROCK)THEN
-         CALL dbedrock_readin (dir_landdata)
+         !CALL dbedrock_readin (dir_landdata)
       ENDIF
 
       IF (p_is_worker) THEN
@@ -296,51 +298,51 @@ CONTAINS
 ! ...............................................................
 
       CALL soil_parameters_readin (dir_landdata, lc_year)
-      IF (p_is_worker) THEN
-         IF (numpatch > 0) THEN
+      !IF (p_is_worker) THEN
+      !   IF (numpatch > 0) THEN
 
-            BVIC(:,:) = -1.0
+      !      BVIC(:,:) = -1.0
 
-            DO ipatch = 1, numpatch
-               DO i = 1, nl_soil
-                  !soil_solids_fractions.F90; 
-                  !BVIC is the b parameter in Fraction of saturated soil in a grid calculated by VIC
-                  !Modified from NoahmpTable.TBL in NoahMP
-                  !SEE: a near-global, high resolution land surface parameter dataset for the variable infiltration capacity model
-                  !soil type (USDA)      1        2       3           4          5         6        7          8        9         10        11        12     |   13        14        15        16        17        18      19
-                  !BVIC          =    0.050,    0.080,    0.090,    0.250,    0.150,    0.180,    0.200,    0.220,    0.230,    0.250,    0.280,    0.300,   | 0.260,    0.000,    1.000,    1.000,    1.000,    0.350,    0.150
-                  ! this should be revised using usda soil type
-                  IF (vf_quartz(i,ipatch) >= 0.95) THEN! sand 
-                     BVIC(i,ipatch)=0.050
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.85 .and. vf_quartz(i,ipatch) < 0.95) THEN ! loamy sand; soil types 1 
-                     BVIC(i,ipatch)=0.080
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.69 .and. vf_quartz(i,ipatch) <  0.85) THEN  !Sandy loam; soil types 3
-                     BVIC(i,ipatch)=0.09
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.61 .and. vf_quartz(i,ipatch) <  0.69) THEN  !Sandy clay loam; soil types 7
-                     BVIC(i,ipatch)=0.20
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.50 .and. vf_quartz(i,ipatch) <  0.61) THEN  !Sandy clay; soil types 10
-                     BVIC(i,ipatch)=0.25
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.41 .and. vf_quartz(i,ipatch) <  0.50) THEN  !Silt; soil types 5
-                     BVIC(i,ipatch)=0.150
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.25 .and. vf_quartz(i,ipatch) <  0.41 .and. wf_sand(i,ipatch)<=0.20) THEN  !Silty clay loam ; soil types 8
-                     BVIC(i,ipatch)=0.220
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.25 .and. vf_quartz(i,ipatch) <  0.41 .and. wf_sand(i,ipatch)>0.20) THEN    !Clay; soil types 12 
-                     BVIC(i,ipatch)=0.30          
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.19 .and. vf_quartz(i,ipatch) <  0.25) THEN  !Loam; soil types 6
-                     BVIC(i,ipatch)=0.180 
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.09 .and. vf_quartz(i,ipatch) <  0.19) THEN  !Clay loam; soil types 9
-                     BVIC(i,ipatch)=0.230
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.08 .and. vf_quartz(i,ipatch) <  0.09) THEN  !Silty clay; soil types 11 
-                     BVIC(i,ipatch)=0.280
-                  ELSEIF (vf_quartz(i,ipatch) >= 0.0 .and. vf_quartz(i,ipatch) <  0.08) THEN  !Silt loam; soil types 4
-                     BVIC(i,ipatch)=0.100
-                  ELSE
-                     BVIC(i,ipatch)=1.0
-                  ENDIF
-               ENDDO
-            ENDDO
-         ENDIF
-      ENDIF
+      !      DO ipatch = 1, numpatch
+      !         DO i = 1, nl_soil
+      !            !soil_solids_fractions.F90; 
+      !            !BVIC is the b parameter in Fraction of saturated soil in a grid calculated by VIC
+      !            !Modified from NoahmpTable.TBL in NoahMP
+      !            !SEE: a near-global, high resolution land surface parameter dataset for the variable infiltration capacity model
+      !            !soil type (USDA)      1        2       3           4          5         6        7          8        9         10        11        12     |   13        14        15        16        17        18      19
+      !            !BVIC          =    0.050,    0.080,    0.090,    0.250,    0.150,    0.180,    0.200,    0.220,    0.230,    0.250,    0.280,    0.300,   | 0.260,    0.000,    1.000,    1.000,    1.000,    0.350,    0.150
+      !            ! this should be revised using usda soil type
+      !            IF (vf_quartz(i,ipatch) >= 0.95) THEN! sand 
+      !               BVIC(i,ipatch)=0.050
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.85 .and. vf_quartz(i,ipatch) < 0.95) THEN ! loamy sand; soil types 1 
+      !               BVIC(i,ipatch)=0.080
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.69 .and. vf_quartz(i,ipatch) <  0.85) THEN  !Sandy loam; soil types 3
+      !               BVIC(i,ipatch)=0.09
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.61 .and. vf_quartz(i,ipatch) <  0.69) THEN  !Sandy clay loam; soil types 7
+      !               BVIC(i,ipatch)=0.20
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.50 .and. vf_quartz(i,ipatch) <  0.61) THEN  !Sandy clay; soil types 10
+      !               BVIC(i,ipatch)=0.25
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.41 .and. vf_quartz(i,ipatch) <  0.50) THEN  !Silt; soil types 5
+      !               BVIC(i,ipatch)=0.150
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.25 .and. vf_quartz(i,ipatch) <  0.41 .and. wf_sand(i,ipatch)<=0.20) THEN  !Silty clay loam ; soil types 8
+      !               BVIC(i,ipatch)=0.220
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.25 .and. vf_quartz(i,ipatch) <  0.41 .and. wf_sand(i,ipatch)>0.20) THEN    !Clay; soil types 12 
+      !               BVIC(i,ipatch)=0.30          
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.19 .and. vf_quartz(i,ipatch) <  0.25) THEN  !Loam; soil types 6
+      !               BVIC(i,ipatch)=0.180 
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.09 .and. vf_quartz(i,ipatch) <  0.19) THEN  !Clay loam; soil types 9
+      !               BVIC(i,ipatch)=0.230
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.08 .and. vf_quartz(i,ipatch) <  0.09) THEN  !Silty clay; soil types 11 
+      !               BVIC(i,ipatch)=0.280
+      !            ELSEIF (vf_quartz(i,ipatch) >= 0.0 .and. vf_quartz(i,ipatch) <  0.08) THEN  !Silt loam; soil types 4
+      !               BVIC(i,ipatch)=0.100
+      !            ELSE
+      !               BVIC(i,ipatch)=1.0
+      !            ENDIF
+      !         ENDDO
+      !      ENDDO
+      !   ENDIF
+      !ENDIF
 
 
 
@@ -397,18 +399,18 @@ CONTAINS
       sf_lut_patches(:,:,1) = SITE_sf_lut
 #else
       IF (DEF_USE_Forcing_Downscaling) THEN  !set false
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/slp_type_patches.nc'             ! slope
-         CALL ncio_read_vector (lndname, 'slp_type_patches', num_type, landpatch, slp_type_patches)
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/svf_patches.nc'               ! sky view factor
-         CALL ncio_read_vector (lndname, 'svf_patches', landpatch, svf_patches)
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/asp_type_patches.nc'            ! aspect
-         CALL ncio_read_vector (lndname, 'asp_type_patches', num_type, landpatch, asp_type_patches)
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/area_type_patches.nc'         ! area percent
-         CALL ncio_read_vector (lndname, 'area_type_patches', num_type, landpatch, area_type_patches)
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/sf_lut_patches.nc'        ! shadow mask
-         CALL ncio_read_vector (lndname, 'sf_lut_patches', num_azimuth, num_zenith, landpatch, sf_lut_patches)
-         lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/cur_patches.nc'               ! curvature
-         CALL ncio_read_vector (lndname, 'cur_patches', landpatch, cur_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/slp_type_patches.nc'             ! slope
+         !CALL ncio_read_vector (lndname, 'slp_type_patches', num_type, landpatch, slp_type_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/svf_patches.nc'               ! sky view factor
+         !CALL ncio_read_vector (lndname, 'svf_patches', landpatch, svf_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/asp_type_patches.nc'            ! aspect
+         !CALL ncio_read_vector (lndname, 'asp_type_patches', num_type, landpatch, asp_type_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/area_type_patches.nc'         ! area percent
+         !CALL ncio_read_vector (lndname, 'area_type_patches', num_type, landpatch, area_type_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/sf_lut_patches.nc'        ! shadow mask
+         !CALL ncio_read_vector (lndname, 'sf_lut_patches', num_azimuth, num_zenith, landpatch, sf_lut_patches)
+         !lndname = trim(DEF_dir_landdata) // '/topography/'//trim(cyear)//'/cur_patches.nc'               ! curvature
+         !CALL ncio_read_vector (lndname, 'cur_patches', landpatch, cur_patches)
        ENDIF
 #endif
 ! ................................
@@ -430,43 +432,43 @@ CONTAINS
       tcrit  = 2.5     !critical temp. to determine rain or snow
       wetwatmax = 200.0 !maximum wetland water (mm)
 
-      IF (DEF_Runoff_SCHEME == 1) THEN
-         IF (p_is_master) THEN
-            txt_id = 111
-            open(txt_id, file=trim(DEF_file_VIC_para), status='old', form='formatted')
-            READ(txt_id, *)
-            READ(txt_id, *) vic_b_infilt_, vic_Dsmax_, vic_Ds_, vic_Ws_, vic_c_
-            close(txt_id)
-         ENDIF
+!      IF (DEF_Runoff_SCHEME == 1) THEN
+!         IF (p_is_master) THEN
+!            txt_id = 111
+!            open(txt_id, file=trim(DEF_file_VIC_para), status='old', form='formatted')
+!            READ(txt_id, *)
+!            READ(txt_id, *) vic_b_infilt_, vic_Dsmax_, vic_Ds_, vic_Ws_, vic_c_
+!            close(txt_id)
+!         ENDIF
 
-#ifdef USEMPI
-         CALL mpi_bcast (vic_b_infilt_, 1, MPI_REAL8, p_root, p_comm_glb, p_err)
-         CALL mpi_bcast (vic_Dsmax_   , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
-         CALL mpi_bcast (vic_Ds_      , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
-         CALL mpi_bcast (vic_Ws_      , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
-         CALL mpi_bcast (vic_c_       , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
-#endif
+!#ifdef USEMPI
+!         CALL mpi_bcast (vic_b_infilt_, 1, MPI_REAL8, p_root, p_comm_glb, p_err)
+!         CALL mpi_bcast (vic_Dsmax_   , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
+!         CALL mpi_bcast (vic_Ds_      , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
+!         CALL mpi_bcast (vic_Ws_      , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
+!         CALL mpi_bcast (vic_c_       , 1, MPI_REAL8, p_root, p_comm_glb, p_err)
+!#endif
 
-         IF (p_is_worker) THEN
-            IF (numpatch > 0) THEN
-               vic_b_infilt = vic_b_infilt_
-               vic_Dsmax    = vic_Dsmax_
-               vic_Ds       = vic_Ds_
-               vic_Ws       = vic_Ws_
-               vic_c        = vic_c_
-            ENDIF
-         ENDIF
-      ELSE
-         IF (p_is_worker) THEN
-            IF (numpatch > 0) THEN
-               vic_b_infilt = 0
-               vic_Dsmax    = 0
-               vic_Ds       = 0
-               vic_Ws       = 0
-               vic_c        = 0
-            ENDIF
-         ENDIF
-      ENDIF
+!         IF (p_is_worker) THEN
+!            IF (numpatch > 0) THEN
+!               vic_b_infilt = vic_b_infilt_
+!               vic_Dsmax    = vic_Dsmax_
+!               vic_Ds       = vic_Ds_
+!               vic_Ws       = vic_Ws_
+!               vic_c        = vic_c_
+!            ENDIF
+!         ENDIF
+!      ELSE
+!         IF (p_is_worker) THEN
+!            IF (numpatch > 0) THEN
+!               vic_b_infilt = 0
+!               vic_Dsmax    = 0
+!               vic_Ds       = 0
+!               vic_Ws       = 0
+!               vic_c        = 0
+!            ENDIF
+!         ENDIF
+!      ENDIF
 
 #ifdef BGC
    ! bgc constant
@@ -603,7 +605,7 @@ CONTAINS
       CALL mpi_barrier (p_comm_glb, p_err)
 #endif
 
-      IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Invariants')
+      !IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Invariants')
 
 ! ----------------------------------------------------------------------
 ! [2] INITIALIZE TIME-VARYING VARIABLES
@@ -655,33 +657,33 @@ CONTAINS
          IF (use_soilini) THEN
 
             ! soil layer depth (m)
-            CALL ncio_read_bcast_serial (fsoildat, 'soildepth', soil_z)
+            !CALL ncio_read_bcast_serial (fsoildat, 'soildepth', soil_z)
            
             nl_soil_ini = size(soil_z)
             
-            CALL gsoil%define_from_file (fsoildat, latname = 'lat', lonname = 'lon')
+            !CALL gsoil%define_from_file (fsoildat, latname = 'lat', lonname = 'lon')
          
             CALL julian2monthday (idate(1), idate(2), month, mday)
          
             IF (p_is_master) THEN
-               CALL ncio_get_attr (fsoildat, 'zwt', 'missing_value', missing_value)
+               !CALL ncio_get_attr (fsoildat, 'zwt', 'missing_value', missing_value)
             ENDIF
 #ifdef USEMPI
             CALL mpi_bcast (missing_value, 1, MPI_REAL8, p_root, p_comm_glb, p_err)
 #endif
 
             IF (p_is_io) THEN
-               ! soil layer temperature (K)
-               CALL allocate_block_data  (gsoil, soil_t_grid, nl_soil_ini)
-               CALL ncio_read_block_time (fsoildat, 'soiltemp', &
-                  gsoil, nl_soil_ini, month, soil_t_grid)
-               ! soil layer wetness (-)
-               CALL allocate_block_data  (gsoil, soil_w_grid, nl_soil_ini)
-               CALL ncio_read_block_time (fsoildat, 'soilwat', &
-                  gsoil, nl_soil_ini, month, soil_w_grid)
-               ! water table depth (m)
-               CALL allocate_block_data (gsoil, zwt_grid)
-               CALL ncio_read_block_time (fsoildat, 'zwt', gsoil, month, zwt_grid)
+               !! soil layer temperature (K)
+               !CALL allocate_block_data  (gsoil, soil_t_grid, nl_soil_ini)
+               !CALL ncio_read_block_time (fsoildat, 'soiltemp', &
+               !   gsoil, nl_soil_ini, month, soil_t_grid)
+               !! soil layer wetness (-)
+               !CALL allocate_block_data  (gsoil, soil_w_grid, nl_soil_ini)
+               !CALL ncio_read_block_time (fsoildat, 'soilwat', &
+               !   gsoil, nl_soil_ini, month, soil_w_grid)
+               !! water table depth (m)
+               !CALL allocate_block_data (gsoil, zwt_grid)
+               !CALL ncio_read_block_time (fsoildat, 'zwt', gsoil, month, zwt_grid)
             ENDIF
 
             IF (p_is_worker) THEN
@@ -692,12 +694,12 @@ CONTAINS
                ENDIF
             ENDIF
 
-            CALL msoil2p%build_arealweighted (gsoil, landpatch)
-            CALL msoil2p%set_missing_value   (zwt_grid, missing_value, validval)
+            !CALL msoil2p%build_arealweighted (gsoil, landpatch)
+            !CALL msoil2p%set_missing_value   (zwt_grid, missing_value, validval)
 
-            CALL msoil2p%grid2pset (soil_t_grid, nl_soil_ini, soil_t)
-            CALL msoil2p%grid2pset (soil_w_grid, nl_soil_ini, soil_w)
-            CALL msoil2p%grid2pset (zwt_grid, zwt)
+            !CALL msoil2p%grid2pset (soil_t_grid, nl_soil_ini, soil_t)
+            !CALL msoil2p%grid2pset (soil_w_grid, nl_soil_ini, soil_w)
+            !CALL msoil2p%grid2pset (zwt_grid, zwt)
 
             IF (p_is_worker) THEN
                DO i = 1, numpatch
@@ -959,21 +961,21 @@ CONTAINS
 
          IF (use_snowini) THEN
 
-            CALL gsnow%define_from_file (fsnowdat, latname = 'lat', lonname = 'lon')
+            !CALL gsnow%define_from_file (fsnowdat, latname = 'lat', lonname = 'lon')
          
             CALL julian2monthday (idate(1), idate(2), month, mday)
 
             IF (p_is_master) THEN
-               CALL ncio_get_attr (fsnowdat, 'snowdepth', 'missing_value', missing_value)
+               !CALL ncio_get_attr (fsnowdat, 'snowdepth', 'missing_value', missing_value)
             ENDIF
 #ifdef USEMPI
             CALL mpi_bcast (missing_value, 1, MPI_REAL8, p_root, p_comm_glb, p_err)
 #endif
 
             IF (p_is_io) THEN
-               ! snow depth (m)
-               CALL allocate_block_data (gsnow, snow_d_grid)
-               CALL ncio_read_block_time (fsnowdat, 'snowdepth', gsnow, month, snow_d_grid)
+               !! snow depth (m)
+               !CALL allocate_block_data (gsnow, snow_d_grid)
+               !CALL ncio_read_block_time (fsnowdat, 'snowdepth', gsnow, month, snow_d_grid)
             ENDIF
             
             IF (p_is_worker) THEN
@@ -982,10 +984,10 @@ CONTAINS
                ENDIF
             ENDIF
 
-            CALL msnow2p%build_arealweighted (gsnow, landpatch)
-            CALL msnow2p%set_missing_value   (snow_d_grid, missing_value, validval)
+            !CALL msnow2p%build_arealweighted (gsnow, landpatch)
+            !CALL msnow2p%set_missing_value   (snow_d_grid, missing_value, validval)
 
-            CALL msnow2p%grid2pset (snow_d_grid, snow_d)
+            !CALL msnow2p%grid2pset (snow_d_grid, snow_d)
             
             IF (p_is_worker) THEN
                WHERE (.not. validval)
@@ -1020,15 +1022,15 @@ CONTAINS
       IF (use_wtd) THEN
 
          CALL julian2monthday (idate(1), idate(2), month, mday)
-         CALL gwtd%define_from_file (fwtd)
+         !CALL gwtd%define_from_file (fwtd)
 
          IF (p_is_io) THEN
-            CALL allocate_block_data (gwtd, wtd_xy)
-            CALL ncio_read_block_time (fwtd, 'wtd', gwtd, month, wtd_xy)
+            !CALL allocate_block_data (gwtd, wtd_xy)
+            !CALL ncio_read_block_time (fwtd, 'wtd', gwtd, month, wtd_xy)
          ENDIF
 
-         CALL m_wtd2p%build_arealweighted (gwtd, landpatch)
-         CALL m_wtd2p%grid2pset (wtd_xy, zwt)
+         !CALL m_wtd2p%build_arealweighted (gwtd, landpatch)
+         !CALL m_wtd2p%grid2pset (wtd_xy, zwt)
 
       ENDIF
 
@@ -1365,8 +1367,8 @@ CONTAINS
 #endif
 
       IF ( .not. present(lulcc_call) ) THEN
-         ! only be called in runing MKINI, LULCC will be executed later
-         CALL WRITE_TimeVariables (idate, lc_year, casename, dir_restart)
+         !! only be called in runing MKINI, LULCC will be executed later
+         !CALL WRITE_TimeVariables (idate, lc_year, casename, dir_restart)
       ENDIF
 
 #ifdef USEMPI
@@ -1381,8 +1383,8 @@ CONTAINS
 ! --------------------------------------------------
       IF ( .not. present(lulcc_call) ) THEN
          ! only be called in runing MKINI, LULCC will be executed later
-         CALL deallocate_TimeInvariants
-         CALL deallocate_TimeVariables
+         !CALL deallocate_TimeInvariants
+         !CALL deallocate_TimeVariables
       ENDIF
 
       IF (allocated(z_soisno )) deallocate (z_soisno )
