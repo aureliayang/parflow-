@@ -1,28 +1,6 @@
 # ParFlow-CoLM
 Coupling ParFlow and the latest Common Land Model
 
-### Citing Parflow
-
-If you want the DOI for a specific release see:
-[Zendo](https://zenodo.org/search?page=1&size=20&q=parflow&version)
-
-A generic DOI that always links to the most current release :
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4816884.svg)](https://doi.org/10.5281/zenodo.4816884)
-
-If you use ParFlow in a publication and wish to cite a paper reference
-please use the following that describe model physics:
-
-* Ashby S.F. and R.D. Falgout, Nuclear Science and Engineering 124:145-159, 1996
-* Jones, J.E. and C.S. Woodward, Advances in Water Resources 24:763-774, 2001
-* Kollet, S.J. and R.M. Maxwell, Advances in Water Resources 29:945-958, 2006
-* Maxwell, R.M. Advances in Water Resources 53:109-117, 2013
-
-If you use ParFlow coupled to CLM in a publication, please also cite
-two additional papers that describe the coupled model physics:
-
-* Maxwell, R.M. and N.L. Miller, Journal of Hydrometeorology 6(3):233-247, 2005
-* Kollet, S.J. and R.M. Maxwell, Water Resources Research 44:W02402, 2008
-
 ## Quick Start on Unix/Linux
 
 Important note for users that have built with Autoconf, the CMake
@@ -132,13 +110,6 @@ using MPI libraries.  CLM is being enabled.
    	 -DPARFLOW_HAVE_CLM=ON
 ```
 
-If TCL is not installed in the standard locations (/usr or /usr/local)
-you need to specify the path to the tclsh location:
-
-```shell
-	-DTCL_TCLSH=${PARFLOW_TCL_DIR}/bin/tclsh8.6
-```
-
 Building a parallel version of ParFlow requires the communications
 layer to use must be set.  The most common option will be MPI.  Here
 is a minimal example of an MPI build with CLM:
@@ -150,23 +121,6 @@ is a minimal example of an MPI build with CLM:
       	 -DCMAKE_INSTALL_PREFIX=${PARFLOW_DIR} \
    	 -DPARFLOW_HAVE_CLM=ON \
 	 -DPARFLOW_AMPS_LAYER=mpi1
-```
-
-Here is a more complex example where location of various external
-packages are being specified and some features are being enabled:
-
-```shell
-   mkdir build
-   cd build
-   cmake ../parflow \
-        -DPARFLOW_AMPS_LAYER=mpi1 \
-	-DHYPRE_ROOT=${PARFLOW_HYPRE_DIR} \
-	-DHDF5_ROOT=${PARFLOW_HDF5_DIR} \
-	-DSILO_ROOT=${PARFLOW_SILO_DIR} \
-	-DCMAKE_BUILD_TYPE=Debug \
-	-DPARFLOW_ENABLE_TIMING=TRUE \
-	-DPARFLOW_HAVE_CLM=ON \
-	-DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}
 ```
 
 ### Step 4: Building and installing
