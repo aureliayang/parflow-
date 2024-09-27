@@ -41,32 +41,6 @@ For csh and tcsh:
 
 Extract the source files from the compressed tar file.
 
-Obtain the release from the ParFlow GitHub web site:
-
-https://github.com/parflow/parflow/releases
-
-and extract the release.  Here we assume you are building in new
-subdirectory in your home directory:
-
-```shell
-   mkdir ~/parflow 
-   cd ~/parflow 
-   tar -xvf ../parflow.tar.gz
-```
-
-Note the ParFlow tar file will be have a different name based on the
-version number.
-
-If you are not using GNU tar or have a very old version GNU tar you
-will need to uncompress the file first:
-
-```shell
-   mkdir ~/parflow 
-   cd ~/parflow 
-   gunzip ../parflow.tar.gz
-   tar -xvf ../parflow.tar
-```
-
 ### Step 3: Running CMake to configure ParFlow
 
 CMake is a utility that sets up makefiles for building ParFlow.  CMake
