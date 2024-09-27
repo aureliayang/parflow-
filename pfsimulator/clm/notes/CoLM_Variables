@@ -39,7 +39,7 @@ BA_alpha(1:,i)   !soil, nc readin
 BA_beta(1:,i)    !soil, nc readin                                        
 htop(i)          !Forest_Height.nc     
 hbot(i)          !MOD_Const_LC.F90
-topostd(i)       !not used in pf 
+topostd(i)       !readin, but not used in pf 
 zlnd            
 zsno            
 csoilc          
@@ -57,8 +57,8 @@ tcrit    ###the above variables are values in MOD_Initialize
 
 ###========================Variables==================================
 z_sno(maxsnl+1:,i)               
-dz_sno(maxsnl+1:,i)                
-t_soisno(maxsnl+1:,i)            
+dz_sno(maxsnl+1:,i)    ### maybe zero if not use snowinit            
+t_soisno(maxsnl+1:,i)  ### some simple values      
 wliq_soisno(maxsnl+1:,i)               
 wice_soisno(maxsnl+1:,i)  
 h2osoi(1:,i) !out
@@ -76,12 +76,12 @@ rstfacsun_out(i)  !out
 rstfacsha_out(i)  !out
 gssun_out(i)      !out 
 gssha_out(i)      !out
-t_grnd(i)   
+t_grnd(i)         !simple value as t_soisno(1)
 assimsun_out(i)   !out
 etrsun_out(i)     !out
 assimsha_out(i)   !out
 etrsha_out(i)     !out
-tleaf(i)          !same as t_grnd   
+tleaf(i)          !same as t_grnd or t_soisno(1)   
 ldew(i)           !zero
 ldew_rain(i)      !zero
 ldew_snow(i)      !zero        
@@ -89,8 +89,8 @@ sag(i)            !zero
 scv(i)            !readin or zero
 snowdp(i)         !readin or zero
 fveg(i)           !empirical or readin       
-fsno(i)           !snowfraction
-sigf(i)           !snowfraction
+fsno(i)           !snowfraction or zero
+sigf(i)           !snowfraction or one
 green(i)          !empirical
 lai(i)            !lai = tlai(ipatch)    tsai readin
 laisun(i)         !out
@@ -114,7 +114,7 @@ rss(i)            !out
 t_lake(1:,i)      !no use in pf
 lake_icefrac(1:,i)  !no use in pf             
 savedtke1(i)      !tkwat  = 0.6     
-snw_rds(:,i)      !simple value 
+snw_rds(:,i)      !simple value, snicar, so no use
 ssno_lyr(:,:,:,i) !albland                                         
 mss_bcpho(:,i)    !albland
 mss_bcphi(:,i)    !albland
@@ -261,7 +261,7 @@ deltim_phy,
 patchmask      (:)
 OM_density   !soil, nc readin 
 BD_all       !soil, nc readin 
-wfc          !calculated inside, only need to initialize
+wfc          !calculated inside, only need to initialize, soil parameter readin, now passed by pf
 vic_b_infilt (:)
 vic_Dsmax    (:)
 vic_Ds       (:)
@@ -271,6 +271,8 @@ dbedrock       (:)  !depth to bedrock, no use
 ibedrock       (:)  !bedrock level, no use
 topoelv (:)  !elevation above sea level [m]
 wetwatmax    !./mkinidata/MOD_Initialize.F90:429:      wetwatmax = 200.0 !maximum wetland water (mm)
+
+###below 6 for downscaling, but maybe useful for slope and aspect in future
 svf_patches (:)                                           ! sky view factor
 cur_patches (:)                                           ! curvature
 sf_lut_patches (:,:,:)                                    ! look up table of shadow factor of a patch
@@ -283,9 +285,9 @@ o3coefv_sun   (:) ! Ozone stress factor for photosynthesis on sunlit leaf
 o3coefv_sha   (:) ! Ozone stress factor for photosynthesis on shaded leaf
 o3coefg_sun   (:) ! Ozone stress factor for stomata on sunlit leaf
 o3coefg_sha   (:) ! Ozone stress factor for stomata on shaded leaf
-tlai          (:)
-tsai          (:)
-displa        (:)  !I guess no use
+tlai          (:)   ###lai_empirical or LAI_readin
+tsai          (:)   ###lai_empirical or LAI_readin
+displa        (:)  !I guess no use, there is a local displa
 
 #allocate_1D_Fluxes
 rnet   (:)
@@ -332,7 +334,8 @@ a lot
 water stress
 
 I think wfc is only used in beta soil as local which is recaculated in the subroutine. 
-Though it was readin through TimeInvariants, maybe used in BGC.
+Though it was readin through TimeInvariants, maybe used in BGC. #also claculated in soil parameter readin
+
 you should check the upstream and downstream of rss and rootr
 
 #MOD_Vars_Global.F90
