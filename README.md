@@ -3,22 +3,6 @@ Coupling ParFlow and the latest Common Land Model
 
 ## Quick Start on Unix/Linux
 
-Important note for users that have built with Autoconf, the CMake
-configure process is one step by default.  Most builds of of ParFlow
-are on MPP architectures or workstations where the login node and
-compute nodes are same architecture the default build process builds
-both the ParFlow executable and tools with the same compilers and
-libraries in one step.  This will hopefully make building easier for
-the majority of users.  It is still possible to build the two
-components separately; see instruction below for building pftools and
-pfsimulator separately.
-
-CMake supports builds for several operating systems and IDE tools
-(like Visual Studio on Windows and XCode on MacOS).  The ParFlow team
-has not tested building on platforms other than Linux; there will
-likely be some issues on other platforms.  The ParFlow team welcomes
-bug reports and patches if you attempt other builds.
-
 ### Step 1: Setup
 
 Decide where to install ParFlow and associated libraries.
