@@ -52,18 +52,6 @@ involves removing the build directory.
 
 #### Building with the cmake command line
 
-CMake may also be configured from the command line using the cmake
-command. Instructions to build with different accelerator backends are found from the following documents: [CUDA, KOKKOS](README-GPU.md), [OpenMP](README-OPENMP.md). The default will configure a sequential version of ParFlow
-using MPI libraries.  CLM is being enabled.
-
-```shell
-   mkdir build
-   cd build
-   cmake ../parflow \
-   	 -DCMAKE_INSTALL_PREFIX=${PARFLOW_DIR} \
-   	 -DPARFLOW_HAVE_CLM=ON
-```
-
 Building a parallel version of ParFlow requires the communications
 layer to use must be set.  The most common option will be MPI.  Here
 is a minimal example of an MPI build with CLM:
