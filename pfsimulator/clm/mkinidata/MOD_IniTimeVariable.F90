@@ -81,7 +81,8 @@ CONTAINS
    USE MOD_Vars_Global
    USE MOD_Albedo
    USE MOD_Namelist
-   USE MOD_Hydro_SoilWater
+   !USE MOD_Hydro_SoilWater
+   USE MOD_Hydro_SoilFunction
    USE MOD_SnowFraction
    USE MOD_SPMD_Task
 

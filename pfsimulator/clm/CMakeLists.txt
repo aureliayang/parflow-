@@ -12,8 +12,7 @@ set (SRC_FILES
   ./share/MOD_Utils.F90                               
   ./share/MOD_UserDefFun.F90                          
   ./share/MOD_TimeManager.F90 
-  ./HYDRO/MOD_Hydro_SoilFunction.F90                  
-  ./HYDRO/MOD_Hydro_SoilWater.F90                            
+  ./HYDRO/MOD_Hydro_SoilFunction.F90                                             
   MOD_Vars_Global.F90                         
   MOD_Const_Physical.F90                      
   MOD_Const_LC.F90                                                    
