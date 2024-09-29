@@ -11,7 +11,7 @@ MODULE MOD_HtopReadin
 
 CONTAINS
 
-   SUBROUTINE HTOP_readin (dir_landdata, lc_year)
+   SUBROUTINE HTOP_readin (dir_landdata, lc_year, numpatch)
 
 ! ===========================================================
 ! Read in the canopy tree top height
@@ -23,13 +23,13 @@ CONTAINS
    USE MOD_Const_LC
    USE MOD_Const_PFT
    USE MOD_Vars_TimeInvariants
-   USE MOD_LandPatch
+   !USE MOD_LandPatch
 #if (defined LULC_IGBP_PFT || defined LULC_IGBP_PC)
    USE MOD_LandPFT
    USE MOD_Vars_PFTimeInvariants
    USE MOD_Vars_PFTimeVariables
 #endif
-   USE MOD_NetCDFVector
+   !USE MOD_NetCDFVector
 #ifdef SinglePoint
    USE MOD_SingleSrfdata
 #endif
@@ -44,8 +44,9 @@ CONTAINS
    character(len=256) :: landdir, lndname, cyear
    integer :: i,j,t,p,ps,pe,m,n,npatch
 
-   real(r8), allocatable :: htoplc  (:)
+   !real(r8), allocatable :: htoplc  (:)
    real(r8), allocatable :: htoppft (:)
+   integer, intent(in) :: numpatch
 
       write(cyear,'(i4.4)') lc_year
       landdir = trim(dir_landdata) // '/htop/' // trim(cyear)
@@ -71,7 +72,7 @@ CONTAINS
       htoplc(:) = SITE_htop
 #else
       lndname = trim(landdir)//'/htop_patches.nc'
-      CALL ncio_read_vector (lndname, 'htop_patches', landpatch, htoplc)
+      !CALL ncio_read_vector (lndname, 'htop_patches', landpatch, htoplc)
 #endif
 
       IF (p_is_worker) THEN
@@ -95,7 +96,7 @@ CONTAINS
          ENDDO
       ENDIF
 
-      IF (allocated(htoplc))   deallocate ( htoplc )
+      !IF (allocated(htoplc))   deallocate ( htoplc )
 #endif
 
 

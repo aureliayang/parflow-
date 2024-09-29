@@ -92,7 +92,7 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
                  (grid(c-ix,r-iy)%BA_beta(t),t=1,nl_soil),                 &
                  (grid(c-ix,r-iy)%OM_density(t),t=1,nl_soil),              &
                  (grid(c-ix,r-iy)%BD_all(t),t=1,nl_soil),                  &
-                 grid(c-ix,r-iy)%htop
+                 grid(c-ix,r-iy)%htoplc
        !grid(c-ix,r-iy)%sand(:) = sand
        !grid(c-ix,r-iy)%clay(:) = clay
 

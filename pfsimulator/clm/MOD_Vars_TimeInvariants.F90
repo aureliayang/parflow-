@@ -239,6 +239,7 @@ MODULE MOD_Vars_TimeInvariants
 
    real(r8), allocatable :: topoelv (:)  !elevation above sea level [m]
    real(r8), allocatable :: topostd (:)  !standard deviation of elevation [m]
+   real(r8), allocatable :: htoplc  (:)
 
    real(r8) :: zlnd                             !roughness length for soil [m]
    real(r8) :: zsno                             !roughness length for snow [m]
@@ -352,6 +353,7 @@ CONTAINS
             allocate (ibedrock             (numpatch))
             allocate (topoelv              (numpatch))
             allocate (topostd              (numpatch))
+            allocate (htoplc               (numpatch))
       
             ! Used for downscaling
             allocate (svf_patches          (numpatch))
@@ -456,6 +458,7 @@ CONTAINS
 
             deallocate (topoelv        )
             deallocate (topostd        )
+            deallocate (htoplc         )
 
             IF (DEF_USE_Forcing_Downscaling) THEN
                deallocate(slp_type_patches  )

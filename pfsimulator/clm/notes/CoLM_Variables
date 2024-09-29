@@ -19,6 +19,7 @@ porsl(1:,i)      !soil, nc readin
 psi0(1:,i)       !soil, nc readin              
 bsw(1:,i)        !soil, nc readin 
 theta_r(1:,i)    !soil, nc readin    
+!esat = (vliq - vl_r) / (porsl - vl_r) in MOD_Hydro_SoilFunction know it is porosity*theta_r_in_pf
 
 BVIC(1,i)        ##                                                 
 alpha_vgm(1:,i)  !soil, nc readin 
@@ -258,7 +259,7 @@ dosst,
 deltim_phy,         
 
 #TimeInvariants
-patchmask      (:)
+patchmask      (:) !not used in pf
 OM_density   !soil, nc readin 
 BD_all       !soil, nc readin 
 wfc          !calculated inside, only need to initialize, soil parameter readin, now passed by pf

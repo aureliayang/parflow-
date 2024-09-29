@@ -75,7 +75,7 @@ CONTAINS
    !USE MOD_LAIReadin
    USE MOD_OrbCoszen
    !USE MOD_DBedrockReadin
-   !USE MOD_HtopReadin
+   USE MOD_HtopReadin
    USE MOD_IniTimeVariable
    !USE MOD_LakeDepthReadin
    !USE MOD_PercentagesPFTReadin
@@ -257,7 +257,7 @@ CONTAINS
             ! ---------------------------------------
 
             IF (DEF_URBAN_ONLY .and. m.ne.URBAN) THEN
-               patchmask(ipatch) = .false.
+            !   patchmask(ipatch) = .false.
                CYCLE
             ENDIF
 
@@ -384,8 +384,8 @@ CONTAINS
 ! ...............................................................
 
       ! read global tree top height from nc file
-      !CALL HTOP_readin (dir_landdata, lc_year)
-      !@CY: pfb readin
+      CALL HTOP_readin (dir_landdata, lc_year, numpatch) !! more work to pass htoplc to this subroutine
+
 #ifdef URBAN_MODEL
       CALL Urban_readin (dir_landdata, lc_year)
 #endif

@@ -55,7 +55,7 @@ subroutine drv_g2clm(grid,nx,ny,planar_mask,numpatch)
       c = planar_mask(1,t)
       r = planar_mask(2,t)
 
-      htop(t)           = grid(c,r)%htop 
+      htoplc(t)         = grid(c,r)%htoplc 
       patchclass(t)     = grid(c,r)%patchclass
       patchlatr(t)      = grid(c,r)%patchlatr*4.*atan(1.)/180.  
       patchlonr(t)      = grid(c,r)%patchlonr*4.*atan(1.)/180.
