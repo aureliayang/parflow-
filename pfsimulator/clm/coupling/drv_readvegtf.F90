@@ -64,53 +64,53 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
   ! do r=1,drv%nr     !rows
    ! do c=1,drv%nc  !columns
   do r =1, gny  ! @RMM replaced local row/column with global grid
-   do c = 1, gnx
-    if (((c > ix).and.(c <= (ix+nx))).and.((r > iy).and.(r <= (iy+ny)))) then
-       read(2,*) i,j,          &
-                 grid(c-ix,r-iy)%patchclass,                               &
-                 grid(c-ix,r-iy)%patchlatr,                                &
-                 grid(c-ix,r-iy)%patchlonr,                                &
-                 (grid(c-ix,r-iy)%vf_quartz(t),t=1,nl_soil),               &
-                 (grid(c-ix,r-iy)%vf_gravels(t),t=1,nl_soil),              &
-                 (grid(c-ix,r-iy)%vf_om(t),t=1,nl_soil),                   &
-                 (grid(c-ix,r-iy)%vf_sand(t),t=1,nl_soil),                 &
-                 (grid(c-ix,r-iy)%wf_gravels(t),t=1,nl_soil),              &
-                 (grid(c-ix,r-iy)%wf_sand(t),t=1,nl_soil),                 &
-                 (grid(c-ix,r-iy)%psi0(t),t=1,nl_soil),                    &
-                 (grid(c-ix,r-iy)%bsw(t),t=1,nl_soil),                     &
-                 (grid(c-ix,r-iy)%theta_r(t),t=1,nl_soil),                 &
-                 (grid(c-ix,r-iy)%alpha_vgm(t),t=1,nl_soil),               &
-                 (grid(c-ix,r-iy)%n_vgm(t),t=1,nl_soil),                   &
-                 (grid(c-ix,r-iy)%L_vgm(t),t=1,nl_soil),                   &
-                 (grid(c-ix,r-iy)%hksati(t),t=1,nl_soil),                  &
-                 (grid(c-ix,r-iy)%csol(t),t=1,nl_soil),                    &
-                 (grid(c-ix,r-iy)%k_solids(t),t=1,nl_soil),                &
-                 (grid(c-ix,r-iy)%dksatu(t),t=1,nl_soil),                  &
-                 (grid(c-ix,r-iy)%dksatf(t),t=1,nl_soil),                  &
-                 (grid(c-ix,r-iy)%dkdry(t),t=1,nl_soil),                   &
-                 (grid(c-ix,r-iy)%BA_alpha(t),t=1,nl_soil),                &
-                 (grid(c-ix,r-iy)%BA_beta(t),t=1,nl_soil),                 &
-                 (grid(c-ix,r-iy)%OM_density(t),t=1,nl_soil),              &
-                 (grid(c-ix,r-iy)%BD_all(t),t=1,nl_soil),                  &
-                 grid(c-ix,r-iy)%htoplc
-       !grid(c-ix,r-iy)%sand(:) = sand
-       !grid(c-ix,r-iy)%clay(:) = clay
+    do c = 1, gnx
+      if (((c > ix).and.(c <= (ix+nx))).and.((r > iy).and.(r <= (iy+ny)))) then
+        read(2,*) i,j,          &
+                  grid(c-ix,r-iy)%patchclass,                               &
+                  grid(c-ix,r-iy)%patchlatr,                                &
+                  grid(c-ix,r-iy)%patchlonr,                                &
+                  (grid(c-ix,r-iy)%vf_quartz(t),t=1,nl_soil),               &
+                  (grid(c-ix,r-iy)%vf_gravels(t),t=1,nl_soil),              &
+                  (grid(c-ix,r-iy)%vf_om(t),t=1,nl_soil),                   &
+                  (grid(c-ix,r-iy)%vf_sand(t),t=1,nl_soil),                 &
+                  (grid(c-ix,r-iy)%wf_gravels(t),t=1,nl_soil),              &
+                  (grid(c-ix,r-iy)%wf_sand(t),t=1,nl_soil),                 &
+                  (grid(c-ix,r-iy)%psi0(t),t=1,nl_soil),                    &
+                  (grid(c-ix,r-iy)%bsw(t),t=1,nl_soil),                     &
+                  !(grid(c-ix,r-iy)%theta_r(t),t=1,nl_soil),                 &
+                  (grid(c-ix,r-iy)%alpha_vgm(t),t=1,nl_soil),               &
+                  (grid(c-ix,r-iy)%n_vgm(t),t=1,nl_soil),                   &
+                  (grid(c-ix,r-iy)%L_vgm(t),t=1,nl_soil),                   &
+                  (grid(c-ix,r-iy)%hksati(t),t=1,nl_soil),                  &
+                  (grid(c-ix,r-iy)%csol(t),t=1,nl_soil),                    &
+                  (grid(c-ix,r-iy)%k_solids(t),t=1,nl_soil),                &
+                  (grid(c-ix,r-iy)%dksatu(t),t=1,nl_soil),                  &
+                  (grid(c-ix,r-iy)%dksatf(t),t=1,nl_soil),                  &
+                  (grid(c-ix,r-iy)%dkdry(t),t=1,nl_soil),                   &
+                  (grid(c-ix,r-iy)%BA_alpha(t),t=1,nl_soil),                &
+                  (grid(c-ix,r-iy)%BA_beta(t),t=1,nl_soil),                 &
+                  (grid(c-ix,r-iy)%OM_density(t),t=1,nl_soil),              &
+                  (grid(c-ix,r-iy)%BD_all(t),t=1,nl_soil)
+                  !grid(c-ix,r-iy)%htoplc
+        !grid(c-ix,r-iy)%sand(:) = sand
+        !grid(c-ix,r-iy)%clay(:) = clay
 
-       !rsum=0.0
-       !do t=1,drv%nt
-       !   rsum=rsum+grid(c-ix,r-iy)%fgrd(t)
-       !enddo
-       !if (rsum >= drv%mina) then
-       !   grid(c-ix,r-iy)%mask=1
-       !else
-       !   grid(c-ix,r-iy)%mask=0
-       !endif
-        
-    else
-       read(2,*)
-    end if
+        !rsum=0.0
+        !do t=1,drv%nt
+        !   rsum=rsum+grid(c-ix,r-iy)%fgrd(t)
+        !enddo
+        !if (rsum >= drv%mina) then
+        !   grid(c-ix,r-iy)%mask=1
+        !else
+        !   grid(c-ix,r-iy)%mask=0
+        !endif
+          
+      else
+        read(2,*)
+      end if
 
-   enddo ! C 
+    enddo ! C 
   enddo ! R 
 
   ! write(*,*) 'Size of Tile-Space Dimension:',nchp

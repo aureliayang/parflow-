@@ -40,7 +40,7 @@ module drv_gridmodule
      !real(r8):: porsl(1:,i)      !soil, nc readin, from pf 
      real(r8):: psi0(nl_soil)       !soil, nc readin              
      real(r8):: bsw(nl_soil)        !soil, nc readin 
-     real(r8):: theta_r(nl_soil)    !soil, nc readin                                                
+     !real(r8):: theta_r(nl_soil)    !soil, nc readin                                                
      real(r8):: alpha_vgm(nl_soil)  !soil, nc readin 
      real(r8):: n_vgm(nl_soil)      !soil, nc readin 
      real(r8):: L_vgm(nl_soil)      !soil, nc readin  
@@ -52,7 +52,7 @@ module drv_gridmodule
      real(r8):: dkdry(nl_soil)      !soil, nc readin                                           
      real(r8):: BA_alpha(nl_soil)   !soil, nc readin  
      real(r8):: BA_beta(nl_soil)    !soil, nc readin                                        
-     real(r8):: htoplc          !Forest_Height.nc 
+     !real(r8):: htoplc              !Forest_Height.nc 
      real(r8):: OM_density(nl_soil)   !soil, nc readin 
      real(r8):: BD_all(nl_soil)       !soil, nc readin   
 

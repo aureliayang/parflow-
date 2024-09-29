@@ -85,12 +85,12 @@ CONTAINS
             ! trees or woody savannas
             IF ( m<6 .or. m==8) THEN
                ! 01/06/2020, yuan: adjust htop reading
-               IF (htoplc(npatch) > 2.) THEN
-                  htop(npatch) = htoplc(npatch)
-                  hbot(npatch) = htoplc(npatch)*hbot0(m)/htop0(m)
-                  hbot(npatch) = max(1., hbot(npatch))
-                  !htop(npatch) = max(htop(npatch), hbot0(m)*1.2)
-               ENDIF
+               !IF (htoplc(npatch) > 2.) THEN
+               !   htop(npatch) = htoplc(npatch)
+               !   hbot(npatch) = htoplc(npatch)*hbot0(m)/htop0(m)
+               !   hbot(npatch) = max(1., hbot(npatch))
+               !   !htop(npatch) = max(htop(npatch), hbot0(m)*1.2)
+               !ENDIF
             ENDIF
 
          ENDDO

@@ -30,7 +30,7 @@ fc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM
 !phase change, super cool and snicar scheme
 !wilting point, field capacity, saturation capacity   
                              
-hksati(1:,i)     !soil, nc readin 
+hksati(1:,i)     !soil, nc readin, plant hydraulic 
 csol(1:,i)       !soil, nc readin     
 k_solids(1:,i)   !soil, nc readin   
 dksatu(1:,i)     !soil, nc readin            
@@ -63,8 +63,9 @@ t_soisno(maxsnl+1:,i)  ### some simple values
 wliq_soisno(maxsnl+1:,i)               
 wice_soisno(maxsnl+1:,i)  
 h2osoi(1:,i) !out
-smp(1:,i)    !soil matrix potential, not used      
-hk(1:,i)     !soil hydraulic conductance, not used
+smp(1:,i)    !soil matrix potential, not used   
+!only if used in planthydraulic
+hk(1:,i)     !soil hydraulic conductance, not used, , plant hydraulic 
 rootr(1:,i)     !out
 rootflux(1:,i)  !out
 vegwp(1:,i)   !if use plant hydraulic, simple value  

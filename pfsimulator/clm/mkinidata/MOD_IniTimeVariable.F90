@@ -83,7 +83,7 @@ CONTAINS
    USE MOD_Namelist
    !USE MOD_Hydro_SoilWater
    USE MOD_Hydro_SoilFunction
-   USE MOD_SnowFraction
+   !USE MOD_SnowFraction
    USE MOD_SPMD_Task
 
    IMPLICIT NONE
