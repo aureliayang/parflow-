@@ -30,7 +30,7 @@ fc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM
 !phase change, super cool and snicar scheme
 !wilting point, field capacity, saturation capacity   
                              
-hksati(1:,i)     !soil, nc readin, plant hydraulic 
+hksati(1:,i)     !soil, nc readin, plant hydraulic, no need to read, will be passed from pf later 
 csol(1:,i)       !soil, nc readin     
 k_solids(1:,i)   !soil, nc readin   
 dksatu(1:,i)     !soil, nc readin            
