@@ -15,12 +15,6 @@ For bash:
    export PARFLOW_DIR=/home/snoopy/parflow
 ```   
 
-For csh and tcsh:
-
-```shell
-   setenv PARFLOW_DIR /home/snoopy/parflow
-```
-
 ### Step 2: Extract the Source
 
 Extract the source files from the compressed tar file.
