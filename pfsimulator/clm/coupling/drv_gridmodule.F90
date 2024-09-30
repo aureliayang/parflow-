@@ -31,7 +31,7 @@ module drv_gridmodule
      integer :: patchclass
      real(r8):: patchlatr
      real(r8):: patchlonr
-     real(r8):: vf_quartz(nl_soil)  !soil, nc readin ##not used at all
+     !real(r8):: vf_quartz(nl_soil)  !soil, nc readin ##not used at all
      real(r8):: vf_gravels(nl_soil) !soil, nc readin ##used in soil_hcap_cond, maybe setup in 2nd file
      real(r8):: vf_om(nl_soil)      !soil, nc readin ##used in soil_hcap_cond, maybe setup in 2nd file 
      real(r8):: vf_sand(nl_soil)    !soil, nc readin             

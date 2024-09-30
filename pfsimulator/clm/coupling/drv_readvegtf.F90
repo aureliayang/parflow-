@@ -70,7 +70,7 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
                   grid(c-ix,r-iy)%patchclass,                               &
                   grid(c-ix,r-iy)%patchlatr,                                &
                   grid(c-ix,r-iy)%patchlonr,                                &
-                  (grid(c-ix,r-iy)%vf_quartz(t),t=1,nl_soil),               &
+                  !(grid(c-ix,r-iy)%vf_quartz(t),t=1,nl_soil),               &
                   (grid(c-ix,r-iy)%vf_gravels(t),t=1,nl_soil),              &
                   (grid(c-ix,r-iy)%vf_om(t),t=1,nl_soil),                   &
                   (grid(c-ix,r-iy)%vf_sand(t),t=1,nl_soil),                 &

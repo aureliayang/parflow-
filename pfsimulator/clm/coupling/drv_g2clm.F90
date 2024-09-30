@@ -59,7 +59,7 @@ subroutine drv_g2clm(grid,nx,ny,planar_mask,numpatch)
       patchclass(t)     = grid(c,r)%patchclass
       patchlatr(t)      = grid(c,r)%patchlatr*4.*atan(1.)/180.  
       patchlonr(t)      = grid(c,r)%patchlonr*4.*atan(1.)/180.
-      vf_quartz(:,t)    = grid(c,r)%vf_quartz(:)
+      !vf_quartz(:,t)    = grid(c,r)%vf_quartz(:)
       vf_gravels(:,t)   = grid(c,r)%vf_gravels(:)
       vf_om(:,t)        = grid(c,r)%vf_om(:)
       vf_sand(:,t)      = grid(c,r)%vf_sand(:)
