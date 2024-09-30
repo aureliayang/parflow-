@@ -13,7 +13,7 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
    USE MOD_Vars_TimeVariables, only: pf_flux
    USE MOD_Vars_1DFluxes, only: qinfl, qseva, etr
    USE MOD_Vars_Global, only: nl_soil, dz_soi
-   USE MOD_Const_LC, only: rootfr
+   USE MOD_Const_LC, only: rootr
    implicit none
 
   !type (drvdec):: drv
@@ -50,10 +50,10 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
                abs_transpiration = 0.0
                if (etr(t) >= 0.0) abs_transpiration = etr(t)
                if (k == 1) then
-                  pf_flux(k,t)=(-abs_transpiration*rootfr(k,m)) + qinfl(t) - qseva(t)
-            !!print*, 'Beta:',(-clm(t)%qflx_tran_veg*clm(t)%rootfr(k)),clm(t)%qflx_infl,saturation(l),pressure(l)
+                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) + qinfl(t) - qseva(t)
+            !!print*, 'Beta:',(-clm(t)%qflx_tran_veg*clm(t)%rootr(k)),clm(t)%qflx_infl,saturation(l),pressure(l)
                else  
-                  pf_flux(k,t)=(-abs_transpiration*rootfr(k,m)) 
+                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) 
                endif
                ! copy back to pf, assumes timing for pf is hours and timing for clm is seconds
                ! IMF: replaced drv%dz with clm(t)%dz to allow variable DZ...

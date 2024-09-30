@@ -16,7 +16,7 @@ vf_sand(1:,i)    !soil, nc readin
 wf_gravels(1:,i) !soil, nc readin
 wf_sand(1:,i)    !soil, nc readin   
 porsl(1:,i)      !soil, nc readin 
-psi0(1:,i)       !soil, nc readin              
+psi0(1:,i)       !soil, nc readin, super cool in phase change,              
 bsw(1:,i)        !soil, nc readin 
 theta_r(1:,i)    !soil, nc readin    
 !esat = (vliq - vl_r) / (porsl - vl_r) in MOD_Hydro_SoilFunction know it is porosity*theta_r_in_pf
@@ -30,7 +30,8 @@ fc_vgm(1:,i)     !calculated inside, get_derived_parameters_vGM
 !phase change, super cool and snicar scheme
 !wilting point, field capacity, saturation capacity   
                              
-hksati(1:,i)     !soil, nc readin, plant hydraulic, no need to read, will be passed from pf later 
+hksati(1:,i)     !soil, nc readin, 
+!plant hydraulic, soil_conductance, no need to read, will be passed from pf later 
 csol(1:,i)       !soil, nc readin     
 k_solids(1:,i)   !soil, nc readin   
 dksatu(1:,i)     !soil, nc readin            
