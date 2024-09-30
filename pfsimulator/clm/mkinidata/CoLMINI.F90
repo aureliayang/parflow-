@@ -74,9 +74,9 @@ subroutine CoLMINI(idate, numpatch)
       CALL spmd_init ()
 #endif
 
-      IF (p_is_master) THEN
-         CALL system_clock (start_time)
-      ENDIF
+      !IF (p_is_master) THEN
+      !   CALL system_clock (start_time)
+      !ENDIF
 
       ! ----------------------------------------------------------------------
       !CALL getarg (1, nlfile)
