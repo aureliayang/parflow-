@@ -41,9 +41,10 @@ layer to use must be set.  The most common option will be MPI.  Here
 is a minimal example of an MPI build with CLM:
 
 ```shell
+   cd parflow
    mkdir build
    cd build
-   cmake ../parflow \
+   cmake .. \
       	 -DCMAKE_INSTALL_PREFIX=${PARFLOW_DIR} \
    	 -DPARFLOW_HAVE_CLM=ON \
 	 -DPARFLOW_AMPS_LAYER=mpi1
@@ -55,7 +56,6 @@ Once CMake has configured and created a set of Makefiles; building is
 easy:
 
 ```shell
-   cd build
    make 
    make install
 ```
