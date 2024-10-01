@@ -226,8 +226,8 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    real(r8) :: slope_x_pf((nx+2)*(ny+2)*3)        ! Slope in x-direction from PF
    real(r8) :: slope_y_pf((nx+2)*(ny+2)*3)        ! Slope in y-direction from PF
 
-   integer :: topo_mask(3,nx*ny)                 ! nx*ny >= numpatch
-   integer :: planar_mask(3,nx*ny)               ! col num, row num, mask indicator
+   integer  :: topo_mask(3,nx*ny)                 ! nx*ny >= numpatch
+   integer  :: planar_mask(3,nx*ny)               ! col num, row num, mask indicator
  
    ! output keys
    integer  :: clm_dump_interval                  ! dump inteval for CLM output, passed from PF, always in interval of CLM timestep, not time
@@ -314,7 +314,7 @@ if (time == start_time_pf) then !initialization
 
       !deltim    = DEF_simulation_time%timestep
       deltim    = dt*3600.d0
-      greenwich = DEF_simulation_time%greenwich
+      !greenwich = DEF_simulation_time%greenwich
       s_year    = DEF_simulation_time%start_year
       s_month   = DEF_simulation_time%start_month
       s_day     = DEF_simulation_time%start_day
@@ -573,6 +573,7 @@ if (time == start_time_pf) then !initialization
                porsl(k,t)   = porosity(l)
                dksatu(k,t)  = k_solids(k,t)*0.57**porsl(k,t)
                theta_r(k,t) = porsl(k,t)*res_satpf
+               !if you don't use VG model, this is only used in phase change and rss for soil beta
             end do !k
  
          endif ! active/inactive
@@ -814,11 +815,22 @@ endif
             j=planar_mask(2,t)
             l = 1+i + (nx+2)*(j) + (nx+2)*(ny+2) 
             if (planar_mask(3,t)==1) then
+
+               !eflx_lh_pf(l)      = clm(t)%eflx_lh_tot
+               !eflx_lwrad_pf(l)   = clm(t)%eflx_lwrad_out
+               !eflx_sh_pf(l)      = clm(t)%eflx_sh_tot  fsena
+               !eflx_grnd_pf(l)    = clm(t)%eflx_soil_grnd
+               !qflx_tot_pf(l)     = clm(t)%qflx_evap_tot
+               !qflx_grnd_pf(l)    = clm(t)%qflx_evap_grnd
+               !qflx_soi_pf(l)     = clm(t)%qflx_evap_soi
+               !qflx_eveg_pf(l)    = clm(t)%qflx_evap_veg 
+               !qflx_tveg_pf(l)    = clm(t)%qflx_tran_veg
+
                eflx_lh_pf(l)      = lfevpa(t)
                eflx_lwrad_pf(l)   = olrg(t)
                eflx_sh_pf(l)      = fsena(t)
                eflx_grnd_pf(l)    = fgrnd(t)
-               qflx_tot_pf(l)     = fevpl(t) - etr(t) + fevpg(t)
+               qflx_tot_pf(l)     = fevpa(t) !fevpl(t) - etr(t) + fevpg(t)
                qflx_grnd_pf(l)    = qseva(t)
                qflx_soi_pf(l)     = fevpg(t)
                qflx_eveg_pf(l)    = fevpl(t) 

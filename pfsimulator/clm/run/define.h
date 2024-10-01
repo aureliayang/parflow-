@@ -31,8 +31,8 @@
 
 ! 5. Hydrological process options.
 ! 5.1 Two soil hydraulic models can be used.
-#undef   Campbell_SOIL_MODEL
-#define  vanGenuchten_Mualem_SOIL_MODEL
+#define Campbell_SOIL_MODEL
+#undef  vanGenuchten_Mualem_SOIL_MODEL
 ! 5.2 If defined, lateral flow is modeled.
 #undef CatchLateralFlow
 !    Conflicts :
@@ -73,3 +73,5 @@
 #ifdef VectorInOneFileP
 #undef VectorInOneFileS
 #endif
+
+#define DYN_PHENOLOGY

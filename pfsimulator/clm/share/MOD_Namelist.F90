@@ -278,7 +278,7 @@ MODULE MOD_Namelist
    character(len=256) :: DEF_file_snowaging  = 'null'
 
    ! .true. read aerosol deposition data from file or .false. set in the code
-   logical :: DEF_Aerosol_Readin              = .true.
+   logical :: DEF_Aerosol_Readin              = .false.
 
    ! .true. Read aerosol deposition climatology data or .false. yearly changed
    logical :: DEF_Aerosol_Clim                = .false.
@@ -294,7 +294,7 @@ MODULE MOD_Namelist
    logical :: DEF_USE_IRRIGATION = .false.
    
    !Plant Hydraulics
-   logical            :: DEF_USE_PLANTHYDRAULICS = .true.
+   logical            :: DEF_USE_PLANTHYDRAULICS = .false.
    !Medlyn stomata model
    logical            :: DEF_USE_MEDLYNST = .false.
    !WUE stomata model
