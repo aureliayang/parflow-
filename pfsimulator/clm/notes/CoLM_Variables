@@ -39,8 +39,8 @@ dksatf(1:,i)     !soil, nc readin
 dkdry(1:,i)      !soil, nc readin                                           
 BA_alpha(1:,i)   !soil, nc readin  
 BA_beta(1:,i)    !soil, nc readin                                        
-htop(i)          !Forest_Height.nc     
-hbot(i)          !MOD_Const_LC.F90
+htop(i)          !htop readin     
+hbot(i)          !htop readin
 topostd(i)       !readin, but not used in pf 
 zlnd            
 zsno            
@@ -64,7 +64,7 @@ t_soisno(maxsnl+1:,i)  ### some simple values
 wliq_soisno(maxsnl+1:,i)               
 wice_soisno(maxsnl+1:,i)  
 h2osoi(1:,i) !out
-smp(1:,i)    !soil matrix potential, not used   
+smp(1:,i)    !soil matrix potential, plant hydraulics, not used currently, initialized, pf press will be used  
 !only if used in planthydraulic
 hk(1:,i)     !soil hydraulic conductance, not used, , plant hydraulic 
 rootr(1:,i)     !out
@@ -110,9 +110,9 @@ extkb(i)          !albland
 extkd(i)          !albland 
 zwt(i)            !no use
 wa(i)             !no use
-wetwat(i)         !no use  
+wetwat(i)         !no use, new_snow on warm wetland  
 wat(i)            !no use    
-wdsrf(i)          !no use
+wdsrf(i)          !no use  in VSF and some other HYDRO subroutines, now removed
 rss(i)            !out      
 t_lake(1:,i)      !no use in pf
 lake_icefrac(1:,i)  !no use in pf             
@@ -129,7 +129,7 @@ mss_dst3(:,i)     !albland
 mss_dst4(:,i)     !albland
 trad(i)           !t_grnd, out
 tref(i)           !t_grnd, out
-qref(i)           !t_grnd, out                   
+qref(i)           !0.3                 
 rst(i)     !out, canopy stomatal resistance   
 emis(i)    !emis  = 1.0 
 z0m(i)     !z0m    = htop * z0mr(patchclass(ipatch))
