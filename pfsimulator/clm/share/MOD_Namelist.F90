@@ -241,7 +241,7 @@ MODULE MOD_Namelist
                                                    ! 6: Tarnawski and Leong (2012)
                                                    ! 7: De Vries (1963)
                                                    ! 8: Yan Hengnian, He Hailong et al.(2019)
-   logical :: DEF_USE_SUPERCOOL_WATER = .true.     ! supercooled soil water scheme, Niu & Yang (2006)
+   logical :: DEF_USE_SUPERCOOL_WATER = .false.    ! supercooled soil water scheme, Niu & Yang (2006)
 
    ! Options for soil surface resistance schemes
    ! 0: NONE soil surface resistance
@@ -250,7 +250,7 @@ MODULE MOD_Namelist
    ! 3: TR13, Tang and Riley (2013)
    ! 4: LP92, Lee and Pielke (1992)
    ! 5: S92,  Sellers et al (1992)
-   integer :: DEF_RSS_SCHEME = 1
+   integer :: DEF_RSS_SCHEME = 4
 
    ! Options for runoff parameterization schemes
    ! 0: scheme from SIMTOP model, also used in CoLM2014
@@ -267,7 +267,7 @@ MODULE MOD_Namelist
    ! Corresponding vars are named as ***_soil, ***_snow.
    logical :: DEF_SPLIT_SOILSNOW = .false.
 
-   logical :: DEF_USE_VariablySaturatedFlow = .true.
+   logical :: DEF_USE_VariablySaturatedFlow = .false.
    logical :: DEF_USE_BEDROCK               = .false.
    logical :: DEF_USE_OZONESTRESS           = .false.
    logical :: DEF_USE_OZONEDATA             = .false.
