@@ -1059,7 +1059,7 @@ CONTAINS
          DO i = 1, numpatch
             IF (use_soilini) THEN
                DO nsl = 1, nl_soil
-                  CALL polint(soil_z,soil_t(:,i),nl_soil_ini,z_soi(nsl),t_soisno(nsl,i))
+                  !CALL polint(soil_z,soil_t(:,i),nl_soil_ini,z_soi(nsl),t_soisno(nsl,i))
                ENDDO
             ELSE
                t_soisno(1:,i) = 283.  !@CY: we may not use soilini currently
