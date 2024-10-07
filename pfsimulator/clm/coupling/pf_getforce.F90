@@ -2,7 +2,7 @@
 
 subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,clm_forc_veg, &
-  numpatch,planar_mask)
+  numpatch,planar_mask,idate)
 
 !=========================================================================
 !
@@ -36,6 +36,9 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   !use clmtype             ! 1-D CLM variables
   !use clm_varcon, only : tfrz, tcrit
   USE MOD_Vars_1DForcing
+  USE MOD_OrbCoszen
+  USE MOD_Vars_TimeInvariants, only: patchlonr, patchlatr
+  USE MOD_TimeManager
   implicit none
 
 !=== Arguments ===========================================================
@@ -60,6 +63,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   real(r8),intent(in) :: displa_pf((nx+2)*(ny+2)*3)         ! displacement height, passed from PF !BH
   !real(r8),intent(in) :: slope_x_pf((nx+2)*(ny+2)*3)        ! slope in x direction, passed from PF !IJB
   !real(r8),intent(in) :: slope_y_pf((nx+2)*(ny+2)*3)        ! slope in y direction, passed from PF !IJB
+  integer, intent(in) :: idate(3)
 
 
 !=== Local Variables =====================================================
@@ -68,6 +72,8 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   real(r8) prcp      ! precipitation [mm/s]
   integer t,i,j,k,l  ! Looping indices
 ! integer nx,ny      ! Array sizes
+  real(r8) :: a, calday                                             ! Julian cal day (1.xx to 365.xx)
+  real(r8) :: sunang, cloud, difrat, vnrat
   
 !=== End Variable List ===================================================
 
@@ -108,11 +114,37 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         !Treat air density
         forc_rhoair(t)  = forc_psrf(t)/(forc_t(t)*2.8704e2)
 
-        !Treat solar (SW)
-        forc_sols(t)    = forc_swrad(t)*35./100.   !forc_sols
-        forc_soll(t)    = forc_swrad(t)*35./100.   !forc_soll
-        forc_solsd(t)   = forc_swrad(t)*15./100.   !forc_solsd
-        forc_solld(t)   = forc_swrad(t)*15./100.   !forc_solad
+        !======================================
+        !!Treat solar (SW)
+        !forc_sols(t)    = forc_swrad(t)*35./100.   !forc_sols
+        !forc_soll(t)    = forc_swrad(t)*35./100.   !forc_soll
+        !forc_solsd(t)   = forc_swrad(t)*15./100.   !forc_solsd
+        !forc_solld(t)   = forc_swrad(t)*15./100.   !forc_solad
+        a = forc_swrad(t)
+        IF (isnan(a)) a = 0
+        calday = calendarday(idate)
+        sunang = orb_coszen (calday, patchlonr(t), patchlatr(t))
+        IF (sunang.eq.0) THEN
+           cloud = 0.
+        ELSE
+           cloud = (1160.*sunang-a)/(963.*sunang)
+        ENDIF
+        cloud = max(cloud,0.0001)
+        cloud = min(cloud,1.)
+        cloud = max(0.58,cloud)
+
+        difrat = 0.0604/(sunang-0.0223)+0.0683
+        IF(difrat.lt.0.) difrat = 0.
+        IF(difrat.gt.1.) difrat = 1.
+
+        difrat = difrat+(1.0-difrat)*cloud
+        vnrat = (580.-cloud*464.)/((580.-cloud*499.)+(580.-cloud*464.))
+
+        forc_sols(t)  = a*(1.0-difrat)*vnrat
+        forc_soll(t)  = a*(1.0-difrat)*(1.0-vnrat)
+        forc_solsd(t) = a*difrat*vnrat
+        forc_solld(t) = a*difrat*(1.0-vnrat)
+        !======================================
 
         forc_prc(t)     = prcp/3.d0
         forc_prl(t)     = prcp*2.d0/3.d0

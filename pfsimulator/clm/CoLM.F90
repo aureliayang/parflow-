@@ -620,7 +620,7 @@ endif
          ! CALL read_forcing (jdate, dir_forcing)
          call pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
          patm_pf,qatm_pf,lai_pf,sai_pf,z0m_pf,displa_pf,clm_forc_veg, &
-         numpatch,planar_mask)
+         numpatch,planar_mask,jdate)
 
          IF(DEF_USE_OZONEDATA)THEN
             !CALL update_Ozone_data(itstamp, deltim)
