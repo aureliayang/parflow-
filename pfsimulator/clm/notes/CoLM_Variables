@@ -1,4 +1,4 @@
-###========================Invariants===============================
+###========================Invariants 51===============================
 patchclass(i)   
 patchtype(i)     
 patchlonr(i)    
@@ -57,7 +57,7 @@ smpmin
 trsmx0 
 tcrit    ###the above variables are values in MOD_Initialize                                            
 
-###========================Variables==================================
+###========================Variables 82==================================
 z_sno(maxsnl+1:,i)               
 dz_sno(maxsnl+1:,i)    ### maybe zero if not use snowinit            
 t_soisno(maxsnl+1:,i)  ### some simple values      
@@ -142,7 +142,7 @@ fm(i)      !fm    = alog(30.)
 fh(i)      !fh    = alog(30.)    
 fq(i)      !fq    = alog(30.)
 
-###========================1D_Flux=======================================
+###========================1D_Flux 45=======================================
 taux(i)         
 tauy(i)         
 fsena(i)     
@@ -156,7 +156,7 @@ fevpg(i)
 fgrnd(i)  
 olrg(i)     
 xerr(i)        
-zerr(i) 
+zerr(i) 14
 
 sabvsun(i)                  
 sabvsha(i)      
@@ -177,7 +177,7 @@ solniln(i)
 srvdln(i)                   
 srviln(i)       
 srndln(i)      
-srniln(i)
+srniln(i) 20
                                               
 rsur(i)        
 rsur_se(i)      
@@ -186,14 +186,14 @@ rnof(i)
 qintr(i)        
 qinfl(i)        
 qdrip(i)   
-qcharge(i) 
+qcharge(i) 8
 
 assim(i)        
-respc(i)      
+respc(i)     2 
        
-oro(i)       //redeclared in driver, not the same as that (oroflag) in flux
+oro(i)   1    //redeclared in driver, not the same as that (oroflag) in flux
 
-###========================1D_Forcing=============================
+###========================1D_Forcing 24=============================
 forc_pco2m(i)   !constant in old clm, currently, set as constant temporarily 
 forc_po2m(i)    !constant in old clm, currently, set as constant temporarily    
 forc_us(i)      !wind, pfb readin     
@@ -219,7 +219,7 @@ forc_hpbl(i)    !eddy
 forc_aerdep(:,i) !aerosol
 forc_ozone(i)    !ozone
 
-###========================Const_LC=====================================
+###========================Const_LC 29=====================================
 rootfr(1:,m)    
 sqrtdi(m)                                     
 effcon(m)       
@@ -264,7 +264,7 @@ deltim_phy,
 patchmask      (:) !not used in pf
 OM_density   !soil, nc readin 
 BD_all       !soil, nc readin 
-wfc          !calculated inside, only need to initialize, soil parameter readin, now passed by pf
+wfc          !calculated inside, only need to initialize, soil parameter readin, now passed by pf, used in BGC
 vic_b_infilt (:)
 vic_Dsmax    (:)
 vic_Ds       (:)
@@ -308,8 +308,6 @@ remove two subroutines: AerosolDepInit, AerosolDepReadin
 r8 precision
 #MOD_Glacier.F90
 r8 precision
-#MOD_Hydro_SoilWater.F90
-r8 precision
 #MOD_LeafInterception.F90
 line length
 #MOD_LeafTemperature.F90
@@ -335,6 +333,7 @@ beta soil
 a lot
 #MOD_Eroot.F90
 water stress
+#MOD_Namelist.F90
 
 I think wfc is only used in beta soil as local which is recaculated in the subroutine. 
 Though it was readin through TimeInvariants, maybe used in BGC. #also claculated in soil parameter readin
@@ -349,3 +348,7 @@ some
 add qseva
 #MOD_Vars_1DForcing.F90
 numpatch
+#MOD_Vars_TimeVariables.F90
+3 variables
+#MOD_Vars_TimeInvariants.F90
+1 variable

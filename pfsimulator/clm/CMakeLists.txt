@@ -72,7 +72,7 @@ set (SRC_FILES
   ./coupling/drv_readvegtf.F90
   )
 
-include_directories(./run)
+include_directories(./include)
 #set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -M${CMAKE_CURRENT_BINARY_DIR}")
 
 add_library(pfclm ${SRC_FILES})

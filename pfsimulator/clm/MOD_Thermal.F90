@@ -600,7 +600,7 @@ ENDIF
 #endif
                             dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss,&
                             pf_vol_liq)
-         IF(lb <= 0) rss = 1.d0
+         !IF(lb <= 0) rss = 1.d0
       ELSE
          rss = 0.
       ENDIF
