@@ -156,7 +156,7 @@ MODULE MOD_Namelist
    ! Options for soil reflectance setting schemes
    ! 1: Guessed soil color type according to land cover classes
    ! 2: Read a global soil color map from CLM
-   integer :: DEF_SOIL_REFL_SCHEME = 2
+   integer :: DEF_SOIL_REFL_SCHEME = 1
 
    ! ----- merge data in aggregation when send data from IO to worker -----
    logical :: USE_zip_for_aggregation = .true.

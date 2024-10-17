@@ -406,7 +406,7 @@ IF(patchtype<=1)THEN   ! soil ground only
 IF ((.not.DEF_SPLIT_SOILSNOW) .or. (patchtype==1 .and. DEF_URBAN_RUN)) THEN
       IF(lb >= 1)THEN
          ! make consistent with how evap_grnd removed in infiltration
-         wliq_soisno(1) = max(0., wliq_soisno(1) + qsdew * deltim)
+         !wliq_soisno(1) = max(0., wliq_soisno(1) + qsdew * deltim)
          wice_soisno(1) = max(0., wice_soisno(1) + (qfros-qsubl) * deltim)
       ENDIF
 
@@ -418,7 +418,7 @@ IF ((.not.DEF_SPLIT_SOILSNOW) .or. (patchtype==1 .and. DEF_URBAN_RUN)) THEN
       ENDIF
 
 ELSE
-      wliq_soisno(1) = max(0., wliq_soisno(1) + qsdew_soil * deltim)
+      !wliq_soisno(1) = max(0., wliq_soisno(1) + qsdew_soil * deltim)
       wice_soisno(1) = max(0., wice_soisno(1) + (qfros_soil-qsubl_soil) * deltim)
 
       err_solver = (sum(wliq_soisno(1:))+sum(wice_soisno(1:))+wa) - w_sum &

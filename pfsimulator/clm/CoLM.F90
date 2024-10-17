@@ -330,7 +330,7 @@ if (time == start_time_pf) then !initialization
 
       !spinup_repeat = DEF_simulation_time%spinup_repeat
 
-      CALL initimetype(greenwich)
+      CALL initimetype(greenwich) !set as true in namelist
       CALL monthday2julian(s_year,s_month,s_day,s_julian)
       !CALL monthday2julian(e_year,e_month,e_day,e_julian)
       !CALL monthday2julian(p_year,p_month,p_day,p_julian)
@@ -374,6 +374,8 @@ if (time == start_time_pf) then !initialization
 
          enddo !i
       enddo !j
+
+      deallocate( counter )
 
       CALL Init_GlobalVars
       CAll Init_LC_Const
@@ -571,7 +573,7 @@ if (time == start_time_pf) then !initialization
                ! convert clm space to parflow space, note that PF space has ghost nodes
                l = 1+i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))
                porsl(k,t)   = porosity(l)
-               dksatu(k,t)  = k_solids(k,t)*0.57**porsl(k,t)
+               !dksatu(k,t)  = k_solids(k,t)*0.57**porsl(k,t)
                theta_r(k,t) = porsl(k,t)*res_satpf
                !if you don't use VG model, this is only used in phase change and rss for soil beta
             end do !k
