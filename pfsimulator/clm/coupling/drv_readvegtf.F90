@@ -1,7 +1,7 @@
 !#include <misc.h>
 
 !subroutine drv_readvegtf (drv,grid,tile,clm,nx, ny, ix, iy,gnx, gny, rank)
-subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
+subroutine drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
 
   !=========================================================================
   !
@@ -21,7 +21,7 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
   ! $Id: drv_readvegtf.F90,v 1.1.1.1 2006/02/14 23:05:52 kollet Exp $
   !=========================================================================
 
-   use MOD_Precision
+  use MOD_Precision
   !use drv_module          ! 1-D Land Model Driver variables
   !use drv_tilemodule      ! Tile-space variables
   !use clmtype             ! 1-D CLM variables
@@ -63,7 +63,7 @@ subroutine drv_readvegtf (grid,nx, ny, ix, iy,gnx, gny, rank)
 !  print*, 
   ! do r=1,drv%nr     !rows
    ! do c=1,drv%nc  !columns
-  do r =1, gny  ! @RMM replaced local row/column with global grid
+  do r = 1, gny  ! @RMM replaced local row/column with global grid
     do c = 1, gnx
       if (((c > ix).and.(c <= (ix+nx))).and.((r > iy).and.(r <= (iy+ny)))) then
         read(2,*) i,j,          &

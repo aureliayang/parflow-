@@ -583,9 +583,12 @@ if (time == start_time_pf) then !initialization
       end do !t
 
       allocate (grid(nx,ny)) 
+
       call drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
       call drv_g2clm (grid,nx,ny,planar_mask,numpatch)
+
       deallocate (grid)
+
       call CoLMINI(jdate, numpatch)
 
 endif

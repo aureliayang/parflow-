@@ -47,7 +47,7 @@ MODULE MOD_Vars_Global
 
    ! vertical layer number
    integer, parameter :: maxsnl    = -5
-   integer, parameter :: nl_soil   = 4
+   integer, parameter :: nl_soil   = 10
    integer, parameter :: nl_soil_full = 15
 
    integer, parameter :: nl_lake   = 10
