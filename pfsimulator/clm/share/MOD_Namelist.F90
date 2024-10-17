@@ -964,7 +964,7 @@ CONTAINS
          write(*,*) '                  *****                  '
          write(*,*) 'Note: DEF_USE_VariablySaturatedFlow is automaticlly set to .true.  '
          write(*,*) 'when using vanGenuchten_Mualem_SOIL_MODEL. '
-         DEF_USE_VariablySaturatedFlow = .true.
+         DEF_USE_VariablySaturatedFlow = .false.
 #endif
 #if (defined CatchLateralFlow)
          write(*,*) '                  *****                  '
