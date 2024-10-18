@@ -11,7 +11,7 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
    USE MOD_Precision
    USE MOD_Vars_TimeInvariants, only: patchclass
    USE MOD_Vars_TimeVariables, only: pf_flux, rootr
-   USE MOD_Vars_1DFluxes, only: qinfl, qseva, etr
+   USE MOD_Vars_1DFluxes, only: qinfl, etr !, qseva
    USE MOD_Vars_Global, only: nl_soil, dz_soi
    implicit none
 
@@ -22,9 +22,9 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
 
   integer i,j,k,l,t,m
   integer nx,ny,nz,j_incr,k_incr,numpatch
-  ! real(r8) begwatb,endwatb !@ beginning and ending water balance over ENTIRE domain
-  real(r8) tot_infl_mm,tot_tran_veg_mm,tot_drain_mm !@ total mm of h2o from infiltration and transpiration
-  real(r8) error !@ mass balance error over entire domain
+  !real(r8) begwatb,endwatb !@ beginning and ending water balance over ENTIRE domain
+  !real(r8) tot_infl_mm,tot_tran_veg_mm,tot_drain_mm !@ total mm of h2o from infiltration and transpiration
+  !real(r8) error !@ mass balance error over entire domain
   real(r8) evap_trans((nx+2)*(ny+2)*(nz+2))
   real(r8) saturation((nx+2)*(ny+2)*(nz+2)),pressure((nx+2)*(ny+2)*(nz+2))
   real(r8) porosity((nx+2)*(ny+2)*(nz+2))
@@ -49,7 +49,7 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
                abs_transpiration = 0.0
                if (etr(t) >= 0.0) abs_transpiration = etr(t)
                if (k == 1) then
-                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) + qinfl(t) - qseva(t)
+                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) + qinfl(t) !- qseva(t)
             !!print*, 'Beta:',(-clm(t)%qflx_tran_veg*clm(t)%rootr(k)),clm(t)%qflx_infl,saturation(l),pressure(l)
                else  
                   pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) 
