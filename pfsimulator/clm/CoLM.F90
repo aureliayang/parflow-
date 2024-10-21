@@ -544,6 +544,15 @@ if (time == start_time_pf) then !initialization
       idate   = sdate
       !itstamp = ststamp
 
+      allocate (grid(nx,ny)) 
+
+      call drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
+      call drv_g2clm (grid,nx,ny,planar_mask,numpatch)
+
+      deallocate (grid)
+
+      call CoLMINI(jdate, numpatch)
+
       do t = 1, numpatch  
 
          ! check if cell is active
@@ -581,15 +590,6 @@ if (time == start_time_pf) then !initialization
          endif ! active/inactive
  
       end do !t
-
-      allocate (grid(nx,ny)) 
-
-      call drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
-      call drv_g2clm (grid,nx,ny,planar_mask,numpatch)
-
-      deallocate (grid)
-
-      call CoLMINI(jdate, numpatch)
 
 endif
 

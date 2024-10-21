@@ -928,24 +928,24 @@ CONTAINS
          ENDIF
          close(10)
 
-         open(10, status='OLD', file=trim(DEF_forcing_namelist), form="FORMATTED")
-         read(10, nml=nl_colm_forcing, iostat=ierr)
-         IF (ierr /= 0) THEN
-            CALL CoLM_Stop (' ***** ERROR: Problem reading namelist: '// trim(DEF_forcing_namelist))
-         ENDIF
-         close(10)
+         !open(10, status='OLD', file=trim(DEF_forcing_namelist), form="FORMATTED")
+         !read(10, nml=nl_colm_forcing, iostat=ierr)
+         !IF (ierr /= 0) THEN
+         !   CALL CoLM_Stop (' ***** ERROR: Problem reading namelist: '// trim(DEF_forcing_namelist))
+         !ENDIF
+         !close(10)
 #ifdef SinglePoint
          DEF_forcing%has_missing_value = .false.
 #endif
 
-         DEF_dir_landdata = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/landdata'
-         DEF_dir_restart  = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/restart'
-         DEF_dir_history  = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/history'
+         !DEF_dir_landdata = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/landdata'
+         !DEF_dir_restart  = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/restart'
+         !DEF_dir_history  = trim(DEF_dir_output) // '/' // trim(adjustl(DEF_CASE_NAME)) // '/history'
 
-         CALL system('mkdir -p ' // trim(adjustl(DEF_dir_output  )))
-         CALL system('mkdir -p ' // trim(adjustl(DEF_dir_landdata)))
-         CALL system('mkdir -p ' // trim(adjustl(DEF_dir_restart )))
-         CALL system('mkdir -p ' // trim(adjustl(DEF_dir_history )))
+         !CALL system('mkdir -p ' // trim(adjustl(DEF_dir_output  )))
+         !CALL system('mkdir -p ' // trim(adjustl(DEF_dir_landdata)))
+         !CALL system('mkdir -p ' // trim(adjustl(DEF_dir_restart )))
+         !CALL system('mkdir -p ' // trim(adjustl(DEF_dir_history )))
 
 #ifdef SinglePoint
          DEF_nx_blocks = 360

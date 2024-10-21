@@ -38,6 +38,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   USE MOD_Vars_1DForcing
   USE MOD_OrbCoszen
   USE MOD_Vars_TimeInvariants, only: patchlonr, patchlatr
+  USE MOD_Const_Physical, only: rgas
   USE MOD_TimeManager
   implicit none
 
@@ -80,9 +81,9 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
 !=== Increment Time Step Counter
 ! clm%istep=clm%istep+1 
 ! clm%istep=istep_pf
-  forc_hgt_u = 10.d0
-  forc_hgt_t = 2.d0
-  forc_hgt_q = 2.d0
+  forc_hgt_u = 50.d0
+  forc_hgt_t = 40.d0
+  forc_hgt_q = 40.d0
 
 ! Valdai - 1D Met data
 
@@ -112,7 +113,16 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         endif
       
         !Treat air density
-        forc_rhoair(t)  = forc_psrf(t)/(forc_t(t)*2.8704e2)
+        !forc_rhoair(t)  = forc_psrf(t)/(forc_t(t)*2.8704e2)
+
+        IF(forc_t(t) < 180.) forc_t(t) = 180.
+        ! the highest air temp was found in Kuwait 326 K, Sulaibya 2012-07-31;
+        ! Pakistan, Sindh 2010-05-26; Iraq, Nasiriyah 2011-08-03
+        IF(forc_t(t) > 326.) forc_t(t) = 326.
+
+        forc_rhoair(t) = (forc_psrf(t) &
+           - 0.378*forc_q(t)*forc_psrf(t)/(0.622+0.378*forc_q(t)))&
+           / (rgas*forc_t(t))
 
         !======================================
         !!Treat solar (SW)
