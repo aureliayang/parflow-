@@ -77,10 +77,21 @@ subroutine drv_g2clm(grid,nx,ny,planar_mask,numpatch)
       dksatu(:,t)       = grid(c,r)%dksatu(:)
       dksatf(:,t)       = grid(c,r)%dksatf(:)
       dkdry(:,t)        = grid(c,r)%dkdry(:)
-      BA_alpha(:,t)     = grid(c,r)%BA_alpha(:)
-      BA_beta(:,t)      = grid(c,r)%BA_beta(:)
+      !BA_alpha(:,t)     = grid(c,r)%BA_alpha(:)
+      !BA_beta(:,t)      = grid(c,r)%BA_beta(:)
       !OM_density(:,t)   = grid(c,r)%OM_density(:)
       !BD_all(:,t)       = grid(c,r)%BD_all(:)
+
+      WHERE ((vf_gravels(:,t) + vf_sand(:,t)) > 0.4)
+        BA_alpha(:,t) = 0.38
+        BA_beta(:,t) = 35.0
+      ELSEWHERE ((vf_gravels(:,t) + vf_sand(:,t)) > 0.25)
+        BA_alpha(:,t) = 0.24
+        BA_beta(:,t) = 26.0
+      ELSEWHERE
+        BA_alpha(:,t) = 0.2
+        BA_beta(:,t) = 10.0
+      END WHERE
 
   enddo
 

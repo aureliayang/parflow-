@@ -50,8 +50,8 @@ module drv_gridmodule
      real(r8):: dksatu(nl_soil)     !soil, nc readin            
      real(r8):: dksatf(nl_soil)     !soil, nc readin     
      real(r8):: dkdry(nl_soil)      !soil, nc readin                                           
-     real(r8):: BA_alpha(nl_soil)   !soil, nc readin  
-     real(r8):: BA_beta(nl_soil)    !soil, nc readin                                        
+     !real(r8):: BA_alpha(nl_soil)   !soil, nc readin  
+     !real(r8):: BA_beta(nl_soil)    !soil, nc readin                                        
      !real(r8):: htoplc              !Forest_Height.nc 
      !real(r8):: OM_density(nl_soil)   !soil, nc readin 
      !real(r8):: BD_all(nl_soil)       !soil, nc readin   

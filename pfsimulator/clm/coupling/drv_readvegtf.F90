@@ -67,9 +67,9 @@ subroutine drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
     do c = 1, gnx
       if (((c > ix).and.(c <= (ix+nx))).and.((r > iy).and.(r <= (iy+ny)))) then
         read(2,*) i,j,          &
-                  grid(c-ix,r-iy)%patchclass,                               &
+                  grid(c-ix,r-iy)%patchlonr,                                &       
                   grid(c-ix,r-iy)%patchlatr,                                &
-                  grid(c-ix,r-iy)%patchlonr,                                &
+                  grid(c-ix,r-iy)%patchclass,                               &
                   !(grid(c-ix,r-iy)%vf_quartz(t),t=1,nl_soil),               &
                   (grid(c-ix,r-iy)%vf_gravels(t),t=1,nl_soil),              &
                   (grid(c-ix,r-iy)%vf_om(t),t=1,nl_soil),                   &
@@ -88,8 +88,8 @@ subroutine drv_readvegtf (grid, nx, ny, ix, iy, gnx, gny, rank)
                   (grid(c-ix,r-iy)%dksatu(t),t=1,nl_soil),                  &
                   (grid(c-ix,r-iy)%dksatf(t),t=1,nl_soil),                  &
                   (grid(c-ix,r-iy)%dkdry(t),t=1,nl_soil),                   &
-                  (grid(c-ix,r-iy)%BA_alpha(t),t=1,nl_soil),                &
-                  (grid(c-ix,r-iy)%BA_beta(t),t=1,nl_soil)
+                  !(grid(c-ix,r-iy)%BA_alpha(t),t=1,nl_soil),                &
+                  !(grid(c-ix,r-iy)%BA_beta(t),t=1,nl_soil)
                   !(grid(c-ix,r-iy)%OM_density(t),t=1,nl_soil),              &
                   !(grid(c-ix,r-iy)%BD_all(t),t=1,nl_soil)
                   !grid(c-ix,r-iy)%htoplc
