@@ -1328,7 +1328,7 @@ SUBROUTINE CoLMMAIN ( &
 #if(defined DYN_PHENOLOGY)
       ! need to update lai and sai, fveg, green, they are done once in a day only
          IF (dolai) THEN
-            CALL LAI_empirical(patchclass,nl_soil,rootfr,t_soisno(1:),lai,sai,fveg,green)
+            CALL LAI_empirical(patchclass,nl_soil,rootfr,t_soisno(1:),tlai(ipatch),tsai(ipatch),fveg,green)
          ENDIF
 #endif
 
