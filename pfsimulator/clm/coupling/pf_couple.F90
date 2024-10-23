@@ -43,16 +43,16 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
          if (planar_mask(3,t) == 1) then
             i = planar_mask(1,t)
             j = planar_mask(2,t)
-            m = patchclass(t)
+            !m = patchclass(t)
             do k = 1, nl_soil
                l = 1+i + j_incr*(j) + k_incr*(topo_mask(1,t)-(k-1))    ! updated indexing @RMM 4-12-09
                abs_transpiration = 0.0
                if (etr(t) >= 0.0) abs_transpiration = etr(t)
                if (k == 1) then
-                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) + qinfl(t) !- qseva(t)
+                  pf_flux(k,t)=(-abs_transpiration*rootr(k,t)) + qinfl(t) !- qseva(t)
             !!print*, 'Beta:',(-clm(t)%qflx_tran_veg*clm(t)%rootr(k)),clm(t)%qflx_infl,saturation(l),pressure(l)
                else  
-                  pf_flux(k,t)=(-abs_transpiration*rootr(k,m)) 
+                  pf_flux(k,t)=(-abs_transpiration*rootr(k,t))
                endif
                ! copy back to pf, assumes timing for pf is hours and timing for clm is seconds
                ! IMF: replaced drv%dz with clm(t)%dz to allow variable DZ...

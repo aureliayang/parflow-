@@ -180,6 +180,7 @@ CONTAINS
    ! --------------------------------------------------------------------
    USE MOD_SPMD_Task
    !USE MOD_LandPatch
+   IMPLICIT NONE
    integer :: numpatch
 
       IF (p_is_worker) THEN

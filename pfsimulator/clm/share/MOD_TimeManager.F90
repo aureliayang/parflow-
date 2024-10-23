@@ -557,31 +557,31 @@ CONTAINS
       RETURN
    END FUNCTION get_calday
 
-   !integer FUNCTION minutes_since_1900 (year, julianday, second)
+   integer FUNCTION minutes_since_1900 (year, julianday, second)
 
-   !USE MOD_UserDefFun
-   !IMPLICIT NONE
-   !integer, intent(in) :: year, julianday, second
+   USE MOD_UserDefFun
+   IMPLICIT NONE
+   integer, intent(in) :: year, julianday, second
 
-   !integer :: refyear(10) = (/1, 1900, 1950, 1980, 1990, 2000, 2005, 2010, 2015, 2020/)
-   !integer :: refval (10) = (/-998776800,0,26297280,42075360,47335680,52594560,55225440,&
-   !                           57854880,60484320,63113760/)
-   !integer :: iref, iyear
+   integer :: refyear(10) = (/1, 1900, 1950, 1980, 1990, 2000, 2005, 2010, 2015, 2020/)
+   integer :: refval (10) = (/-998776800,0,26297280,42075360,47335680,52594560,55225440,&
+                              57854880,60484320,63113760/)
+   integer :: iref, iyear
 
-   !   iref = findloc_ud(refyear <= year, back=.true.)
-   !   minutes_since_1900 = refval(iref)
-   !   DO iyear = refyear(iref), year-1
-   !      IF (isleapyear(iyear)) THEN
-   !         minutes_since_1900 = minutes_since_1900 + 527040
-   !      ELSE
-   !         minutes_since_1900 = minutes_since_1900 + 525600
-   !      ENDIF
-   !   ENDDO
+      iref = findloc_ud(refyear <= year, back=.true.)
+      minutes_since_1900 = refval(iref)
+      DO iyear = refyear(iref), year-1
+         IF (isleapyear(iyear)) THEN
+            minutes_since_1900 = minutes_since_1900 + 527040
+         ELSE
+            minutes_since_1900 = minutes_since_1900 + 525600
+         ENDIF
+      ENDDO
 
-   !   minutes_since_1900 = minutes_since_1900 + (julianday-1) * 1440
-   !   minutes_since_1900 = minutes_since_1900 + second/60
+      minutes_since_1900 = minutes_since_1900 + (julianday-1) * 1440
+      minutes_since_1900 = minutes_since_1900 + second/60
 
-   !END FUNCTION minutes_since_1900
+   END FUNCTION minutes_since_1900
 
    ! -----------------------------------------------------------------------
    SUBROUTINE gmt2local(idate, long, ldate)
