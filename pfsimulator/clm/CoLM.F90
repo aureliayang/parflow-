@@ -279,7 +279,8 @@ if (time == start_time_pf) then !initialization
       CALL spmd_init ()
 #endif
 
-      CALL getarg (1, nlfile)
+      !CALL getarg (1, nlfile)
+      nlfile = 'CoLM_nlfile.nml'
 
       CALL read_namelist (nlfile)
 
@@ -314,7 +315,7 @@ if (time == start_time_pf) then !initialization
 
       !deltim    = DEF_simulation_time%timestep
       deltim    = dt*3600.d0
-      !greenwich = DEF_simulation_time%greenwich
+      greenwich = DEF_simulation_time%greenwich
       s_year    = DEF_simulation_time%start_year
       s_month   = DEF_simulation_time%start_month
       s_day     = DEF_simulation_time%start_day
@@ -378,8 +379,6 @@ if (time == start_time_pf) then !initialization
       deallocate( counter )
 
       CALL Init_GlobalVars
-      CAll Init_LC_Const
-      CAll Init_PFT_Const
 
       do t = 1, numpatch
 
@@ -416,6 +415,9 @@ if (time == start_time_pf) then !initialization
 
          endif ! active/inactive
       enddo !t 
+
+      CAll Init_LC_Const
+      CAll Init_PFT_Const
 
       !CALL pixel%load_from_file    (dir_landdata)
       !CALL gblock%load_from_file   (dir_landdata)

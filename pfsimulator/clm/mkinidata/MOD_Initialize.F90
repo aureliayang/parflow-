@@ -1070,8 +1070,9 @@ CONTAINS
          DO i = 1, numpatch
             ! Call Ecological Model()  !not commented by CY
             ltyp = patchtype(i)
+            m = patchclass(i)
             IF(ltyp > 0) THEN
-               CALL lai_empirical(ltyp, nl_soil,rootfr(1:,i), t_soisno(1:,i),tlai(i),tsai(i),fveg(i),green(i))
+               CALL lai_empirical(ltyp, nl_soil,rootfr(1:,m), t_soisno(1:,i),tlai(i),tsai(i),fveg(i),green(i))
             ENDIF
          ENDDO
 
