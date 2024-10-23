@@ -159,7 +159,6 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         forc_prc(t)     = prcp/3.d0
         forc_prl(t)     = prcp*2.d0/3.d0
 
-        
 
         forc_pco2m(t)   = 355.e-06*forc_psrf(t)
         forc_po2m(t)    = 0.209*forc_psrf(t)

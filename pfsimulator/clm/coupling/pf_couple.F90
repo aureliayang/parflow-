@@ -67,5 +67,9 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_i
          endif
    enddo
 
+   print *, etr
+   print *, qinfl
+   print *, rootr
+
 end subroutine pf_couple
 

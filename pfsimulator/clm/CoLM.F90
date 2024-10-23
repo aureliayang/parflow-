@@ -226,8 +226,8 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    real(r8) :: slope_x_pf((nx+2)*(ny+2)*3)        ! Slope in x-direction from PF
    real(r8) :: slope_y_pf((nx+2)*(ny+2)*3)        ! Slope in y-direction from PF
 
-   integer  :: topo_mask(3,nx*ny)                 ! nx*ny >= numpatch
-   integer  :: planar_mask(3,nx*ny)               ! col num, row num, mask indicator
+   integer, allocatable  :: topo_mask(:,:)                 ! nx*ny >= numpatch
+   integer, allocatable  :: planar_mask(:,:)               ! col num, row num, mask indicator
  
    ! output keys
    integer  :: clm_dump_interval                  ! dump inteval for CLM output, passed from PF, always in interval of CLM timestep, not time
@@ -342,6 +342,8 @@ if (time == start_time_pf) then !initialization
 
       !@CY: build numpatch and planar_mask
       allocate( counter(nx,ny) )
+      allocate( topo_mask(3,nx*ny) )            ! nx*ny >= numpatch
+      allocate( planar_mask(3,nx*ny) ) 
       numpatch = 0
       topo_mask = 0
       planar_mask = 0
