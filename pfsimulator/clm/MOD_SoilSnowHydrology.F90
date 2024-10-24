@@ -211,7 +211,7 @@ CONTAINS
 IF ((.not.DEF_SPLIT_SOILSNOW) .or. (patchtype==1 .and. DEF_URBAN_RUN)) THEN
 
       IF (lb>=1)THEN
-         gwat = pg_rain + sm - qseva + qsdew * deltim
+         gwat = pg_rain + sm - qseva + qsdew 
       ELSE
          IF ((.not.DEF_USE_SNICAR) .or. (patchtype==1 .and. DEF_URBAN_RUN)) THEN
             CALL snowwater (lb,deltim,ssi,wimp,&
