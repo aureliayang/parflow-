@@ -20,13 +20,13 @@ MODULE MOD_LakeDepthReadin
 CONTAINS
 
 
-   SUBROUTINE lakedepth_readin (dir_landdata, lc_year)
+   SUBROUTINE lakedepth_readin (dir_landdata, lc_year, numpatch)
 
    USE MOD_Precision
    USE MOD_Vars_Global, only : nl_lake
    USE MOD_SPMD_Task
-   USE MOD_LandPatch
-   USE MOD_NetCDFVector
+   !USE MOD_LandPatch
+   !USE MOD_NetCDFVector
    USE MOD_Vars_TimeInvariants, only : lakedepth, dz_lake
 #ifdef SinglePoint
    USE MOD_SingleSrfdata
@@ -34,7 +34,7 @@ CONTAINS
 
    IMPLICIT NONE
 
-   integer, intent(in) :: lc_year    ! which year of land cover data used
+   integer, intent(in) :: lc_year, numpatch    ! which year of land cover data used
    character(len=256), intent(in) :: dir_landdata
 
    ! Local Variables
@@ -76,8 +76,10 @@ CONTAINS
 #else
       write(cyear,'(i4.4)') lc_year
       lndname = trim(dir_landdata)//'/lakedepth/'//trim(cyear)//'/lakedepth_patches.nc'
-      CALL ncio_read_vector (lndname, 'lakedepth_patches', landpatch, lakedepth)
+      !CALL ncio_read_vector (lndname, 'lakedepth_patches', landpatch, lakedepth)
 #endif
+
+      lakedepth = sum(dzlak(1:nl_lake))
 
       ! Define lake levels
       IF (p_is_worker) THEN

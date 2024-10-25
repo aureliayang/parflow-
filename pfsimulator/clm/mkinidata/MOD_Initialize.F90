@@ -77,7 +77,7 @@ CONTAINS
    !USE MOD_DBedrockReadin
    USE MOD_HtopReadin
    USE MOD_IniTimeVariable
-   !USE MOD_LakeDepthReadin
+   USE MOD_LakeDepthReadin
    !USE MOD_PercentagesPFTReadin
    !USE MOD_SoilParametersReadin
    USE MOD_SoilColorRefl
@@ -294,7 +294,7 @@ CONTAINS
 ! ------------------------------------------
 ! 1.2 Lake depth and layers' thickness
 ! ------------------------------------------
-      !CALL lakedepth_readin (dir_landdata, lc_year)
+      CALL lakedepth_readin (dir_landdata, lc_year, numpatch)
 
 ! ...............................................................
 ! 1.3 Read in the soil parameters of the patches of the gridcells
@@ -635,13 +635,13 @@ CONTAINS
 ! 2.1 current time of model run
 ! ............................
 
-      !CALL initimetype(greenwich)
+      CALL initimetype(greenwich)
 
-      !IF (p_is_master) THEN
-      !   IF(.not. greenwich)THEN
-      !      write(*,*) char(27)//"[1;31m"//"Notice: greenwich false, local time is used."//char(27)//"[0m"
-      !   ENDIF
-      !ENDIF
+      IF (p_is_master) THEN
+         IF(.not. greenwich)THEN
+            write(*,*) char(27)//"[1;31m"//"Notice: greenwich false, local time is used."//char(27)//"[0m"
+         ENDIF
+      ENDIF
 
 
 ! ................................

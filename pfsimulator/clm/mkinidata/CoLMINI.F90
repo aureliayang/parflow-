@@ -85,7 +85,7 @@ subroutine CoLMINI(idate, numpatch)
       !casename     = DEF_CASE_NAME
       !dir_landdata = DEF_dir_landdata
       !dir_restart  = DEF_dir_restart
-      !greenwich    = DEF_simulation_time%greenwich
+      greenwich    = DEF_simulation_time%greenwich
       !s_year       = DEF_simulation_time%start_year
       !s_month      = DEF_simulation_time%start_month
       !s_day        = DEF_simulation_time%start_day

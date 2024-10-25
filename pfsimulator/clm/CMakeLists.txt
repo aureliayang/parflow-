@@ -6,6 +6,7 @@ set (SRC_FILES
   ./mkinidata/MOD_IniTimeVariable.F90
   ./mkinidata/MOD_SoilColorRefl.F90
   ./mkinidata/MOD_HtopReadin.F90
+  ./mkinidata/MOD_LakeDepthReadin.F90
   ./share/MOD_Precision.F90                           
   ./share/MOD_SPMD_Task.F90                           
   ./share/MOD_Namelist.F90
