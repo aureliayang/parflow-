@@ -48,6 +48,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
    !USE MOD_Hist
    USE MOD_TimeManager
    !USE MOD_RangeCheck
+   USE MOD_MonthlyinSituCO2MaunaLoa
 
    !USE MOD_Block
    !USE MOD_Pixel
@@ -496,6 +497,8 @@ if (time == start_time_pf) then !initialization
       ! Initialize meteorological forcing data module
       CALL allocate_1D_Forcing (numpatch)
       !CALL forcing_init (dir_forcing, deltim, ststamp, lc_year, etstamp)
+      ! CO2 data initialization
+      CALL init_monthly_co2_mlo
       !CALL allocate_2D_Forcing (gforc)
 
       ! Initialize history data module
