@@ -40,6 +40,7 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
   USE MOD_Vars_TimeInvariants, only: patchlonr, patchlatr
   USE MOD_Const_Physical, only: rgas
   USE MOD_TimeManager
+  USE MOD_MonthlyinSituCO2MaunaLoa, only: get_monthly_co2_mlo
   implicit none
 
 !=== Arguments ===========================================================
@@ -75,6 +76,8 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
 ! integer nx,ny      ! Array sizes
   real(r8) :: a, calday                                             ! Julian cal day (1.xx to 365.xx)
   real(r8) :: sunang, cloud, difrat, vnrat
+  integer :: year, month, mday
+  real(r8) :: pco2m
   
 !=== End Variable List ===================================================
 
@@ -160,8 +163,13 @@ subroutine pf_getforce (nx,ny,sw_pf,lw_pf,prcp_pf,tas_pf,u_pf,v_pf, &
         forc_prl(t)     = prcp*2.d0/3.d0
 
 
-        forc_pco2m(t)   = 355.e-06*forc_psrf(t)
-        forc_po2m(t)    = 0.209*forc_psrf(t)
+        ! [GET ATMOSPHERE CO2 CONCENTRATION DATA]
+        year  = idate(1)
+        CALL julian2monthday (idate(1), idate(2), month, mday)
+        pco2m = get_monthly_co2_mlo(year, month)*1.e-6
+
+        forc_pco2m(t)   = pco2m*forc_psrf(t)
+        forc_po2m(t)    = 0.209_r8*forc_psrf(t)
         
         !!Treat precip
         !!(Set upper limit of air temperature for snowfall at 275.65K.
