@@ -82,3 +82,8 @@ easy:
    make install
 ```
 
+### Step 5: Run 
+an example in  
+```shell
+   parflow/pfsimulator/clm/example/
+```
