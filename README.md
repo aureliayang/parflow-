@@ -83,7 +83,7 @@ easy:
 ```
 
 ### Step 5: Run 
-an example in  
+An example in  
 ```shell
    parflow/pfsimulator/clm/example/
 ```
