@@ -3,8 +3,8 @@ patchclass(i)
 patchtype(i)     
 patchlonr(i)    
 patchlatr(i)    
-lakedepth(i)     ##not used in pf
-dz_lake(1:,i)    ##not used in pf
+lakedepth(i)     ##not used in pf, but setup
+dz_lake(1:,i)    ##not used in pf, but setup
 soil_s_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_d_v_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
 soil_s_n_alb(i)  !aggregation nc and then readin nc, or invoke function calculated inside, soil_color_refl 
