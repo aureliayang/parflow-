@@ -12,7 +12,29 @@ Set the environment variable `PARFLOW_DIR` to the chosen location:
 For bash:
 
 ```shell
-   export PARFLOW_DIR=/home/snoopy/parflow
+   export PARFLOW_VERSION=3.10
+   export PARFLOW_INS=/home/cy15/pf-colm
+   export PF_SRC=/home/cy15/pf-colm/parflow/
+
+   module load cmake/3.18.2
+   module load openmpi/gcc/4.1.6
+
+   #export SILO_DIR=$PARFLOW_INS/silo-4.10.2
+   export HYPRE_DIR=$PARFLOW_INS/hypre-2.18.2
+   export PARFLOW_DIR=$PARFLOW_INS/parflow
+
+   #export LD_LIBRARY_PATH=$SILO_DIR/lib:$LD_LIBRARY_PATH
+   export LD_LIBRARY_PATH=$HYPRE_DIR/lib:$LD_LIBRARY_PATH
+   export LD_LIBRARY_PATH=$PARFLOW_DIR/lib:$LD_LIBRARY_PATH
+
+   #export PATH=$SILO_DIR/bin:$PATH
+   export PATH=$PARFLOW_DIR/bin:$PATH
+
+   export F90=mpif90
+   export F77=mpif77
+   export FC=mpif90
+   export CC=mpicc
+   export CXX=mpicxx
 ```   
 
 ### Step 2: Extract the Source
@@ -38,10 +60,15 @@ is a minimal example of an MPI build with CLM:
    cd parflow
    mkdir build
    cd build
-   cmake .. \
-      	 -DCMAKE_INSTALL_PREFIX=${PARFLOW_DIR} \
-   	 -DPARFLOW_HAVE_CLM=ON \
-	 -DPARFLOW_AMPS_LAYER=mpi1
+   cmake  .. \
+          -DPARFLOW_AMPS_LAYER=mpi1 \
+	  -DPARFLOW_ENABLE_PYTHON=TRUE \
+	  -DPARFLOW_AMPS_SEQUENTIAL_IO=TRUE \
+	  -DHYPRE_ROOT=$HYPRE_DIR \
+	  -DPARFLOW_ENABLE_TIMING=TRUE \
+	  -DPARFLOW_HAVE_CLM=TRUE \
+	  -DCMAKE_INSTALL_PREFIX=$PARFLOW_DIR \
+	  -DPARFLOW_PYTHON_VIRTUAL_ENV=ON
 ```
 
 ### Step 4: Building and installing
