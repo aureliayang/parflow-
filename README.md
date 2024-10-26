@@ -9,7 +9,7 @@ Decide where to install ParFlow and associated libraries.
 
 Set the environment variable `PARFLOW_DIR` to the chosen location:
 
-For bash:
+For bash (an example on Princeton Della cluster):
 
 ```shell
    export PARFLOW_VERSION=3.10
