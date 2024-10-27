@@ -92,7 +92,6 @@ CONTAINS
    integer, intent(in)    :: idate(3)   ! year, julian day, seconds of the starting time
    integer, intent(in)    :: lc_year    ! year, land cover year
    logical, intent(in)    :: greenwich  ! true: greenwich time, false: local time
-   !@CY: no use greenwich
    logical, optional, intent(in) :: lulcc_call   ! whether it is a lulcc CALL
 
    ! ------------------------ local variables -----------------------------
@@ -264,7 +263,6 @@ CONTAINS
          ENDDO
 
          !CALL landpatch%get_lonlat_radian (patchlonr, patchlatr)
-         !@cy: you may need to read in by your self, lat and lon pfb readin
 
 #if (defined LULC_IGBP_PFT || defined LULC_IGBP_PC)
          IF (numpft > 0) pftclass = landpft%settyp
@@ -620,7 +618,7 @@ CONTAINS
       CALL mpi_barrier (p_comm_glb, p_err)
 #endif
 
-      !IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Invariants')
+      IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Invariants')
 
 ! ----------------------------------------------------------------------
 ! [2] INITIALIZE TIME-VARYING VARIABLES
@@ -1392,7 +1390,7 @@ CONTAINS
       CALL mpi_barrier (p_comm_glb, p_err)
 #endif
 
-      !IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Vraying Variables')
+      IF (p_is_master) write (6,*) ('Successfully Initialize the Land Time-Vraying Variables')
 
 
 ! --------------------------------------------------
