@@ -101,7 +101,8 @@ SUBROUTINE CoLMMAIN ( &
            emis,         z0m,          zol,          rib,           &
            ustar,        qstar,        tstar,        fm,            &
            fh,           fq,           pf_press,     pf_vol_liq,    &
-           veg_water_stress_typepf, wilting_pointpf, field_capacitypf   )
+           beta_typepf, veg_water_stress_typepf, wilting_pointpf,   & 
+           field_capacitypf   )
 
 !=======================================================================
 !
@@ -183,7 +184,8 @@ SUBROUTINE CoLMMAIN ( &
 
    integer, intent(in) :: &
         ipatch, &        ! patch index
-        veg_water_stress_typepf
+        veg_water_stress_typepf, &
+        beta_typepf
 
    real(r8), intent(in) :: &
         patchlonr   ,&! logitude in radians
@@ -750,7 +752,7 @@ SUBROUTINE CoLMMAIN ( &
               fm                ,fh                ,fq                ,pg_rain           ,&
               pg_snow           ,t_precip          ,qintr_rain        ,qintr_snow        ,&
               snofrz(lbsn:0)    ,sabg_snow_lyr(lb:1), pf_press        ,pf_vol_liq        ,&
-              veg_water_stress_typepf, wilting_pointpf, field_capacitypf                  )
+              beta_typepf, veg_water_stress_typepf, wilting_pointpf, field_capacitypf    )
 
          IF (.not. DEF_USE_VariablySaturatedFlow) THEN
 

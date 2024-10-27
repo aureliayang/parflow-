@@ -690,7 +690,7 @@ endif
          ! ----------------------------------------------------------------------
          IF (p_is_worker) THEN
             CALL CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oroflag,numpatch, &
-            veg_water_stress_typepf,wilting_pointpf,field_capacitypf)
+            beta_typepf,veg_water_stress_typepf,wilting_pointpf,field_capacitypf)
          ENDIF
 
 

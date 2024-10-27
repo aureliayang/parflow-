@@ -74,7 +74,8 @@ CONTAINS
                        fm          ,fh          ,fq          ,pg_rain    ,&
                        pg_snow     ,t_precip    ,qintr_rain  ,qintr_snow ,&
                        snofrz      ,sabg_snow_lyr, pf_press  ,pf_vol_liq ,&
-                       veg_water_stress_typepf  ,wilting_pointpf, field_capacitypf)
+                       beta_typepf, veg_water_stress_typepf              ,&
+                       wilting_pointpf, field_capacitypf)
 
 !=======================================================================
 ! this is the main subroutine to execute the calculation
@@ -139,6 +140,7 @@ CONTAINS
        lb,           &! lower bound of array
        patchtype,    &! land patch type (0=soil, 1=urban or built-up, 2=wetland,
                       !                  3=glacier/ice sheet, 4=land water bodies)
+       beta_typepf,  & 
        veg_water_stress_typepf
 
    real(r8), intent(inout) :: &
@@ -599,7 +601,7 @@ ENDIF
                             theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
                             dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss,&
-                            pf_vol_liq)
+                            pf_vol_liq, beta_typepf)
          !IF(lb <= 0) rss = 1.d0  seems like it has been implemented in the subroutine
       ELSE
          !rss = 0.

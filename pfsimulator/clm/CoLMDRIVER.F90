@@ -1,7 +1,7 @@
 #include <define.h>
 
 SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
-  veg_water_stress_typepf, wilting_pointpf, field_capacitypf)
+  beta_typepf, veg_water_stress_typepf, wilting_pointpf, field_capacitypf)
 
 
 !=======================================================================
@@ -37,7 +37,7 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
 
    integer,  intent(in) :: idate(3) ! model calendar for next time step (year, julian day, seconds)
    real(r8), intent(in) :: deltim   ! seconds in a time-step
-   integer,  intent(in) :: numpatch, veg_water_stress_typepf
+   integer,  intent(in) :: numpatch, beta_typepf, veg_water_stress_typepf
    real(r8), intent(in) :: wilting_pointpf, field_capacitypf
 
    logical,  intent(in) :: dolai    ! true if time for time-varying vegetation paramter
@@ -184,8 +184,8 @@ SUBROUTINE CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oro,numpatch, &
                emis(i),         z0m(i),          zol(i),          rib(i),          &
                ustar(i),        qstar(i),        tstar(i),                         &
                fm(i),           fh(i),           fq(i),           pf_press(1:,i),  &
-               pf_vol_liq(1:,i),veg_water_stress_typepf,          wilting_pointpf, &
-               field_capacitypf                                                    )
+               pf_vol_liq(1:,i),beta_typepf, veg_water_stress_typepf,              &
+               wilting_pointpf, field_capacitypf                                   )
 
             ENDDO
          ENDIF

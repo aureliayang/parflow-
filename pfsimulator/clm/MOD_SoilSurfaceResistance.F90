@@ -44,7 +44,7 @@ CONTAINS
                               theta_r, alpha_vgm, n_vgm, L_vgm, sc_vgm, fc_vgm, &
 #endif
                               dz_soisno,t_soisno,wliq_soisno,wice_soisno,fsno,qg,rss,&
-                              pf_vol_liq)
+                              pf_vol_liq,beta_typepf)
 
 !=======================================================================
 ! !DESCRIPTION:
@@ -69,6 +69,7 @@ CONTAINS
 !-----------------------Argument-----------------------------------------
 
    integer, intent(in) :: &
+        beta_typepf,                 &
         nl_soil                       ! upper bound of array
 
    real(r8), intent(in) :: &
@@ -281,7 +282,17 @@ CONTAINS
             rss  = 1._r8
          ENDIF
 
-         rss = 0.5d0*(1.0d0 - cos(((pf_vol_liq(1) - theta_r(1)) / (porsl(1) - theta_r(1)))*3.141d0)) 
+         select case (beta_typepf)
+         case (0)    ! none
+            rss = 1.0d0
+         case (1)    ! linear
+            rss = (pf_vol_liq(1) - theta_r(1)) /(porsl(1) - theta_r(1))
+         case (2)    ! cosine, like ISBA
+            !rss = 0.5d0*(1.0d0 - cos(((clm%pf_vol_liq(1) - clm%res_sat*clm%watsat(1)) / & 
+            !          (clm%watsat(1) - clm%res_sat*clm%watsat(1)))*3.141d0))     
+            rss = 0.5d0*(1.0d0 - cos(((pf_vol_liq(1) - theta_r(1)) / (porsl(1) - theta_r(1)))*3.141d0))
+         end select
+ 
          if (rss < 0.0) rss = 0.00d0
          if (rss > 1.)  rss = 1.d0
 
