@@ -70,6 +70,8 @@ MODULE MOD_Vars_1DFluxes
    real(r8), allocatable :: assim  (:) !canopy assimilation rate (mol m-2 s-1)
    real(r8), allocatable :: respc  (:) !canopy respiration (mol m-2 s-1)
    real(r8), allocatable :: qseva  (:)
+   real(r8), allocatable :: qinfl_old  (:) !interception (mm h2o/s)
+   real(r8), allocatable :: etr_old    (:) !transpiration rate [mm/s]
 
    real(r8), allocatable :: qcharge(:) !groundwater recharge [mm/s]
 
@@ -148,6 +150,8 @@ CONTAINS
             allocate ( assim  (numpatch) )  ; assim  (:) = spval ! canopy assimilation rate (mol m-2 s-1)
             allocate ( respc  (numpatch) )  ; respc  (:) = spval ! canopy respiration (mol m-2 s-1)
             allocate ( qseva  (numpatch) )  ; qseva  (:) = spval
+            allocate ( qinfl_old  (numpatch) )  ; qinfl_old  (:) = spval ! inflitration (mm h2o/s)
+            allocate ( etr_old    (numpatch) )  ; etr_old    (:) = spval ! transpiration rate [mm/s]
 
             allocate ( qcharge(numpatch) )  ; qcharge(:) = spval ! groundwater recharge [mm/s]
 

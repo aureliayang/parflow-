@@ -262,7 +262,7 @@ SUBROUTINE CLM_LSM(pressure,saturation,evap_trans,topo,porosity,pf_dz_mult,istep
  
    integer  :: j_incr,k_incr                      ! increment for j and k to convert 1D vector to 3D i,j,k array
    integer, allocatable :: counter(:,:) 
-   real(r8) :: total
+   real(r8) :: total, begwatb
    !character*100 :: RI
    !real(r8) :: u         ! Tempoary UNDEF Variable  
 
@@ -347,6 +347,7 @@ if (time == start_time_pf) then !initialization
       allocate( planar_mask(3,nx*ny) ) 
       numpatch = 0
       topo_mask = 0
+      topo_mask(3,:) = 1
       planar_mask = 0
       
       do j = 1, ny
@@ -689,6 +690,8 @@ endif
          ! Call colm driver
          ! ----------------------------------------------------------------------
          IF (p_is_worker) THEN
+            qinfl_old = qinfl
+            etr_old   = etr
             CALL CoLMDRIVER (idate,deltim,dolai,doalb,dosst,oroflag,numpatch, &
             beta_typepf,veg_water_stress_typepf,wilting_pointpf,field_capacitypf)
          ENDIF
@@ -889,8 +892,8 @@ endif
             endif
          enddo
 
-         call pf_couple(evap_trans,saturation,pressure,porosity,nx,ny,nz,j_incr,k_incr, &
-            numpatch,topo_mask,planar_mask)
+         call pf_couple(evap_trans,saturation,pressure,porosity,pf_dz_mult,pdz,nx,ny,nz, &
+            j_incr,k_incr,numpatch,topo_mask,planar_mask,deltim,begwatb)
 
       !ENDDO TIMELOOP
 
