@@ -503,8 +503,9 @@ CONTAINS
       zldis = hu - displa
 
       IF(zldis <= 0.0) THEN
-         write(6,*) 'the obs height of u less than the zero displacement heght'
-         CALL abort
+         !write(6,*) 'the obs height of u less than the zero displacement heght'
+         zldis = 5.d0
+         !CALL abort
       ENDIF
 
       CALL moninobukini(ur,th,thm,thv,dth,dqh,dthv,zldis,z0mv,um,obu)

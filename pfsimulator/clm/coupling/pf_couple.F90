@@ -23,7 +23,7 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,pf_dz_mult,pdz,nx,n
   integer i,j,k,l,t,m
   integer nx,ny,nz,j_incr,k_incr,numpatch
   !real(r8) begwatb,endwatb !@ beginning and ending water balance over ENTIRE domain
-  real(r8) tot_infl_mm,tot_tran_veg_mm,tot_drain_mm !@ total mm of h2o from infiltration and transpiration
+  real(r8) tot_infl_mm,tot_tran_veg_mm !@ total mm of h2o from infiltration and transpiration
   !real(r8) error !@ mass balance error over entire domain
   real(r8) evap_trans((nx+2)*(ny+2)*(nz+2))
   real(r8) saturation((nx+2)*(ny+2)*(nz+2)),pressure((nx+2)*(ny+2)*(nz+2))
@@ -70,7 +70,6 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,pf_dz_mult,pdz,nx,n
    endwatb = 0.0d0
    tot_infl_mm = 0.0d0
    tot_tran_veg_mm = 0.0d0
-   tot_drain_mm = 0.0d0
 
    do t = 1, numpatch
       if (planar_mask(3,t) == 1) then
@@ -108,14 +107,14 @@ subroutine pf_couple(evap_trans,saturation,pressure,porosity,pf_dz_mult,pdz,nx,n
    enddo
 
    error = 0.0d0
-   error = endwatb - begwatb - (tot_infl_mm - tot_tran_veg_mm) ! + tot_drain_mm
+   error = endwatb - begwatb - (tot_infl_mm - tot_tran_veg_mm) 
 
    ! SGS according to standard "f" must have fw.d format, changed f -> f20.8, i -> i5 and e -> e10.2
    ! write(199,'(1i5,1x,f20.8,1x,5e13.5)') clm(1)%istep,drv%time,error,tot_infl_mm,tot_tran_veg_mm,drv%begwatb,drv%endwatb
    !write(199,'(1i5,1x,f20.8,1x,5e13.5)') istep_pf,drv%time,error,tot_infl_mm,tot_tran_veg_mm,drv%begwatb,drv%endwatb
    begwatb = endwatb
 
-   print *,"Error (%):", error/begwatb
+   !print *,"Error (%):", error/begwatb
 
 end subroutine pf_couple
 
