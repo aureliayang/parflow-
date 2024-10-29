@@ -22,8 +22,8 @@ CONCN.FileVersion = 4
 # Set Processor topology
 # -----------------------------------------------------------------------------
 
-CONCN.Process.Topology.P = 1
-CONCN.Process.Topology.Q = 1
+CONCN.Process.Topology.P = 3
+CONCN.Process.Topology.Q = 2
 CONCN.Process.Topology.R = 1
 
 # -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ CONCN.Gravity = 1.0
 CONCN.TimingInfo.BaseUnit = 1.0
 CONCN.TimingInfo.StartCount = 0
 CONCN.TimingInfo.StartTime = 0
-CONCN.TimingInfo.StopTime = 72
+CONCN.TimingInfo.StopTime = 72*20
 #CONCN.TimingInfo.StopTime = curr_step + 2
 CONCN.TimingInfo.DumpInterval = 1.
 CONCN.TimeStep.Type = 'Constant'
